@@ -68,7 +68,7 @@ if __name__=='__main__':
 else:
 	from .Graphics import Tkinter
 
-keywords = ['int','char','double','float','struct','if','else','switch','case','default','while','do','for','break','continue','return','cast']
+keywords = ['void','int','char','double','float','struct','if','else','switch','case','default','while','do','for','break','continue','return','cast']
 def any(name, alternates):
     "Return a named group pattern matching list of alternates."
     return "(?P<%s>" % name + "|".join(alternates) + ")"
@@ -126,7 +126,7 @@ def check(k={}):
     if k['COMMENTM']!=None:
     	return 'comment','#848484'
     elif k['BUILTIN']!=None:
-    	return 'builtin','VioletRed'
+    	return 'builtin','#0101DF'
     elif k['STRING']!=None:
     	return 'string','green'
     elif k['KEYWORD']!=None:

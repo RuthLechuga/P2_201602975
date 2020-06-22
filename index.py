@@ -6,6 +6,12 @@ from graphviz import Source
 import webbrowser
 import easygui as eg
 
+#gramatica
+import gramatica as g
+
+#arbol
+from Arbol.Mensaje import *
+
 #bibliotecas para interfaz gráfica
 from magicsticklibs.TextPad import TextPad
 from magicsticklibs.Graphics import Tkinter as tk, tkFileDialog, tkMessageBox 
@@ -15,6 +21,7 @@ mensajes = []
 ts_global = None
 reporte_gramatical = []
 path_archivo = ''
+new = 2
 head_html = '''
 <head> 
     <style>
@@ -208,8 +215,17 @@ class EditorTexto:
         return
     
     def traducir(self):
-        pass
-    
+        global mensajes
+        global reporte_gramatical
+
+        self.cleanTable()
+        self.cleanTS()
+        del mensajes[:]
+        instrucciones = g.parse(self.text.get_text())
+        mensajes = g.mensajes
+        reporte_gramatical = g.reporte_gramatical
+        self.imprimir_errores()
+            
     def optimizar(self):
         pass
 
