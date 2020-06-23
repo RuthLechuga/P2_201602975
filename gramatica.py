@@ -174,6 +174,9 @@ def t_error(t):
 
 import ply.lex as lex
 from Arbol.Mensaje import *
+from Arbol.Declaracion import *
+from Arbol.Expresion import *
+from Arbol.Simbolo import *
 
 lexer = lex.lex()
 
@@ -194,47 +197,69 @@ precedence = (
 def p_init(t) :
     'init            :  instrucciones_globales'
     reporte_gramatical.append(['init -> instrucciones_globales',''])
-    print('init')
+    t[0] = t[1]
 
 def p_instrucciones_globales_instrucciones(t):
     'instrucciones_globales : instrucciones_globales instruccion_global'
     reporte_gramatical.append(['instrucciones_globales -> instrucciones_globales instruccion_global',''])
+    t[1].extend(t[2])
+    t[0] = t[1]
 
 def p_instrucciones_global_instruccion(t):
     'instrucciones_globales : instruccion_global'
     reporte_gramatical.append(['instrucciones_globales -> instruccion_global',''])
+    t[0] = t[1]
 
 #---------------------------------------GRAMATICA DECLARACION---------------------------------------------#
 def p_instruccion_global_decl(t):
     'instruccion_global : declaracion PTCOMA'
     reporte_gramatical.append(['instruccion_global -> declaracion PTCOMA',''])
+    t[0] = t[1]
 
 def p_declaracion(t):
     'declaracion : tipo lista_asignaciones_dec'
     reporte_gramatical.append(['declaracion -> tipo lista_asignaciones_dec PTCOMA',''])
+    global temporal_tipo
+    temporal_tipo = ''
+    t[0] = t[2]
 
 def p_lista_asignaciones_dec(t):
     'lista_asignaciones_dec : lista_asignaciones_dec COMA asignacion_dec'
     reporte_gramatical.append(['lista_asignaciones_dec -> lista_asignaciones_dec COMA asignacion_dec',''])
+    t[1].append(t[3])
+    t[0] = t[1]
 
 def p_lista_asignacion_dec(t):
     'lista_asignaciones_dec : asignacion_dec'
     reporte_gramatical.append(['lista_asignaciones_dec -> asignacion_dec',''])
+    t[0] = [t[1]]
 
 def p_asignacion_dec_id(t):
     'asignacion_dec : IDENTIFICADOR'
     reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR',''])
+    global temporal_tipo
+    temporal_tipo = t[-1] if temporal_tipo == '' else temporal_tipo
+    if temporal_tipo=='int' : t[0] = Declaracion(TIPO_DATO.ENTERO,t[1],None,None,t.lineno(1),find_column(entrada, t.slice[1]))
+    elif temporal_tipo=='char' : t[0] = Declaracion(TIPO_DATO.CARACTER,t[1],None,None,t.lineno(1),find_column(entrada, t.slice[1]))
+    elif temporal_tipo=='double' : t[0] = Declaracion(TIPO_DATO.DECIMAL,t[1],None,None,t.lineno(1),find_column(entrada, t.slice[1]))
+    elif temporal_tipo=='float' : t[0] = Declaracion(TIPO_DATO.DECIMAL,t[1],None,None,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_asignacion_dec_expresion(t):
-    'asignacion_dec : IDENTIFICADOR sig_asig expresion'
+    'asignacion_dec : IDENTIFICADOR ASIG expresion'
     reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR sig_asig expresion',''])
+    global temporal_tipo
+    temporal_tipo = t[-1] if temporal_tipo == '' else temporal_tipo
+    if temporal_tipo=='int' : t[0] = Declaracion(TIPO_DATO.ENTERO,t[1],None,t[3],t.lineno(1),find_column(entrada, t.slice[1]))
+    elif temporal_tipo=='char' : t[0] = Declaracion(TIPO_DATO.CARACTER,t[1],None,t[3],t.lineno(1),find_column(entrada, t.slice[1]))
+    elif temporal_tipo=='double' : t[0] = Declaracion(TIPO_DATO.DECIMAL,t[1],None,t[3],t.lineno(1),find_column(entrada, t.slice[1]))
+    elif temporal_tipo=='float' : t[0] = Declaracion(TIPO_DATO.DECIMAL,t[1],None,t[3],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_asignacion_dec_accesos(t):
     'asignacion_dec : IDENTIFICADOR accesos'
     reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR accesos',''])
 
 def p_asignacion_dec_accesos_expresion(t):
-    'asignacion_dec : IDENTIFICADOR accesos sig_asig expresion'
+    'asignacion_dec : IDENTIFICADOR accesos ASIG expresion'
     reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR sig_asig expresion',''])
 
 def p_signos_asignacion(t):
@@ -259,6 +284,7 @@ def p_tipo(t):
             | FLOAT
     '''
     reporte_gramatical.append(['tipo -> '+t[1],''])
+    t[0] = t[1]
 
 def p_accesos(t):
     ' accesos : accesos acceso'
@@ -612,15 +638,15 @@ def p_expresion_3(t):
 def p_expresion_2(t):
     ''' expresion : BBNOT expresion
                     | NOT expresion
-                    | INCREMENTO expresion
-                    | DECREMENTO expresion
+                    | INCREMENTO IDENTIFICADOR
+                    | DECREMENTO IDENTIFICADOR
                     | BBAND expresion
     '''
     reporte_gramatical.append([' expresion -> '+t[1]+' expresion',''])
 
 def p_expresion_2_post(t):
-    ''' expresion : expresion INCREMENTO
-                | expresion DECREMENTO
+    ''' expresion : IDENTIFICADOR INCREMENTO
+                | IDENTIFICADOR DECREMENTO
     '''
     reporte_gramatical.append([' expresion -> expresion '+t[2],''])
 
@@ -636,19 +662,39 @@ def p_expresion_3_acceso_lista_punto(t):
     'expresion : IDENTIFICADOR accesos lista_punto'
     reporte_gramatical.append([' expresion -> IDENTIFICADOR accesos lista_punto',''])
 
-def p_expresion_1(t):
-    ''' expresion : ENTERO
-                | CADENA
-                | DECIMAL
-                | CARACTER
-                | IDENTIFICADOR   
-                | llamada
-    '''
-    reporte_gramatical.append([' expresion ->'+str(t[1]),''])
+def p_expresion_1_entero(t):
+    ''' expresion : ENTERO '''
+    reporte_gramatical.append([' expresion -> ENTERO',''])
+    t[0] = Expresion(t[1],None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))
+
+def p_expresion_1_cadena(t):
+    'expresion : CADENA '
+    reporte_gramatical.append([' expresion -> CADENA',''])
+    t[0] = Expresion(t[1],None,TIPO_OPERACION.CADENA,t.lineno(1),find_column(entrada, t.slice[1]))
+
+def p_expresion_1_decimal(t):
+    'expresion : DECIMAL '
+    reporte_gramatical.append([' expresion -> DECIMAL',''])
+    t[0] = Expresion(t[1],None,TIPO_OPERACION.DECIMAL,t.lineno(1),find_column(entrada, t.slice[1]))
+
+def p_expresion_1_caracter(t):
+    'expresion : CARACTER'
+    reporte_gramatical.append([' expresion -> CARACTER',''])
+    t[0] = Expresion(t[1],None,TIPO_OPERACION.CARACTER,t.lineno(1),find_column(entrada, t.slice[1]))
+
+def p_expresion_1_identificador(t):
+    'expresion : IDENTIFICADOR '
+    reporte_gramatical.append([' expresion -> IDENTIFICADOR',''])
+    t[0] = Expresion(t[1],None,TIPO_OPERACION.IDENTIFICADOR,t.lineno(1),find_column(entrada, t.slice[1]))
+
+def p_expresion_1_llamada(t):
+    'expresion : llamada '
+    reporte_gramatical.append([' expresion -> llamada',''])
 
 def p_expresion_par(t):
     ''' expresion : PIZQ expresion PDER '''
-    reporte_gramatical.append([' expresion -> ( expresion )',''])
+    reporte_gramatical.append([' expresion -> ( expresion )','t[0] = t[2]'])
+    t[0] = t[2]
 
 def p_operador_ternario(t):
     ' expresion : expresion TERNARIO expresion DPUNTOS expresion '
@@ -710,6 +756,7 @@ parser = yacc.yacc()
 entrada = ''
 mensajes = []
 reporte_gramatical = []
+temporal_tipo = ''
 
 def parse(input) :
     global entrada

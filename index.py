@@ -11,6 +11,9 @@ import gramatica as g
 
 #arbol
 from Arbol.Mensaje import *
+import Arbol.TablaDeSimbolos as TS
+
+#august
 
 #bibliotecas para interfaz gráfica
 from magicsticklibs.TextPad import TextPad
@@ -140,7 +143,7 @@ class EditorTexto:
 
         self.valor = Entry(self.tab_ts, borderwidth=1, width=15, bg="black", fg='white', font=('Arial',11,'bold')) 
         self.valor.grid(row=0, column=3) 
-        self.valor.insert(END, 'Valor') 
+        self.valor.insert(END, 'Temporal') 
         
         self.linea = Entry(self.tab_ts, borderwidth=1, width=15, bg="black", fg='white', font=('Arial',11,'bold')) 
         self.linea.grid(row=0, column=4) 
@@ -217,6 +220,7 @@ class EditorTexto:
     def traducir(self):
         global mensajes
         global reporte_gramatical
+        global ts_global
 
         self.cleanTable()
         self.cleanTS()
@@ -224,7 +228,36 @@ class EditorTexto:
         instrucciones = g.parse(self.text.get_text())
         mensajes = g.mensajes
         reporte_gramatical = g.reporte_gramatical
-        self.imprimir_errores()
+        
+        #deteccion de errores lexicos y sintacticos
+        if len(mensajes) > 0:
+            self.consola.delete('1.0',END)
+            self.consola.insert('1.0','>>>>>Errores<<<<<')
+            self.imprimir_errores()
+            return
+
+        ts_global = TS.TablaDeSimbolos()
+        ts_global.reiniciar()
+
+        #----------------analizar instrucciones-------------------#
+        for instruccion in instrucciones:
+            instruccion.analizar(ts_global,mensajes)
+
+        #deteccion de errores semanticos
+        if len(mensajes) > 0:
+            self.consola.delete('1.0',END)
+            self.consola.insert('1.0','>>>>>Errores<<<<<')
+            self.imprimir_errores()
+            return
+        
+        c3d = ""
+        for instruccion in instrucciones:
+            c3d += instruccion.get3D(ts_global)
+        self.consola.delete('1.0',END)
+        self.consola.insert('1.0',c3d)    
+        self.imprimir_TS()    
+
+        print('analisis realizado. . .')
             
     def optimizar(self):
         pass
@@ -303,23 +336,22 @@ class EditorTexto:
                     <th>Identificador</th>
                     <th>Tipo</th> 
                     <th>Dimension</th>
-                    <th>Valor</th>
                     <th>Linea</th>
                     <th>Columna</th>
                     <th>Ambito</th>
+                    <th>Temporal</th>
                 </tr>
         '''
-
         for simbolo in ts_global.simbolos.values():
             html += '''
                 <tr>
                     <td>'''+str(simbolo.identificador)+'''</td>
                     <td>'''+str(simbolo.tipo.name)+'''</td>
                     <td>'''+str(simbolo.dimension)+'''</td>
-                    <td>'''+str(simbolo.valor)+'''</td>
                     <td>'''+str(simbolo.linea)+'''</td>
                     <td>'''+str(simbolo.columna)+'''</td>
                     <td>'''+str(simbolo.ambito)+'''</td>
+                    <td>'''+str(simbolo.temporal)+'''</td>
                 </tr>
             '''
         html += '''</table> <br> <br> <br>'''
@@ -333,7 +365,7 @@ class EditorTexto:
                     <th>Columna</th>
                 </tr>
         '''
-        for etiqueta in ts_global.etiquetas.values():
+        for etiqueta in ts_global.funciones.values():
             html += '''
                 <tr>
                     <td>'''+etiqueta.identificador+'''</td>
@@ -413,7 +445,7 @@ class EditorTexto:
             dimension.insert(END, str(simbolo.dimension))
             valor = Entry(self.tab_ts, borderwidth=1, width=15, fg='black', font=('Arial',11))
             valor.grid(row=fila, column=3) 
-            valor.insert(END, str(simbolo.valor))
+            valor.insert(END, str(simbolo.temporal))
             linea = Entry(self.tab_ts, borderwidth=1, width=15, fg='black', font=('Arial',11))
             linea.grid(row=fila, column=4) 
             linea.insert(END, str(simbolo.linea))
