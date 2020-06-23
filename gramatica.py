@@ -108,7 +108,7 @@ t_DER_ASIG          = r'\>\>\='
 t_AND_ASIG          = r'\&\='
 t_OR_ASIG           = r'\|\='
 t_XOR_ASIG          = r'\^\='
-t_NOT               = r'!'
+t_NOT               = r'\!'
 t_AND               = r'\&\&'
 t_OR                = r'\|\|'
 t_BBNOT             = r'~'
@@ -634,15 +634,37 @@ def p_expresion_3(t):
                 | expresion MAYOR_IGUAL_QUE expresion
     '''
     reporte_gramatical.append([' expresion -> expresion '+t[2]+' expresion',''])
+    if t[2]=='+': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.SUMA,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='-': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.RESTA,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='*': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.MULTIPLICACION,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='/': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.DIVISION,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='%': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.RESIDUO,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='<': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.MENOR_QUE,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='>': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.MAYOR_QUE,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='<=': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.MENOR_IGUAL_QUE,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='>=': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.MAYOR_IGUAL_QUE,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='==': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.IGUAL_QUE,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='!=': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.DISTINTO_QUE,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='&&': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.AND,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='||': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.OR,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='&': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.BBAND,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='|': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.BBOR,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='^': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.BBXOR,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='<<': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.BBIZQ,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
+    if t[2]=='>>': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.BBDER,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
 
 def p_expresion_2(t):
     ''' expresion : BBNOT expresion
                     | NOT expresion
+                    | MENOS expresion
                     | INCREMENTO IDENTIFICADOR
                     | DECREMENTO IDENTIFICADOR
                     | BBAND expresion
     '''
     reporte_gramatical.append([' expresion -> '+t[1]+' expresion',''])
+    if t[1]=='!': t[0] = Expresion(t[2],None,TIPO_OPERACION.NOT,t.lineno(1),find_column(entrada, t.slice[1]),t[1])
+    if t[1]=='~': t[0] = Expresion(t[2],None,TIPO_OPERACION.BBNOT,t.lineno(1),find_column(entrada, t.slice[1]),t[1])
+    if t[1]=='-': t[0] = Expresion(t[2],None,TIPO_OPERACION.MENOS_UNARIO,t.lineno(1),find_column(entrada, t.slice[1]),t[1])
 
 def p_expresion_2_post(t):
     ''' expresion : IDENTIFICADOR INCREMENTO
