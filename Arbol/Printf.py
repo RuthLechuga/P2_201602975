@@ -1,8 +1,6 @@
 from .Instruccion import Instruccion
 from .Mensaje import *
 
-import re
-
 class Printf(Instruccion) :
 
     def __init__(self, cadena, parametros, linea, columna) :
@@ -41,6 +39,9 @@ class Printf(Instruccion) :
                     else:
                         c3d += 'print(0);\n'
                 pos+=1
+            
+            if len(temp_cad)>0:
+                c3d += 'print(\"'+temp_cad+'\");\n'
 
         return c3d
 
