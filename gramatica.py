@@ -176,6 +176,7 @@ import ply.lex as lex
 from Arbol.Mensaje import *
 from Arbol.Asignacion import *
 from Arbol.Declaracion import *
+from Arbol.DoWhile import *
 from Arbol.Expresion import *
 from Arbol.Funcion import *
 from Arbol.Printf import *
@@ -549,22 +550,24 @@ def p_default(t):
 #------------------------------------------GRAMATICA WHILE------------------------------------------------#
 def p_instruccion_while(t):
     'instruccion : while'
-    reporte_gramatical.append(['instruccion -> while',''])
+    reporte_gramatical.append(['instruccion -> while','t[0] = [t[1]]'])
     t[0] = [t[1]]
 
 def p_while(t):
     'while : WHILE PIZQ expresion PDER LLIZQ instrucciones LLDER'
-    reporte_gramatical.append(['while -> WHILE PIZQ expresion PDER LLIZQ instrucciones LLDER',''])
+    reporte_gramatical.append(['while -> WHILE PIZQ expresion PDER LLIZQ instrucciones LLDER','t[0] = While(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))'])
     t[0] = While(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))
 
 #----------------------------------------GRAMATICA DO WHILE------------------------------------------------#
 def p_instruccion_do_while(t):
     'instruccion : do_while'
-    reporte_gramatical.append(['instruccion -> do_while',''])
+    reporte_gramatical.append(['instruccion -> do_while','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_do_while(t):
     'do_while : DO LLIZQ instrucciones LLDER WHILE PIZQ expresion PDER PTCOMA'
-    reporte_gramatical.append(['while -> WHILE PIZQ expresion PDER LLIZQ instrucciones LLDER',''])
+    reporte_gramatical.append(['do_while : DO LLIZQ instrucciones LLDER WHILE PIZQ expresion PDER PTCOMA','t[0] = DoWhile(t[7],t[3],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = DoWhile(t[7],t[3],t.lineno(1),find_column(entrada, t.slice[1]))
 
 #------------------------------------------GRAMATICA FOR---------------------------------------------------#
 def p_instruccion_for(t):
