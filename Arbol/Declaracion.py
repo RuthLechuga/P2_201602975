@@ -23,6 +23,9 @@ class Declaracion(Instruccion) :
         if self.accesos is None and (not self.expresion is None):
             tipo = self.expresion.analizar(ts,mensajes)
             self.tipo_expresion = tipo
+
+            if tipo is None:
+                mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'Expresión inválida para:'+self.identificador+'.',self.linea,self.columna))
             
             if isinstance(tipo,Mensaje):
                 mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'Expresión inválida para:'+self.identificador+'.',self.linea,self.columna))

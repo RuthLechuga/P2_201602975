@@ -1,31 +1,38 @@
 class TablaDeSimbolos() :
 
-    def __init__(self, funciones= {}, simbolos = {}) :
+    def __init__(self, funciones= {}, simbolos = []) :
         self.simbolos = simbolos
         self.funciones = funciones
         self.temporal = 0
         self.parametro = 0
         self.retorno = 0
         self.pila = 0
+        self.label = 0
         self.ambito = 'global'
         self.padre = None
 
     def addSimbolo(self, simbolo):
-        if simbolo.identificador in self.simbolos:
-            return False
+        for s in self.simbolos:
+            if simbolo.identificador == s.identificador and simbolo.ambito == s.ambito:
+                return False
 
-        self.simbolos[simbolo.identificador] = simbolo
+        self.simbolos.append(simbolo)
         return True
     
     def getSimbolo(self, identificador):
-        if not identificador in self.simbolos:
-            return None
+        for simbolo in self.simbolos:
+            if simbolo.identificador == identificador and (simbolo.ambito == self.ambito or simbolo.ambito=='global'):
+                return simbolo
 
-        return self.simbolos[identificador]
+        return None
     
     def addFuncion(self, funcion):
+        if funcion.identificador in self.funciones:
+            return False
+
         self.funciones[funcion.identificador] = funcion
-    
+        return True
+
     def getFuncion(self, identificador):
         if not identificador in self.funciones:
             return None
@@ -60,6 +67,13 @@ class TablaDeSimbolos() :
     def getPilaActual(self):
         return "$s"+str(self.pila)
     
+    def getLabel(self):
+        self.label += 1
+        return "Label_"+str(self.label)
+    
+    def getLabelActual(self):
+        return "Label_"+str(self.label)
+        
     def reiniciar(self):
         self.simbolos.clear()
         self.funciones.clear()

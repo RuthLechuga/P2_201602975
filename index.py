@@ -342,7 +342,7 @@ class EditorTexto:
                     <th>Temporal</th>
                 </tr>
         '''
-        for simbolo in ts_global.simbolos.values():
+        for simbolo in ts_global.simbolos:
             html += '''
                 <tr>
                     <td>'''+str(simbolo.identificador)+'''</td>
@@ -356,7 +356,7 @@ class EditorTexto:
             '''
         html += '''</table> <br> <br> <br>'''
         
-        html += '''<h1>Etiquetas</h1>
+        html += '''<h1>Funciones</h1>
                 <table id="t02">
                 <tr>
                     <th>Identificador</th>
@@ -365,13 +365,13 @@ class EditorTexto:
                     <th>Columna</th>
                 </tr>
         '''
-        for etiqueta in ts_global.funciones.values():
+        for funcion in ts_global.funciones.values():
             html += '''
                 <tr>
-                    <td>'''+etiqueta.identificador+'''</td>
-                    <td>'''+etiqueta.tipo_estructura.name+'''</td>
-                    <td>'''+str(etiqueta.linea)+'''</td>
-                    <td>'''+str(etiqueta.columna)+'''</td>
+                    <td>'''+funcion.identificador+'''</td>
+                    <td>'''+funcion.tipo.name+'''</td>
+                    <td>'''+str(funcion.linea)+'''</td>
+                    <td>'''+str(funcion.columna)+'''</td>
                 </tr>
             '''
         html += '''</table>'''
@@ -433,7 +433,7 @@ class EditorTexto:
     def imprimir_TS(self):
         global ts_global
         fila = 1
-        for simbolo in ts_global.simbolos.values():
+        for simbolo in ts_global.simbolos:
             identificador = Entry(self.tab_ts, borderwidth=1, width=15, fg='black', font=('Arial',11)) 
             identificador.grid(row=fila, column=0) 
             identificador.insert(END, simbolo.identificador)

@@ -174,8 +174,10 @@ def t_error(t):
 
 import ply.lex as lex
 from Arbol.Mensaje import *
+from Arbol.Asignacion import *
 from Arbol.Declaracion import *
 from Arbol.Expresion import *
+from Arbol.Funcion import *
 from Arbol.Simbolo import *
 
 lexer = lex.lex()
@@ -196,47 +198,47 @@ precedence = (
 #-------------------------------------------INICIO GRAMATICA---------------------------------------------#
 def p_init(t) :
     'init            :  instrucciones_globales'
-    reporte_gramatical.append(['init -> instrucciones_globales',''])
+    reporte_gramatical.append(['init -> instrucciones_globales','t[0] = t[1]'])
     t[0] = t[1]
 
 def p_instrucciones_globales_instrucciones(t):
     'instrucciones_globales : instrucciones_globales instruccion_global'
-    reporte_gramatical.append(['instrucciones_globales -> instrucciones_globales instruccion_global',''])
+    reporte_gramatical.append(['instrucciones_globales -> instrucciones_globales instruccion_global','t[1].extend(t[2])\nt[0] = t[1]'])
     t[1].extend(t[2])
     t[0] = t[1]
 
 def p_instrucciones_global_instruccion(t):
     'instrucciones_globales : instruccion_global'
-    reporte_gramatical.append(['instrucciones_globales -> instruccion_global',''])
+    reporte_gramatical.append(['instrucciones_globales -> instruccion_global','t[0] = t[1]'])
     t[0] = t[1]
 
 #---------------------------------------GRAMATICA DECLARACION---------------------------------------------#
 def p_instruccion_global_decl(t):
     'instruccion_global : declaracion PTCOMA'
-    reporte_gramatical.append(['instruccion_global -> declaracion PTCOMA',''])
+    reporte_gramatical.append(['instruccion_global -> declaracion PTCOMA','t[0] = t[1]'])
     t[0] = t[1]
 
 def p_declaracion(t):
     'declaracion : tipo lista_asignaciones_dec'
-    reporte_gramatical.append(['declaracion -> tipo lista_asignaciones_dec PTCOMA',''])
+    reporte_gramatical.append(['declaracion -> tipo lista_asignaciones_dec PTCOMA','t[0] = t[2]'])
     global temporal_tipo
     temporal_tipo = ''
     t[0] = t[2]
 
 def p_lista_asignaciones_dec(t):
     'lista_asignaciones_dec : lista_asignaciones_dec COMA asignacion_dec'
-    reporte_gramatical.append(['lista_asignaciones_dec -> lista_asignaciones_dec COMA asignacion_dec',''])
+    reporte_gramatical.append(['lista_asignaciones_dec -> lista_asignaciones_dec COMA asignacion_dec','t[1].append(t[3])\nt[0] = t[1]'])
     t[1].append(t[3])
     t[0] = t[1]
 
 def p_lista_asignacion_dec(t):
     'lista_asignaciones_dec : asignacion_dec'
-    reporte_gramatical.append(['lista_asignaciones_dec -> asignacion_dec',''])
+    reporte_gramatical.append(['lista_asignaciones_dec -> asignacion_dec','t[0] = [t[1]]'])
     t[0] = [t[1]]
 
 def p_asignacion_dec_id(t):
     'asignacion_dec : IDENTIFICADOR'
-    reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR',''])
+    reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR','t[0] = Declaracion(TIPO_DATO.ENTERO,t[1],None,None,t.lineno(1),find_column(entrada, t.slice[1]))'])
     global temporal_tipo
     temporal_tipo = t[-1] if temporal_tipo == '' else temporal_tipo
     if temporal_tipo=='int' : t[0] = Declaracion(TIPO_DATO.ENTERO,t[1],None,None,t.lineno(1),find_column(entrada, t.slice[1]))
@@ -246,7 +248,7 @@ def p_asignacion_dec_id(t):
 
 def p_asignacion_dec_expresion(t):
     'asignacion_dec : IDENTIFICADOR ASIG expresion'
-    reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR sig_asig expresion',''])
+    reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR sig_asig expresion','t[0] = Declaracion(TIPO_DATO.ENTERO,t[1],None,t[3],t.lineno(1),find_column(entrada, t.slice[1]))'])
     global temporal_tipo
     temporal_tipo = t[-1] if temporal_tipo == '' else temporal_tipo
     if temporal_tipo=='int' : t[0] = Declaracion(TIPO_DATO.ENTERO,t[1],None,t[3],t.lineno(1),find_column(entrada, t.slice[1]))
@@ -275,7 +277,8 @@ def p_signos_asignacion(t):
                 | POR_ASIG
                 | XOR_ASIG
     '''
-    reporte_gramatical.append(['sig_asig -> '+t[1],''])
+    reporte_gramatical.append(['sig_asig -> '+t[1],'t[0] = t[1]'])
+    t[0] = t[1]
 
 def p_tipo(t):
     ''' tipo : INT
@@ -283,7 +286,7 @@ def p_tipo(t):
             | DOUBLE
             | FLOAT
     '''
-    reporte_gramatical.append(['tipo -> '+t[1],''])
+    reporte_gramatical.append(['tipo -> '+t[1],'t[0] = t[1]'])
     t[0] = t[1]
 
 def p_accesos(t):
@@ -355,35 +358,56 @@ def p_declaracion_struct_accesos(t):
 #---------------------------------------GRAMATICA DE METODOS---------------------------------------------#
 def p_instruccion_global_metodo(t):
     'instruccion_global : metodo '
-    reporte_gramatical.append(['instruccion_global -> metodo',''])
+    reporte_gramatical.append(['instruccion_global -> metodo','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_metodo_void_param(t):
     'metodo : VOID IDENTIFICADOR PIZQ lista_parametros PDER LLIZQ instrucciones LLDER'
-    reporte_gramatical.append(['metodo -> VOID IDENTIFICADOR PIZQ lista_parametros PDER LLIZQ instrucciones LLDER',''])
+    reporte_gramatical.append(['metodo -> VOID IDENTIFICADOR PIZQ lista_parametros PDER LLIZQ instrucciones LLDER','t[0] = Funcion(TIPO_FUNCION.VOID,t[2],t[4],t[7],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Funcion(TIPO_FUNCION.VOID,t[2],t[4],t[7],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_metodo_void(t):
     'metodo : VOID IDENTIFICADOR PIZQ PDER LLIZQ instrucciones LLDER'
-    reporte_gramatical.append(['metodo -> VOID IDENTIFICADOR PIZQ PDER LLIZQ instrucciones LLDER',''])
+    reporte_gramatical.append(['metodo -> VOID IDENTIFICADOR PIZQ PDER LLIZQ instrucciones LLDER','t[0] = Funcion(TIPO_FUNCION.VOID,t[2],None,t[6],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Funcion(TIPO_FUNCION.VOID,t[2],None,t[6],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_metodo_tipo_param(t):
     'metodo : tipo IDENTIFICADOR PIZQ lista_parametros PDER LLIZQ instrucciones LLDER'
-    reporte_gramatical.append(['metodo -> tipo IDENTIFICADOR PIZQ lista_parametros PDER LLIZQ instrucciones LLDER',''])
+    reporte_gramatical.append(['metodo -> tipo IDENTIFICADOR PIZQ lista_parametros PDER LLIZQ instrucciones LLDER','t[0] = Funcion(tipo,t[2],t[4],t[7],t.lineno(2),find_column(entrada, t.slice[2]))'])
+    tipo = ''
+    if t[1]=='int': tipo = TIPO_FUNCION.ENTERO
+    elif t[1]=='double' or t[1]=='float': tipo = TIPO_FUNCION.DECIMAL
+    elif t[1]=='char': tipo = TIPO_FUNCION.CARACTER
+    t[0] = Funcion(tipo,t[2],t[4],t[7],t.lineno(2),find_column(entrada, t.slice[2]))
 
 def p_metodo_tipo(t):
     'metodo : tipo IDENTIFICADOR PIZQ PDER LLIZQ instrucciones LLDER'
-    reporte_gramatical.append(['metodo -> tipo IDENTIFICADOR PIZQ PDER LLIZQ instrucciones LLDER',''])
+    reporte_gramatical.append(['metodo -> tipo IDENTIFICADOR PIZQ PDER LLIZQ instrucciones LLDER','t[0] = Funcion(tipo,t[2],None,t[6],t.lineno(2),find_column(entrada, t.slice[2]))'])
+    tipo = ''
+    if t[1]=='int': tipo = TIPO_FUNCION.ENTERO
+    elif t[1]=='double' or t[1]=='float': tipo = TIPO_FUNCION.DECIMAL
+    elif t[1]=='char': tipo = TIPO_FUNCION.CARACTER
+    t[0] = Funcion(tipo,t[2],None,t[6],t.lineno(2),find_column(entrada, t.slice[2]))
 
 def p_lista_parametros(t):
     'lista_parametros : lista_parametros COMA parametro'
-    reporte_gramatical.append(['lista_parametros -> lista_parametros COMA parametro',''])
+    reporte_gramatical.append(['lista_parametros -> lista_parametros COMA parametro','t[1].append(t[3])\nt[0] = t[1]'])
+    t[1].append(t[3])
+    t[0] = t[1]
 
 def p_lista_parametros_parametro(t):
     'lista_parametros : parametro'
-    reporte_gramatical.append(['lista_parametros -> parametro',''])
+    reporte_gramatical.append(['lista_parametros -> parametro','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_parametro(t):
     'parametro : tipo IDENTIFICADOR'
-    reporte_gramatical.append(['parametro -> tipo IDENTIFICADOR',''])
+    reporte_gramatical.append(['parametro -> tipo IDENTIFICADOR','t[0] = Declaracion(tipo,t[2],None,None,t.lineno(2),find_column(entrada, t.slice[2]))'])
+    tipo = ''
+    if t[1]=='int': tipo = TIPO_DATO.ENTERO
+    elif t[1]=='double' or t[1]=='float': tipo = TIPO_DATO.DECIMAL
+    elif t[1]=='char': tipo = TIPO_DATO.CARACTER
+    t[0] = Declaracion(tipo,t[2],None,None,t.lineno(2),find_column(entrada, t.slice[2]))
 
 def p_parametro_acceso(t):
     'parametro : tipo IDENTIFICADOR accesos'
@@ -391,15 +415,19 @@ def p_parametro_acceso(t):
 
 def p_instrucciones(t):
     'instrucciones : instrucciones instruccion'
-    reporte_gramatical.append(['instrucciones -> instrucciones instruccion',''])
+    reporte_gramatical.append(['instrucciones -> instrucciones instruccion','t[1].extend(t[2])\nt[0] = t[1]'])
+    t[1].extend(t[2])
+    t[0] = t[1]
 
 def p_instrucciones_instruccion(t):
     'instrucciones : instruccion'
-    reporte_gramatical.append(['instrucciones -> instruccion',''])
+    reporte_gramatical.append(['instrucciones -> instruccion','t[0] = t[1]'])
+    t[0] = t[1]
 
 def p_instruccion(t):
     'instruccion : declaracion PTCOMA'
-    reporte_gramatical.append(['instruccion -> declaracion PTCOMA',''])
+    reporte_gramatical.append(['instruccion -> declaracion PTCOMA','t[0] = t[1]'])
+    t[0] = t[1]
 
 def p_instruccion_struct(t):
     'instruccion : def_struct PTCOMA'
@@ -429,11 +457,13 @@ def p_lista_param_printf_param(t):
 #----------------------------------------GRAMATICA ASIGNACION---------------------------------------------#
 def p_instruccion_asignacion(t):
     'instruccion : asignacion PTCOMA'
-    reporte_gramatical.append(['instruccion -> asignacion',''])
+    reporte_gramatical.append(['instruccion -> asignacion','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_asignacion(t):
     'asignacion : IDENTIFICADOR sig_asig expresion'
-    reporte_gramatical.append(['asignacion -> IDENTIFICADOR sig_asig expresion',''])
+    reporte_gramatical.append(['asignacion -> IDENTIFICADOR sig_asig expresion','t[0] = Asignacion(t[1],None,t[2],t[3],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Asignacion(t[1],None,t[2],t[3],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_asignacion_accesos(t):
     'asignacion : IDENTIFICADOR accesos sig_asig expresion'
