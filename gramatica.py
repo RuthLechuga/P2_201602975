@@ -178,6 +178,7 @@ from Arbol.Asignacion import *
 from Arbol.Declaracion import *
 from Arbol.DoWhile import *
 from Arbol.Expresion import *
+from Arbol.For import *
 from Arbol.Funcion import *
 from Arbol.Printf import *
 from Arbol.Simbolo import *
@@ -504,7 +505,8 @@ def p_lista_punto_valor_acceso(t):
 #-------------------------------------------GRAMATICA IF--------------------------------------------------#
 def p_instruccion_if(t):
     'instruccion : if'
-    reporte_gramatical.append(['instruccion -> if',''])
+    reporte_gramatical.append(['instruccion -> if','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_if(t):
     'if : IF PIZQ expresion PDER LLIZQ instrucciones LLDER'
@@ -572,47 +574,58 @@ def p_do_while(t):
 #------------------------------------------GRAMATICA FOR---------------------------------------------------#
 def p_instruccion_for(t):
     'instruccion : for'
-    reporte_gramatical.append(['instruccion -> for',''])
+    reporte_gramatical.append(['instruccion -> for','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_for(t):
     'for : FOR PIZQ for_ini PTCOMA for_exp PTCOMA for_inc PDER LLIZQ instrucciones LLDER '
-    reporte_gramatical.append(['for -> FOR PIZQ for_ini PTCOMA for_exp PTCOMA for_inc PDER LLIZQ instrucciones LLDER ',''])
+    reporte_gramatical.append(['for -> FOR PIZQ for_ini PTCOMA for_exp PTCOMA for_inc PDER LLIZQ instrucciones LLDER ','t[0] = For(t[3],t[5],t[7],t[10],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = For(t[3],t[5],t[7],t[10],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_for_ini(t):
     'for_ini : IDENTIFICADOR'
-    reporte_gramatical.append(['for_ini -> IDENTIFICADOR',''])
+    reporte_gramatical.append(['for_ini -> IDENTIFICADOR','t[0] = t[1]'])
+    t[0] = t[1]
 
 def p_for_ini_dec(t):
     'for_ini : declaracion'
-    reporte_gramatical.append(['for_ini -> declaracion',''])
+    reporte_gramatical.append(['for_ini -> declaracion','t[0] = t[1]'])
+    t[0] = t[1][0]
 
 def p_for_init_asig(t):
     'for_ini : asignacion'
-    reporte_gramatical.append(['for_ini -> asignacion',''])
+    reporte_gramatical.append(['for_ini -> asignacion','t[0] = t[1]'])
+    t[0] = t[1]
 
 def p_for_ini_epsilon(t):
     'for_ini : '
-    reporte_gramatical.append(['for_ini -> ',''])
+    reporte_gramatical.append(['for_ini -> ','t[0] = None'])
+    t[0] = None
 
 def p_for_exp(t):
     'for_exp : expresion'
-    reporte_gramatical.append(['for_exp -> expresion',''])
+    reporte_gramatical.append(['for_exp -> expresion','t[0] = t[1]'])
+    t[0] = t[1]
 
 def p_for_exp_epsilon(t):
     'for_exp : '
-    reporte_gramatical.append(['for_exp -> ',''])
+    reporte_gramatical.append(['for_exp -> ','t[0] = None'])
+    t[0] = None
 
 def p_for_incremento(t):
     'for_inc : asignacion'
-    reporte_gramatical.append(['for_inc -> asignacion',''])
+    reporte_gramatical.append(['for_inc -> asignacion','t[0] = t[1][0]'])
+    t[0] = t[1]
 
 def p_for_operadores(t):
     'for_inc : inc_dec'
-    reporte_gramatical.append(['for_inc -> inc_dec',''])
+    reporte_gramatical.append(['for_inc -> inc_dec','t[0] = t[1][0]'])
+    t[0] = t[1]
 
 def p_for_inc_epsilon(t):
     'for_inc : '
-    reporte_gramatical.append(['for_inc -> ',''])
+    reporte_gramatical.append(['for_inc -> ','t[0] = None'])
+    t[0] = None
 
 #------------------------------------------GRAMATICA BREAK------------------------------------------------#
 def p_instruccion_break(t):
@@ -636,23 +649,40 @@ def p_instruccion_return_exp(t):
 #------------------------------------------GRAMATICA INCREMENTOS------------------------------------------------#
 def p_ins_inc_dec(t):
     'instruccion : inc_dec PTCOMA'
-    reporte_gramatical.append(['instruccion -> inc_dec PTCOMA',''])
+    reporte_gramatical.append(['instruccion -> inc_dec PTCOMA','t[0] = t[1]'])
+    t[0] = [t[1]]
 
 def p_ins_inc_pre(t):
     'inc_dec : INCREMENTO IDENTIFICADOR'
-    reporte_gramatical.append(['inc_dec -> INCREMENTO IDENTIFICADOR',''])
+    reporte_gramatical.append(['inc_dec -> INCREMENTO IDENTIFICADOR','exp = Expresion(t[2],Expresion(1,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1])),TIPO_OPERACION.SUMA,t.lineno(1),find_column(entrada, t.slice[1]))\nt[0] = Asignacion(t[2],None,\'=\',exp,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    exp_id = Expresion(t[2],None,TIPO_OPERACION.IDENTIFICADOR,t.lineno(1),find_column(entrada, t.slice[1]))
+    exp_1 = Expresion(1,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))
+    exp = Expresion(exp_id,exp_1,TIPO_OPERACION.SUMA,t.lineno(1),find_column(entrada, t.slice[1]),'+')
+    t[0] = Asignacion(t[2],None,'=',exp,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_ins_inc_post(t):
     'inc_dec : IDENTIFICADOR INCREMENTO'
-    reporte_gramatical.append(['inc_dec -> IDENTIFICADOR INCREMENTO',''])
+    reporte_gramatical.append(['inc_dec -> IDENTIFICADOR INCREMENTO','exp = Expresion(t[1],Expresion(1,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1])),TIPO_OPERACION.SUMA,t.lineno(1),find_column(entrada, t.slice[1]))\nt[0] = Asignacion(t[1],None,\'=\',exp,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    exp_id = Expresion(t[1],None,TIPO_OPERACION.IDENTIFICADOR,t.lineno(1),find_column(entrada, t.slice[1]))
+    exp_1 = Expresion(1,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))
+    exp = Expresion(exp_id,exp_1,TIPO_OPERACION.SUMA,t.lineno(1),find_column(entrada, t.slice[1]),'+')
+    t[0] = Asignacion(t[1],None,'=',exp,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_ins_dec_pre(t):
     'inc_dec : DECREMENTO IDENTIFICADOR'
-    reporte_gramatical.append(['inc_dec -> DECREMENTO IDENTIFICADOR',''])
+    reporte_gramatical.append(['inc_dec -> DECREMENTO IDENTIFICADOR','exp = Expresion(t[2],Expresion(1,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1])),TIPO_OPERACION.RESTA,t.lineno(1),find_column(entrada, t.slice[1]))\nt[0] = Asignacion(t[2],None,\'=\',exp,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    exp_id = Expresion(t[2],None,TIPO_OPERACION.IDENTIFICADOR,t.lineno(1),find_column(entrada, t.slice[1]))
+    exp_1 = Expresion(1,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))
+    exp = Expresion(exp_id,exp_1,TIPO_OPERACION.RESTA,t.lineno(1),find_column(entrada, t.slice[1]),'-')
+    t[0] = Asignacion(t[2],None,'=',exp,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_ins_dec_post(t):
     'inc_dec : IDENTIFICADOR DECREMENTO'
-    reporte_gramatical.append(['inc_dec -> IDENTIFICADOR DECREMENTO',''])
+    reporte_gramatical.append(['inc_dec -> IDENTIFICADOR DECREMENTO','exp = Expresion(t[1],Expresion(1,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1])),TIPO_OPERACION.RESTA,t.lineno(1),find_column(entrada, t.slice[1]))\nt[0] = Asignacion(t[1],None,\'=\',exp,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    exp_id = Expresion(t[1],None,TIPO_OPERACION.IDENTIFICADOR,t.lineno(1),find_column(entrada, t.slice[1]))
+    exp_1 = Expresion(1,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))
+    exp = Expresion(exp_id,exp_1,TIPO_OPERACION.RESTA,t.lineno(1),find_column(entrada, t.slice[1]),'-')
+    t[0] = Asignacion(t[1],None,'=',exp,t.lineno(1),find_column(entrada, t.slice[1]))
 
 #---------------------------------------GRAMATICA EXPRESIONES---------------------------------------------#
 def p_expresion_3(t):
