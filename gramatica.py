@@ -178,6 +178,7 @@ from Arbol.Asignacion import *
 from Arbol.Declaracion import *
 from Arbol.Expresion import *
 from Arbol.Funcion import *
+from Arbol.Printf import *
 from Arbol.Simbolo import *
 
 lexer = lex.lex()
@@ -440,19 +441,24 @@ def p_instruccion_declaracion_struct(t):
 #---------------------------------------GRAMATICA PRINTF---------------------------------------------#
 def p_printf(t):
     'instruccion : PRINTF PIZQ CADENA COMA lista_param_printf PDER PTCOMA'
-    reporte_gramatical.append(['instruccion -> PRINTF PIZQ CADENA COMA lista_param_printf PDER PTCOMA',''])
+    reporte_gramatical.append(['instruccion -> PRINTF PIZQ CADENA COMA lista_param_printf PDER PTCOMA','t[0] = [Printf(t[3],t[5],t.lineno(2),find_column(entrada, t.slice[2]))]'])
+    t[0] = [Printf(t[3],t[5],t.lineno(2),find_column(entrada, t.slice[2]))]
 
 def p_printf_cadena(t):
     'instruccion : PRINTF PIZQ CADENA PDER PTCOMA'
-    reporte_gramatical.append(['instruccion -> PRINTF PIZQ CADENA PDER PTCOMA',''])
+    reporte_gramatical.append(['instruccion -> PRINTF PIZQ CADENA PDER PTCOMA','t[0] = Printf(t[3],None,t.lineno(2),find_column(entrada, t.slice[2]))'])
+    t[0] = [Printf(t[3],None,t.lineno(2),find_column(entrada, t.slice[2]))]
 
 def p_lista_param_printf(t):
     'lista_param_printf : lista_param_printf COMA expresion'
-    reporte_gramatical.append(['lista_param_printf -> lista_param_printf COMA expresion',''])
+    reporte_gramatical.append(['lista_param_printf -> lista_param_printf COMA expresion','t[1].append(t[3])\nt[0] = t[1]'])
+    t[1].append(t[3])
+    t[0] = t[1]
 
 def p_lista_param_printf_param(t):
     'lista_param_printf : expresion'
-    reporte_gramatical.append(['lista_param_printf -> expresion',''])
+    reporte_gramatical.append(['lista_param_printf -> expresion','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 #----------------------------------------GRAMATICA ASIGNACION---------------------------------------------#
 def p_instruccion_asignacion(t):
