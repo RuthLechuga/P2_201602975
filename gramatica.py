@@ -176,6 +176,7 @@ import ply.lex as lex
 from Arbol.Mensaje import *
 from Arbol.Asignacion import *
 from Arbol.Break import *
+from Arbol.Case import *
 from Arbol.Continue import *
 from Arbol.Declaracion import *
 from Arbol.DoWhile import *
@@ -186,6 +187,7 @@ from Arbol.Funcion import *
 from Arbol.If import *
 from Arbol.Printf import *
 from Arbol.Simbolo import *
+from Arbol.Switch import *
 from Arbol.While import *
 
 lexer = lex.lex()
@@ -534,31 +536,45 @@ def p_if_der(t):
 #-------------------------------------------GRAMATICA SWITCH--------------------------------------------------#
 def p_instruccion_switch(t):
     'instruccion : switch_ins'
-    reporte_gramatical.append(['instruccion -> switch',''])
+    reporte_gramatical.append(['instruccion -> switch','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_switch(t):
     'switch_ins : SWITCH PIZQ expresion PDER LLIZQ lista_cases LLDER'
-    reporte_gramatical.append(['switch -> SWITCH PIZQ expresion PDER LLIZQ lista_cases LLDER',''])
+    reporte_gramatical.append(['switch -> SWITCH PIZQ expresion PDER LLIZQ lista_cases LLDER','t[0] = Switch(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Switch(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_switch_default(t):
     'switch_ins : SWITCH PIZQ expresion PDER LLIZQ lista_cases default LLDER'
-    reporte_gramatical.append(['switch_ins -> SWITCH PIZQ expresion PDER LLIZQ lista_cases default LLDER',''])
+    reporte_gramatical.append(['switch_ins -> SWITCH PIZQ expresion PDER LLIZQ lista_cases default LLDER','t[6].append(t[7])\nt[0] = Switch(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[6].append(t[7])
+    t[0] = Switch(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_lista_cases(t):
     'lista_cases : lista_cases case'
-    reporte_gramatical.append(['lista_cases -> lista_cases case',''])
+    reporte_gramatical.append(['lista_cases -> lista_cases case','t[1].append(t[2])\nt[0] = t[1]'])
+    t[1].append(t[2])
+    t[0] = t[1]
 
 def p_lista_case(t):
     'lista_cases : case'
-    reporte_gramatical.append(['lista_cases -> case',''])
+    reporte_gramatical.append(['lista_cases -> case','t[0] = t[1]'])
+    t[0] = [t[1]]
 
 def p_case(t):
     'case : CASE expresion DPUNTOS instrucciones' 
-    reporte_gramatical.append(['case -> CASE expresion DPUNTOS instrucciones',''])
+    reporte_gramatical.append(['case -> CASE expresion DPUNTOS instrucciones','t[0] = Case(t[2],t[4],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Case(t[2],t[4],t.lineno(1),find_column(entrada, t.slice[1]))
+
+def p_case_epsilon(t):
+    'case : CASE expresion DPUNTOS' 
+    reporte_gramatical.append(['case -> CASE expresion DPUNTOS instrucciones','t[0] = Case(t[2],[],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Case(t[2],[],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_default(t):
     'default : DEFAULT DPUNTOS instrucciones'
-    reporte_gramatical.append(['default -> DEFAULT DPUNTOS instrucciones',''])
+    reporte_gramatical.append(['default -> DEFAULT DPUNTOS instrucciones','t[0] = Case(None,t[4],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Case(None,t[3],t.lineno(1),find_column(entrada, t.slice[1]))
 
 #------------------------------------------GRAMATICA WHILE------------------------------------------------#
 def p_instruccion_while(t):
@@ -641,13 +657,13 @@ def p_for_inc_epsilon(t):
 #------------------------------------------GRAMATICA BREAK------------------------------------------------#
 def p_instruccion_break(t):
     'instruccion : BREAK PTCOMA'
-    reporte_gramatical.append(['instruccion -> BREAK PTCOMA',''])
+    reporte_gramatical.append(['instruccion -> BREAK PTCOMA','t[0] = [Break()]'])
     t[0] = [Break()]
 
 #------------------------------------------GRAMATICA CONTINUE------------------------------------------------#
 def p_instruccion_continue(t):
     'instruccion : CONTINUE PTCOMA'
-    reporte_gramatical.append(['instruccion -> CONTINUE PTCOMA',''])
+    reporte_gramatical.append(['instruccion -> CONTINUE PTCOMA','t[0] = [Continue()]'])
     t[0] = [Continue()]
 
 #------------------------------------------GRAMATICA RETURN------------------------------------------------#
