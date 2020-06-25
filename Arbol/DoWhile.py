@@ -22,6 +22,8 @@ class DoWhile(Instruccion) :
         c3d = ''
         label_do_while = ts.getLabel()
         label_salida = ts.getLabel()
+        ts.et_salida.append(label_salida)
+        ts.et_inicio.append(do_while)
 
         c3d = label_do_while +':  #do-while \n'
 
@@ -33,6 +35,9 @@ class DoWhile(Instruccion) :
         c3d += 'if ('+et_expresion+') goto '+label_do_while+';\n'
 
         c3d += label_salida +':   #salida do-while \n'
+
+        ts.et_salida.pop()
+        ts.et_inicio.pop()
 
         return c3d
 

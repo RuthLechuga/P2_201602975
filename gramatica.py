@@ -90,7 +90,7 @@ t_MAS               = r'\+'
 t_MENOS             = r'\-'
 t_POR               = r'\*'
 t_DIVIDIDO          = r'\/'
-t_MODULO            = r'%'
+t_MODULO            = r'\%'
 t_BBIZQ             = r'<<'
 t_BBDER             = r'>>'
 t_MENOR_IGUAL_QUE   = r'\<\='
@@ -175,6 +175,8 @@ def t_error(t):
 import ply.lex as lex
 from Arbol.Mensaje import *
 from Arbol.Asignacion import *
+from Arbol.Break import *
+from Arbol.Continue import *
 from Arbol.Declaracion import *
 from Arbol.DoWhile import *
 from Arbol.Elseif import *
@@ -640,11 +642,13 @@ def p_for_inc_epsilon(t):
 def p_instruccion_break(t):
     'instruccion : BREAK PTCOMA'
     reporte_gramatical.append(['instruccion -> BREAK PTCOMA',''])
+    t[0] = [Break()]
 
 #------------------------------------------GRAMATICA CONTINUE------------------------------------------------#
 def p_instruccion_continue(t):
     'instruccion : CONTINUE PTCOMA'
     reporte_gramatical.append(['instruccion -> CONTINUE PTCOMA',''])
+    t[0] = [Continue()]
 
 #------------------------------------------GRAMATICA RETURN------------------------------------------------#
 def p_instruccion_return(t):

@@ -27,13 +27,21 @@ class For(Instruccion) :
 
     def get3D(self,ts) :
         c3d = ''
-        label_for = ts.getLabel()
+        label_inc = ts.getLabel()
+        label_cuerpo = ts.getLabel()
         label_salida = ts.getLabel()
+
+        ts.et_salida.append(label_salida)
+        ts.et_inicio.append(label_inc)
 
         c3d = '#inicializacion for:\n'
         c3d += self.declaracion.get3D(ts)
+        c3d += 'goto '+label_cuerpo+';\n';
 
-        c3d += label_for +':  #for \n'
+        c3d += label_inc +':  #incremento del for:\n'
+        c3d += self.incremento.get3D(ts)
+
+        c3d += label_cuerpo +':  #for \n'
 
         c3d += self.condicion.get3D(ts)
         et_expresion = ts.getTemporalActual()
@@ -44,12 +52,12 @@ class For(Instruccion) :
 
         for instruccion in self.instrucciones:
             c3d += instruccion.get3D(ts)
-
-        c3d += '#incremento del for:\n'
-        c3d += self.incremento.get3D(ts)
-        c3d += 'goto '+label_for+';\n\n'
+        c3d += 'goto '+label_inc+';\n\n'
 
         c3d += label_salida +':   #salida for \n'
+
+        ts.et_inicio.pop()
+        ts.et_salida.pop()
 
         return c3d
 

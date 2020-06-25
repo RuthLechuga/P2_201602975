@@ -10,6 +10,8 @@ class TablaDeSimbolos() :
         self.label = 0
         self.ambito = 'global'
         self.padre = None
+        self.et_salida = []
+        self.et_inicio = []
 
     def addSimbolo(self, simbolo):
         for s in self.simbolos:

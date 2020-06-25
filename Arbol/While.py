@@ -22,6 +22,9 @@ class While(Instruccion) :
         c3d = ''
         label_while = ts.getLabel()
         label_salida = ts.getLabel()
+        
+        ts.et_salida.append(label_salida)
+        ts.et_inicio.append(label_while)
 
         c3d = label_while +':  #while \n'
 
@@ -39,6 +42,8 @@ class While(Instruccion) :
 
         c3d += label_salida +':   #salida while \n'
 
+        ts.et_salida.pop()
+        ts.et_inicio.pop()
         return c3d
 
     def getAST(self) :
