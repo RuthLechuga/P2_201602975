@@ -177,9 +177,11 @@ from Arbol.Mensaje import *
 from Arbol.Asignacion import *
 from Arbol.Declaracion import *
 from Arbol.DoWhile import *
+from Arbol.Elseif import *
 from Arbol.Expresion import *
 from Arbol.For import *
 from Arbol.Funcion import *
+from Arbol.If import *
 from Arbol.Printf import *
 from Arbol.Simbolo import *
 from Arbol.While import *
@@ -510,15 +512,22 @@ def p_instruccion_if(t):
 
 def p_if(t):
     'if : IF PIZQ expresion PDER LLIZQ instrucciones LLDER'
-    reporte_gramatical.append(['if -> IF PIZQ expresion PDER LLIZQ instrucciones LLDER',''])
+    reporte_gramatical.append(['if -> IF PIZQ expresion PDER LLIZQ instrucciones LLDER','lista = [Elseif(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))]\nt[0] = If(lista)'])
+    lista = [Elseif(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))]
+    t[0] = If(lista)
 
 def p_if_else(t):
     'if : IF PIZQ expresion PDER LLIZQ instrucciones LLDER ELSE LLIZQ instrucciones LLDER'
-    reporte_gramatical.append(['if -> IF PIZQ expresion PDER LLIZQ instrucciones LLDER ELSE LLIZQ instrucciones LLDER',''])
-
+    reporte_gramatical.append(['if -> IF PIZQ expresion PDER LLIZQ instrucciones LLDER ELSE LLIZQ instrucciones LLDER','lista = [Elseif(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))]\nlista.append(Elseif(None,t[10],t.lineno(1),find_column(entrada, t.slice[1])))\nt[0] = If(lista)'])
+    lista = [Elseif(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))]
+    lista.append(Elseif(None,t[10],t.lineno(1),find_column(entrada, t.slice[1])))
+    t[0] = If(lista)
+    
 def p_if_der(t):
     'if : IF PIZQ expresion PDER LLIZQ instrucciones LLDER ELSE if'
-    reporte_gramatical.append(['if -> IF PIZQ expresion PDER LLIZQ instrucciones LLDER ELSE if',''])
+    reporte_gramatical.append(['if -> IF PIZQ expresion PDER LLIZQ instrucciones LLDER ELSE if','t[9].lista_if.insert(0,Elseif(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1])))\nt[0] = t[9]'])
+    t[9].lista_if.insert(0,Elseif(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1])))
+    t[0] = t[9]
 
 #-------------------------------------------GRAMATICA SWITCH--------------------------------------------------#
 def p_instruccion_switch(t):

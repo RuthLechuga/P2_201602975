@@ -4,17 +4,26 @@ from .Simbolo import *
 
 class If(Instruccion) :
 
-    def __init__(self, expresion, instrucciones, linea, columna) :
-        self.expresion = expresion
-        self.instrucciones = instrucciones
-        self.linea = linea
-        self.columna = columna
+    def __init__(self, lista_if) :
+        self.lista_if = lista_if
 
     def analizar(self,ts,mensajes) :
-        pass        
+        for eif in self.lista_if:
+            eif.analizar(ts,mensajes)        
 
     def get3D(self,ts) :
         c3d = ''
+        et_salida = ts.getLabel() 
+
+        for eif in self.lista_if:
+            c3d += eif.get3D(ts)
+            c3d += 'goto '+et_salida+';\n'
+
+            if not eif.condicion is None:
+                c3d += ts.getLabelActual() + ': \n'
+        
+        c3d += et_salida+':\n'
+
         return c3d
 
     def getAST(self) :
