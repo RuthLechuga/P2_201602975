@@ -1,6 +1,7 @@
 from .Instruccion import Instruccion
 from .Mensaje import *
 from .Simbolo import *
+from .Scanf import *
 
 class Asignacion(Instruccion) :
 
@@ -19,6 +20,9 @@ class Asignacion(Instruccion) :
             mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'La variables: '+ self.identificador+ ' no existe.',self.linea,self.columna))
             return
         
+        if isinstance(self.expresion,Scanf):
+            return
+        
         tipo = self.expresion.analizar(ts,mensajes)
 
         if tipo is None:
@@ -32,7 +36,11 @@ class Asignacion(Instruccion) :
 
     def get3D(self,ts):
         temporal = ts.getSimbolo(self.identificador).temporal
-        
+
+        if isinstance(self.expresion,Scanf):
+            c3d = temporal + ' = read();\n'
+            return c3d
+
         c3d = self.expresion.get3D(ts)
         resultado = ts.getTemporalActual()
 

@@ -6,6 +6,7 @@ class TIPO_DATO(Enum) :
     CARACTER = 3
     ARREGLO = 4
     STRUCT = 5
+    CADENA = 6
 
 class Simbolo() :
     def __init__(self, identificador, tipo, dimension, linea, columna, ambito, temporal="") :

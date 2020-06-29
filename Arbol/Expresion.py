@@ -58,6 +58,9 @@ class Expresion(Instruccion) :
         if self.tipo == TIPO_OPERACION.CARACTER:
             return TIPO_DATO.CARACTER
         
+        if self.tipo == TIPO_OPERACION.CADENA:
+            return TIPO_DATO.CADENA
+        
         if self.tipo == TIPO_OPERACION.IDENTIFICADOR:
             temp = ts.getSimbolo(self.izquierdo)
 
@@ -67,8 +70,11 @@ class Expresion(Instruccion) :
             
             return temp.tipo
         
-        tipo_izq = None if self.izquierdo is None else self.izquierdo.analizar(ts,mensajes)
-        tipo_der = None if self.derecha is None else self.derecha.analizar(ts,mensajes)
+        try:
+            tipo_izq = None if self.izquierdo is None else self.izquierdo.analizar(ts,mensajes)
+            tipo_der = None if self.derecha is None else self.derecha.analizar(ts,mensajes)
+        except:
+            return None
 
         if tipo_der is None:
             if (self.tipo == TIPO_OPERACION.NOT or self.tipo == TIPO_OPERACION.BBNOT) and tipo_izq == TIPO_DATO.ENTERO:
@@ -103,6 +109,9 @@ class Expresion(Instruccion) :
         if self.tipo == TIPO_OPERACION.MAYOR_QUE or self.tipo == TIPO_OPERACION.MENOR_QUE or self.tipo == TIPO_OPERACION.MAYOR_IGUAL_QUE or self.tipo == TIPO_OPERACION.MENOR_IGUAL_QUE or self.tipo == TIPO_OPERACION.IGUAL_QUE or self.tipo == TIPO_OPERACION.DISTINTO_QUE:
             if (tipo_izq == TIPO_DATO.ENTERO or tipo_izq == TIPO_DATO.DECIMAL or tipo_izq == TIPO_DATO.CARACTER) and (tipo_der == TIPO_DATO.ENTERO or tipo_der == TIPO_DATO.DECIMAL or tipo_der == TIPO_DATO.CARACTER):
                 return TIPO_DATO.ENTERO
+            
+            if (tipo_izq == TIPO_DATO.CADENA or tipo_der == TIPO_DATO.CADENA):
+                return TIPO_DATO.ENTERO
 
             mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'Incompatibilidad de tipo en la operación.',self.linea,self.columna))
             return None
@@ -122,6 +131,10 @@ class Expresion(Instruccion) :
         elif self.tipo == TIPO_OPERACION.CARACTER:
             temporal = ts.getTemporal()
             c3d = temporal + ' = ' +str(ord(self.izquierdo)) + ';\n'
+        
+        elif self.tipo == TIPO_OPERACION.CADENA:
+            temporal = ts.getTemporal()
+            c3d = temporal + ' = \"' +str(self.izquierdo) + '\";\n'
         
         elif self.tipo == TIPO_OPERACION.IDENTIFICADOR:
             var = ts.getSimbolo(self.izquierdo)

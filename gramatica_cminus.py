@@ -17,7 +17,9 @@ reservadas = {
     'continue': 'CONTINUE',
     'return': 'RETURN',
     'void': 'VOID',
-    'sizeof': 'SIZEOF'
+    'sizeof': 'SIZEOF',
+    'scanf': 'SCANF',
+    'goto': 'GOTO'
 }
 
 tokens  = [
@@ -181,11 +183,13 @@ from Arbol.Continue import *
 from Arbol.Declaracion import *
 from Arbol.DoWhile import *
 from Arbol.Elseif import *
+from Arbol.EtiquetasAgust import *
 from Arbol.Expresion import *
 from Arbol.For import *
 from Arbol.Funcion import *
 from Arbol.If import *
 from Arbol.Printf import *
+from Arbol.Scanf import *
 from Arbol.Simbolo import *
 from Arbol.Switch import *
 from Arbol.While import *
@@ -446,6 +450,14 @@ def p_instruccion_struct(t):
 def p_instruccion_declaracion_struct(t):
     'instruccion : declaracion_struct PTCOMA'
     reporte_gramatical.append(['instruccion -> declaracion_struct PTCOMA',''])
+
+def p_instruccion_goto(t):
+    'instruccion : GOTO IDENTIFICADOR PTCOMA'
+    t[0] = [EtiquetasAgust('goto '+t[2]+';\n')]
+
+def p_instruccion_label(t):
+    'instruccion : IDENTIFICADOR DPUNTOS'
+    t[0] = [EtiquetasAgust(t[1]+':\n')]
 
 #---------------------------------------GRAMATICA PRINTF---------------------------------------------#
 def p_printf(t):
@@ -813,6 +825,10 @@ def p_expresion_1_identificador(t):
 def p_expresion_1_llamada(t):
     'expresion : llamada '
     reporte_gramatical.append([' expresion -> llamada',''])
+
+def p_expresion_1_scanf(t):
+    'expresion : SCANF PIZQ PDER'
+    t[0] = Scanf(t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_expresion_par(t):
     ''' expresion : PIZQ expresion PDER '''

@@ -1,16 +1,15 @@
 from .Instruccion import Instruccion
 
-class Scanf(Instruccion) :
+class EtiquetasAgust(Instruccion) :
 
-    def __init__(self, linea, columna) :
-        self.linea = linea
-        self.columna = columna
+    def __init__(self, codigo) :
+        self.codigo = codigo
 
     def analizar(self,ts,mensajes) :
         pass
 
     def get3D(self,ts) :
-        return ''
+        return self.codigo
 
     def getAST(self) :
         pass

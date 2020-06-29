@@ -1,6 +1,7 @@
 from .Instruccion import Instruccion
 from .Mensaje import *
 from .Simbolo import *
+from .Scanf import *
 
 class Declaracion(Instruccion) :
 
@@ -21,7 +22,12 @@ class Declaracion(Instruccion) :
             return
         
         if self.accesos is None and (not self.expresion is None):
-            tipo = self.expresion.analizar(ts,mensajes)
+            
+            if isinstance(self.expresion,Scanf):
+                tipo = self.tipo
+            else:
+                tipo = self.expresion.analizar(ts,mensajes)
+            
             self.tipo_expresion = tipo
 
             if tipo is None:
@@ -57,7 +63,12 @@ class Declaracion(Instruccion) :
         
         if self.accesos is None and (not self.expresion is None):
 
-            if self.tipo == self.tipo_expresion or self.tipo == TIPO_DATO.DECIMAL and self.tipo_expresion == TIPO_DATO.ENTERO:
+            if isinstance(self.expresion,Scanf):
+                temporal = ts.getTemporal()
+                c3d += temporal + ' = read();\n'
+                var.temporal = temporal
+
+            elif self.tipo == self.tipo_expresion or self.tipo == TIPO_DATO.DECIMAL and self.tipo_expresion == TIPO_DATO.ENTERO:
                 c3d = self.expresion.get3D(ts)
                 var.temporal = ts.getTemporalActual()
             else:
