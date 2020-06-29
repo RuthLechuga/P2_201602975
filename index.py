@@ -6,22 +6,23 @@ from graphviz import Source
 import webbrowser
 import easygui as eg
 
-#gramatica
-import gramatica as g
+#gramatica cminus
+import gramatica_cminus as g_cminus
 
 #arbol
 from Arbol.Mensaje import *
 import Arbol.TablaDeSimbolos as TS
 
-#august
+#augus
 
 #bibliotecas para interfaz gráfica
 from magicsticklibs.TextPad import TextPad
 from magicsticklibs.Graphics import Tkinter as tk, tkFileDialog, tkMessageBox 
 from magicsticklibs.FontChooser import FontChooser, Font_wm
 
+#Cminus
 mensajes = []
-ts_global = None
+ts_global_c = None
 reporte_gramatical = []
 path_archivo = ''
 new = 2
@@ -70,9 +71,7 @@ class EditorTexto:
         menubar.add_cascade(label="Archivo", menu=mArchivo)
 
         mEjecutar = Menu(menubar, background='#FFFFFF',foreground='blue')
-        mEjecutar.add_command(label="Traducir", command=self.traducir)
-        mEjecutar.add_command(label="Optimizar", command=self.optimizar)
-        mEjecutar.add_command(label="Ejecutar 3D", command=self.ejecutar3D)
+        mEjecutar.add_command(label="Traducir y Ejecutar", command=self.traducir)
         mEjecutar.add_command(label="Reporte errores", command=self.reporte_errores)
         mEjecutar.add_command(label="Reporte Tabla Simbolos",command=self.reporte_ts)
         mEjecutar.add_command(label="Reporte AST",command=self.reporte_ast)
@@ -103,15 +102,20 @@ class EditorTexto:
 
         tab_control = ttk.Notebook(self.root)
         tab_consola = ttk.Frame(tab_control)
+        self.tab_3d = ttk.Frame(tab_control)
         self.tab_errores = ttk.Frame(tab_control)
         self.tab_ts = ttk.Frame(tab_control)
         tab_control.add(tab_consola,text='CONSOLA')
+        tab_control.add(self.tab_3d,text='CODIGO 3D')
         tab_control.add(self.tab_errores,text='ERRORES')
         tab_control.add(self.tab_ts,text='TABLA SIMBOLOS')
         tab_control.pack(expand=1, fill='both')
 
         self.consola = Text(tab_consola,bg="#000000",fg="#FFFFFF")
         self.consola.pack(expand=True, fill='both')
+
+        self.txt_3d = Text(self.tab_3d,bg="#000000",fg="#FFFFFF")
+        self.txt_3d.pack(expand=True, fill='both')
         
         self.tipo = Entry(self.tab_errores, borderwidth=1, width=15, bg="black", fg='white', font=('Arial',11,'bold')) 
         self.tipo.grid(row=0, column=0) 
@@ -220,51 +224,53 @@ class EditorTexto:
     def traducir(self):
         global mensajes
         global reporte_gramatical
-        global ts_global
+        global ts_global_c
 
         self.cleanTable()
         self.cleanTS()
         del mensajes[:]
-        instrucciones = g.parse(self.text.get_text())
-        mensajes = g.mensajes
-        reporte_gramatical = g.reporte_gramatical
+        instrucciones = g_cminus.parsec(self.text.get_text())
+        mensajes = g_cminus.mensajes
+        reporte_gramatical = g_cminus.reporte_gramatical
         
         #deteccion de errores lexicos y sintacticos
         if len(mensajes) > 0:
-            self.consola.delete('1.0',END)
-            self.consola.insert('1.0','>>>>>Errores<<<<<')
+            self.txt_3d.delete('1.0',END)
+            self.txt_3d.insert('1.0','>>>>>Errores<<<<<')
             self.imprimir_errores()
             return
 
-        ts_global = TS.TablaDeSimbolos()
-        ts_global.reiniciar()
+        ts_global_c = TS.TablaDeSimbolos()
+        ts_global_c.reiniciar()
 
         #----------------analizar instrucciones-------------------#
         for instruccion in instrucciones:
-            instruccion.analizar(ts_global,mensajes)
+            instruccion.analizar(ts_global_c,mensajes)
 
         #deteccion de errores semanticos
         if len(mensajes) > 0:
-            self.consola.delete('1.0',END)
-            self.consola.insert('1.0','>>>>>Errores<<<<<')
+            self.txt_3d.delete('1.0',END)
+            self.txt_3d.insert('1.0','>>>>>Errores<<<<<')
             self.imprimir_errores()
             return
         
         c3d = ""
         for instruccion in instrucciones:
-            c3d += instruccion.get3D(ts_global)
-        self.consola.delete('1.0',END)
-        self.consola.insert('1.0',c3d)    
+            c3d += instruccion.get3D(ts_global_c)
+        self.txt_3d.delete('1.0',END)
+        self.txt_3d.insert('1.0',c3d)    
         self.imprimir_TS()    
 
         print('analisis realizado. . .')
-            
-    def optimizar(self):
-        pass
-
-    def ejecutar3D(self):
-        pass
+        self.ejecutarAugus(c3d)
     
+    def ejecutarAugus(self, codigo):
+        try:
+            import menu as m
+            m.construir_GUI(codigo)
+        except:
+            pass
+            
     def imprimir_errores(self):
         fila = 1
         for mensaje in mensajes:
@@ -325,7 +331,7 @@ class EditorTexto:
             webbrowser.open('Errores.html',new=new)
     
     def reporte_ts(self):
-        global ts_global
+        global ts_global_c
         global head_html
         html = ''' 
         <html>'''+head_html+'''
@@ -342,7 +348,7 @@ class EditorTexto:
                     <th>Temporal</th>
                 </tr>
         '''
-        for simbolo in ts_global.simbolos:
+        for simbolo in ts_global_c.simbolos:
             html += '''
                 <tr>
                     <td>'''+str(simbolo.identificador)+'''</td>
@@ -365,7 +371,7 @@ class EditorTexto:
                     <th>Columna</th>
                 </tr>
         '''
-        for funcion in ts_global.funciones.values():
+        for funcion in ts_global_c.funciones.values():
             html += '''
                 <tr>
                     <td>'''+funcion.identificador+'''</td>
@@ -431,9 +437,9 @@ class EditorTexto:
         pass
 
     def imprimir_TS(self):
-        global ts_global
+        global ts_global_c
         fila = 1
-        for simbolo in ts_global.simbolos:
+        for simbolo in ts_global_c.simbolos:
             identificador = Entry(self.tab_ts, borderwidth=1, width=15, fg='black', font=('Arial',11)) 
             identificador.grid(row=fila, column=0) 
             identificador.insert(END, simbolo.identificador)

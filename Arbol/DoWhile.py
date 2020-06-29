@@ -23,7 +23,7 @@ class DoWhile(Instruccion) :
         label_do_while = ts.getLabel()
         label_salida = ts.getLabel()
         ts.et_salida.append(label_salida)
-        ts.et_inicio.append(do_while)
+        ts.et_inicio.append(label_do_while)
 
         c3d = label_do_while +':  #do-while \n'
 
