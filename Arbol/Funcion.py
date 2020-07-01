@@ -1,5 +1,6 @@
 from .Instruccion import Instruccion
 from .Mensaje import *
+from .Return import *
 
 class TIPO_FUNCION(Enum) :
     ENTERO = 1
@@ -16,6 +17,14 @@ class Funcion(Instruccion) :
         self.instrucciones = instrucciones
         self.linea = linea
         self.columna = columna
+        self.c3d_retorno = 'end_'+self.identificador+':\n$ra = $ra - 1;\n'
+        self.cont_retornos = 0
+        self.var_retorno = ''
+    
+    def addCont(self):
+        self.cont_retornos += 1
+        self.c3d_retorno += 'if($s1[$ra]=='+str(self.cont_retornos)+') goto sig_'+self.identificador+'_'+str(self.cont_retornos)+';\n'
+        return self.cont_retornos
 
     def analizar(self,ts,mensajes) :
         ambito_actual = ts.ambito
@@ -29,13 +38,15 @@ class Funcion(Instruccion) :
         ts.ambito = self.identificador
 
         if not self.parametros is None:
-            print(">>validar funciones con parametros :D")
+            for parametro in self.parametros:
+                parametro.analizar(ts,mensajes)
         
         #se analizan las instrucciones de la funcion
         if not self.instrucciones is None:
             for instruccion in self.instrucciones:
                 instruccion.analizar(ts,mensajes)
-        
+                
+        self.var_retorno = ts.getRetorno()        
         ts.ambito = ambito_actual
     
     def get3D(self,ts):
@@ -45,11 +56,22 @@ class Funcion(Instruccion) :
         ts.ambito = self.identificador
 
         if not self.parametros is None:
-            print(">>validar funciones con parametros :D")
+            for parametro in self.parametros:
+                parametro.get3D(ts)
         
+        if self.identificador.lower() == 'main':
+            c3d += '$s1 = array();\n'
+            c3d += '$s2 = array();\n'
+            c3d += '$ra = 0;\n'
+            c3d += '$sp = 0;\n'
+            for funcion in ts.funciones.values():
+                c3d += funcion.var_retorno + '=0;\n'
+
         if not self.instrucciones is None:
             for instruccion in self.instrucciones:
                 c3d += instruccion.get3D(ts)
+
+        c3d += 'goto end_'+self.identificador+';\n'
 
         ts.ambito = ambito_actual
         return c3d

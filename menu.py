@@ -24,6 +24,7 @@ ejecucion_automatica=1
 editor = None
 FrameLines = None
 consola = None
+debugger = None
 
 def font_resaltar():
     editor_font2 = Font(family="Helvetica", size=10, weight="normal" )
@@ -436,6 +437,7 @@ def construir_GUI(codigo):
     global editor
     global FrameLines
     global consola
+    global debugger
     root = Tk()
     root.resizable(False,False)
     menubar = Menu(root)

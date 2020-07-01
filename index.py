@@ -12,8 +12,7 @@ import gramatica_cminus as g_cminus
 #arbol
 from Arbol.Mensaje import *
 import Arbol.TablaDeSimbolos as TS
-
-#augus
+from Arbol.Funcion import *
 
 #bibliotecas para interfaz gráfica
 from magicsticklibs.TextPad import TextPad
@@ -255,8 +254,19 @@ class EditorTexto:
             return
         
         c3d = ""
+        codigo_main = ''
+
         for instruccion in instrucciones:
-            c3d += instruccion.get3D(ts_global_c)
+            if isinstance(instruccion,Funcion) and instruccion.identificador != 'main':
+                c3d += instruccion.get3D(ts_global_c)
+            else:
+                codigo_main = instruccion.get3D(ts_global_c)
+        
+        c3d = codigo_main + c3d
+
+        for funcion in ts_global_c.funciones.values():
+            c3d += funcion.c3d_retorno + 'exit; \n'
+
         self.txt_3d.delete('1.0',END)
         self.txt_3d.insert('1.0',c3d)    
         self.imprimir_TS()    

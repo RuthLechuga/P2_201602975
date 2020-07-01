@@ -61,6 +61,9 @@ class Expresion(Instruccion) :
         if self.tipo == TIPO_OPERACION.CADENA:
             return TIPO_DATO.CADENA
         
+        if self.tipo == TIPO_OPERACION.LLAMADA:
+            return self.izquierdo.analizar(ts,mensajes)
+        
         if self.tipo == TIPO_OPERACION.IDENTIFICADOR:
             temp = ts.getSimbolo(self.izquierdo)
 
@@ -83,11 +86,15 @@ class Expresion(Instruccion) :
             if (self.tipo == TIPO_OPERACION.MENOS_UNARIO):
                 if (tipo_izq == TIPO_DATO.ENTERO or tipo_izq == TIPO_DATO.DECIMAL or tipo_izq == TIPO_DATO.CARACTER):
                     return tipo_izq
+            
+            if self.tipo == TIPO_OPERACION.LLAMADA:
+                return tipo_izq
 
             mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'Incompatibilidad de tipo en la operación.',self.linea,self.columna))
             return None
         
         if self.tipo == TIPO_OPERACION.SUMA or self.tipo == TIPO_OPERACION.RESTA or self.tipo == TIPO_OPERACION.MULTIPLICACION or self.tipo == TIPO_OPERACION.DIVISION or self.tipo == TIPO_OPERACION.RESIDUO:
+            
             if tipo_izq == TIPO_DATO.ENTERO and tipo_der == TIPO_DATO.ENTERO:
                 return tipo_izq
 
@@ -128,6 +135,9 @@ class Expresion(Instruccion) :
             temporal = ts.getTemporal()
             c3d = temporal + ' = ' + str(self.izquierdo) + ';\n'
         
+        elif self.tipo == TIPO_OPERACION.LLAMADA:
+            return self.izquierdo.get3D(ts)
+        
         elif self.tipo == TIPO_OPERACION.CARACTER:
             temporal = ts.getTemporal()
             c3d = temporal + ' = ' +str(ord(self.izquierdo)) + ';\n'
@@ -161,22 +171,42 @@ class Expresion(Instruccion) :
 
         else:
             tizq = self.izquierdo.tipo
+
+            if tizq is None:
+                return None
+
             if not (tizq == TIPO_OPERACION.ENTERO or tizq == TIPO_OPERACION.DECIMAL or tizq == TIPO_OPERACION.IDENTIFICADOR or tizq == TIPO_OPERACION.CARACTER):
                 c3d += self.izquierdo.get3D(ts)
                 tempizq = ts.getTemporalActual()
             else:
+                
+                if self.izquierdo.izquierdo is None:
+                    return None
+
                 if tizq == TIPO_OPERACION.CARACTER:
                     tempizq = str(ord(self.izquierdo.izquierdo))
                 elif tizq == TIPO_OPERACION.IDENTIFICADOR:
+
+                    if ts.getSimbolo(self.izquierdo.izquierdo) is None:
+                        return None
+
                     tempizq = ts.getSimbolo(self.izquierdo.izquierdo).temporal
                 else:
                     tempizq = str(self.izquierdo.izquierdo)
 
             tder = self.derecha.tipo
+
+            if tder is None:
+                return None
+
             if not (tder  == TIPO_OPERACION.ENTERO or tder == TIPO_OPERACION.DECIMAL or tder == TIPO_OPERACION.IDENTIFICADOR or tizq == TIPO_OPERACION.CARACTER):
                 c3d += self.derecha.get3D(ts)
                 tempder = ts.getTemporalActual()
             else:
+
+                if self.derecha.izquierdo is None:
+                    return None
+
                 if tder == TIPO_OPERACION.CARACTER:
                     tempder = str(ord(self.derecha.izquierdo))
                 elif tder == TIPO_OPERACION.IDENTIFICADOR:

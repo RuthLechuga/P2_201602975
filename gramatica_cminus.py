@@ -188,7 +188,9 @@ from Arbol.Expresion import *
 from Arbol.For import *
 from Arbol.Funcion import *
 from Arbol.If import *
+from Arbol.Llamada import *
 from Arbol.Printf import *
+from Arbol.Return import *
 from Arbol.Scanf import *
 from Arbol.Simbolo import *
 from Arbol.Switch import *
@@ -305,19 +307,24 @@ def p_tipo(t):
 
 def p_accesos(t):
     ' accesos : accesos acceso'
-    reporte_gramatical.append([' accesos -> accesos acceso', ''])
+    reporte_gramatical.append([' accesos -> accesos acceso', 't[1].append(t[2])\nt[0] = t[1]'])
+    t[1].append(t[2])
+    t[0] = t[1]
 
 def p_accesos_acceso(t):
     ' accesos : acceso '
-    reporte_gramatical.append([' accesos -> acceso', ''])
+    reporte_gramatical.append([' accesos -> acceso', 't[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_acceso(t):
     ' acceso : CIZQ expresion CDER'
-    reporte_gramatical.append([' acceso -> CIZQ expresion CDER',''])
+    reporte_gramatical.append([' acceso -> CIZQ expresion CDER','t[0] = t[2]'])
+    t[0] = t[2]
 
 def p_acceso_vacio(t):
     ' acceso : CIZQ CDER'
-    reporte_gramatical.append([' acceso -> CIZQ CDER',''])
+    reporte_gramatical.append([' acceso -> CIZQ CDER','t[0] = None'])
+    t[0] = None
 
 #-------------------------------GRAMATICA DECLARACION STRUCTS---------------------------------------------#
 def p_instruccion_global_struct(t):
@@ -421,7 +428,7 @@ def p_parametro(t):
     if t[1]=='int': tipo = TIPO_DATO.ENTERO
     elif t[1]=='double' or t[1]=='float': tipo = TIPO_DATO.DECIMAL
     elif t[1]=='char': tipo = TIPO_DATO.CARACTER
-    t[0] = Declaracion(tipo,t[2],None,None,t.lineno(2),find_column(entrada, t.slice[2]))
+    t[0] = Declaracion(tipo,t[2],None,None,t.lineno(2),find_column(entrada, t.slice[2]),True)
 
 def p_parametro_acceso(t):
     'parametro : tipo IDENTIFICADOR accesos'
@@ -453,10 +460,12 @@ def p_instruccion_declaracion_struct(t):
 
 def p_instruccion_goto(t):
     'instruccion : GOTO IDENTIFICADOR PTCOMA'
+    reporte_gramatical.append(['instruccion -> GOTO IDENTIFICADOR PTCOMA','t[0] = [EtiquetasAgust(\'goto \'+t[2]+\';\n\')]'])
     t[0] = [EtiquetasAgust('goto '+t[2]+';\n')]
 
 def p_instruccion_label(t):
     'instruccion : IDENTIFICADOR DPUNTOS'
+    reporte_gramatical.append(['instruccion -> IDENTIFICADOR DPUNTOS','t[0] = [EtiquetasAgust(t[1]+\':\n\')]'])
     t[0] = [EtiquetasAgust(t[1]+':\n')]
 
 #---------------------------------------GRAMATICA PRINTF---------------------------------------------#
@@ -628,7 +637,7 @@ def p_for_ini(t):
 
 def p_for_ini_dec(t):
     'for_ini : declaracion'
-    reporte_gramatical.append(['for_ini -> declaracion','t[0] = t[1]'])
+    reporte_gramatical.append(['for_ini -> declaracion','t[0] = t[1][0]'])
     t[0] = t[1][0]
 
 def p_for_init_asig(t):
@@ -681,11 +690,13 @@ def p_instruccion_continue(t):
 #------------------------------------------GRAMATICA RETURN------------------------------------------------#
 def p_instruccion_return(t):
     'instruccion : RETURN PTCOMA'
-    reporte_gramatical.append(['instruccion -> RETURN PTCOMA',''])
+    reporte_gramatical.append(['instruccion -> RETURN PTCOMA','t[0] = [Return(None,t.lineno(1),find_column(entrada, t.slice[1]))]'])
+    t[0] = [Return(None,t.lineno(1),find_column(entrada, t.slice[1]))]
 
 def p_instruccion_return_exp(t):
     'instruccion : RETURN expresion PTCOMA'
-    reporte_gramatical.append(['instruccion -> RETURN expresion PTCOMA',''])
+    reporte_gramatical.append(['instruccion -> RETURN expresion PTCOMA','t[0] = [Return(t[2],t.lineno(1),find_column(entrada, t.slice[1]))]'])
+    t[0] = [Return(t[2],t.lineno(1),find_column(entrada, t.slice[1]))]
 
 #------------------------------------------GRAMATICA INCREMENTOS------------------------------------------------#
 def p_ins_inc_dec(t):
@@ -799,35 +810,37 @@ def p_expresion_3_acceso_lista_punto(t):
 
 def p_expresion_1_entero(t):
     ''' expresion : ENTERO '''
-    reporte_gramatical.append([' expresion -> ENTERO',''])
+    reporte_gramatical.append([' expresion -> ENTERO','t[0] = Expresion(t[1],None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))'])
     t[0] = Expresion(t[1],None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_expresion_1_cadena(t):
     'expresion : CADENA '
-    reporte_gramatical.append([' expresion -> CADENA',''])
+    reporte_gramatical.append([' expresion -> CADENA','t[0] = Expresion(t[1],None,TIPO_OPERACION.CADENA,t.lineno(1),find_column(entrada, t.slice[1]))'])
     t[0] = Expresion(t[1],None,TIPO_OPERACION.CADENA,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_expresion_1_decimal(t):
     'expresion : DECIMAL '
-    reporte_gramatical.append([' expresion -> DECIMAL',''])
+    reporte_gramatical.append([' expresion -> DECIMAL','t[0] = Expresion(t[1],None,TIPO_OPERACION.DECIMAL,t.lineno(1),find_column(entrada, t.slice[1]))'])
     t[0] = Expresion(t[1],None,TIPO_OPERACION.DECIMAL,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_expresion_1_caracter(t):
     'expresion : CARACTER'
-    reporte_gramatical.append([' expresion -> CARACTER',''])
+    reporte_gramatical.append([' expresion -> CARACTER','t[0] = Expresion(t[1],None,TIPO_OPERACION.CARACTER,t.lineno(1),find_column(entrada, t.slice[1]))'])
     t[0] = Expresion(t[1],None,TIPO_OPERACION.CARACTER,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_expresion_1_identificador(t):
     'expresion : IDENTIFICADOR '
-    reporte_gramatical.append([' expresion -> IDENTIFICADOR',''])
+    reporte_gramatical.append([' expresion -> IDENTIFICADOR','t[0] = Expresion(t[1],None,TIPO_OPERACION.IDENTIFICADOR,t.lineno(1),find_column(entrada, t.slice[1]))'])
     t[0] = Expresion(t[1],None,TIPO_OPERACION.IDENTIFICADOR,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_expresion_1_llamada(t):
     'expresion : llamada '
-    reporte_gramatical.append([' expresion -> llamada',''])
+    reporte_gramatical.append([' expresion -> llamada','t[0] = Expresion(t[1],None,TIPO_OPERACION.LLAMADA,0,0)'])
+    t[0] = Expresion(t[1],None,TIPO_OPERACION.LLAMADA,0,0)
 
 def p_expresion_1_scanf(t):
     'expresion : SCANF PIZQ PDER'
+    reporte_gramatical.append(['expresion : SCANF PIZQ PDER','t[0] = t[1]t[0] = Scanf(t.lineno(1),find_column(entrada, t.slice[1]))'])
     t[0] = Scanf(t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_expresion_par(t):
@@ -854,23 +867,29 @@ def p_casteos(t):
 #---------------------------------------GRAMATICA LLAMADA FUNCIONES----------------------------------------#
 def p_instruccion_llamada(t):
     'instruccion : llamada PTCOMA'
-    reporte_gramatical.append([ 'instruccion -> llamada PTCOMA',''])
+    reporte_gramatical.append([ 'instruccion -> llamada PTCOMA','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_llamada(t):
     'llamada : IDENTIFICADOR PIZQ PDER'
-    reporte_gramatical.append([' expresion -> IDENTIFICADOR PIZQ PDER ',''])
+    reporte_gramatical.append([' expresion -> IDENTIFICADOR PIZQ PDER ','t[0] = Llamada(t[1],None,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Llamada(t[1],None,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_llamada_parametros(t):
     'llamada : IDENTIFICADOR PIZQ lista_expresiones PDER'
-    reporte_gramatical.append([' expresion -> IDENTIFICADOR PIZQ lista_expresiones PDER ',''])
+    reporte_gramatical.append([' expresion -> IDENTIFICADOR PIZQ lista_expresiones PDER ','t[0] = Llamada(t[1],t[3],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Llamada(t[1],t[3],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_lista_expresiones(t):
     'lista_expresiones : lista_expresiones COMA expresion'
-    reporte_gramatical.append(['lista_expresiones -> lista_expresiones COMA expresion',''])
+    reporte_gramatical.append(['lista_expresiones -> lista_expresiones COMA expresion','t[1].append(t[3])\nt[0] = t[1]'])
+    t[1].append(t[3])
+    t[0] = t[1]
 
 def p_lista_expresiones_expresion(t):
     'lista_expresiones : expresion'
-    reporte_gramatical.append(['lista_expresiones -> expresion',''])
+    reporte_gramatical.append(['lista_expresiones -> expresion','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 #---------------------------------------METODOS DE HERRAMIENTA---------------------------------------------#
 def p_error(t):

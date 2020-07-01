@@ -10,7 +10,9 @@ class Printf(Instruccion) :
         self.columna = columna
 
     def analizar(self,ts,mensajes) :
-        pass    
+        if not self.parametros is None:
+            for parametro in self.parametros:
+                parametro.analizar(ts,mensajes)    
 
     def get3D(self,ts) :
         c3d = ''

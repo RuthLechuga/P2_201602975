@@ -32,9 +32,9 @@ class Switch(Instruccion) :
                 temp_cond = Expresion(self.expresion,case.expresion,TIPO_OPERACION.IGUAL_QUE,self.linea,self.columna,'==')
                 c3d += temp_cond.get3D(ts)
                 temporal = ts.getTemporalActual()
-                c3d += 'if('+temporal+') goto '+label+';\n\n'
+                c3d += 'if('+temporal+') goto '+label+';\n'
             else:
-                c3d += 'goto '+label+';\n\n'
+                c3d += 'goto '+label+';\n'
         
         for pos in range(0,len(self.cases)):
             c3d += et_cases[pos] + ': \n'

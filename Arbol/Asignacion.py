@@ -12,6 +12,7 @@ class Asignacion(Instruccion) :
         self.expresion = expresion
         self.linea = linea
         self.columna = columna
+        self.temporal = ''
 
     def analizar(self,ts,mensajes) :
         simbolo = ts.getSimbolo(self.identificador)
@@ -36,6 +37,7 @@ class Asignacion(Instruccion) :
 
     def get3D(self,ts):
         temporal = ts.getSimbolo(self.identificador).temporal
+        self.temporal = temporal
 
         if isinstance(self.expresion,Scanf):
             c3d = temporal + ' = read();\n'

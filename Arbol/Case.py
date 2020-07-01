@@ -22,7 +22,7 @@ class Case(Instruccion) :
         c3d = ''
 
         for instruccion in self.instrucciones:
-            c3d += instruccion.get3D(ts)
+            c3d += str(instruccion.get3D(ts))
 
         return c3d
 

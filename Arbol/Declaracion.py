@@ -5,7 +5,7 @@ from .Scanf import *
 
 class Declaracion(Instruccion) :
 
-    def __init__(self, tipo, identificador, accesos, expresion, linea, columna) :
+    def __init__(self, tipo, identificador, accesos, expresion, linea, columna, isParametro = False) :
         self.tipo = tipo
         self.identificador = identificador
         self.accesos = accesos
@@ -13,6 +13,7 @@ class Declaracion(Instruccion) :
         self.linea = linea
         self.columna = columna
         self.tipo_expresion = None
+        self.isParametro = isParametro
     
     def analizar(self,ts,mensajes) :
 
@@ -48,6 +49,10 @@ class Declaracion(Instruccion) :
         c3d = ""
 
         var = ts.getSimbolo(self.identificador)
+
+        if self.isParametro:
+            var.temporal = ts.getParametro()
+            return c3d
 
         if self.accesos is None and self.expresion is None:
             temporal = ts.getTemporal()
