@@ -176,6 +176,7 @@ def t_error(t):
 
 import ply.lex as lex
 from Arbol.Mensaje import *
+from Arbol.Acceso import *
 from Arbol.Asignacion import *
 from Arbol.Break import *
 from Arbol.Case import *
@@ -279,7 +280,7 @@ def p_asignacion_dec_accesos(t):
 
 def p_asignacion_dec_accesos_expresion(t):
     'asignacion_dec : IDENTIFICADOR accesos ASIG expresion'
-    reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR sig_asig expresion',''])
+    reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR sig_asig expresion','t[0] = Declaracion(TIPO_DATO.ARREGLO,t[1],t[2],t[4],t.lineno(1),find_column(entrada, t.slice[1]))'])
     t[0] = Declaracion(TIPO_DATO.ARREGLO,t[1],t[2],t[4],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_signos_asignacion(t):
@@ -435,7 +436,8 @@ def p_parametro(t):
 def p_parametro_acceso(t):
     'parametro : tipo IDENTIFICADOR accesos'
     reporte_gramatical.append(['parametro -> tipo IDENTIFICADOR accesos',''])
-
+    #no se validara en los archivos
+    
 def p_instrucciones(t):
     'instrucciones : instrucciones instruccion'
     reporte_gramatical.append(['instrucciones -> instrucciones instruccion','t[1].extend(t[2])\nt[0] = t[1]'])
@@ -504,34 +506,36 @@ def p_asignacion(t):
     t[0] = Asignacion(t[1],None,t[2],t[3],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_asignacion_accesos(t):
-    'asignacion : IDENTIFICADOR accesos sig_asig expresion'
+    'asignacion : IDENTIFICADOR accesos_generales sig_asig expresion'
     reporte_gramatical.append(['asignacion -> IDENTIFICADOR accesos sig_asig expresion','t[0] = Asignacion(t[1],t[2],t[3],t[4],t.lineno(1),find_column(entrada, t.slice[1]))'])
     t[0] = Asignacion(t[1],t[2],t[3],t[4],t.lineno(1),find_column(entrada, t.slice[1]))
 
-def p_asignacion_punto(t):
-    'asignacion : IDENTIFICADOR lista_punto sig_asig expresion'
-    reporte_gramatical.append(['asignacion -> IDENTIFICADOR lista_punto sig_asig expresion',''])
+def p_asignacion_accesos_generales(t):
+    'accesos_generales : accesos_generales acceso_general'
+    reporte_gramatical.append(['accesos_generales : accesos_generales acceso_general','t[1].append(t[2])\nt[0] = t[1]'])
+    t[1].append(t[2])
+    t[0] = t[1]
 
-def p_asignacion_punto_acceso(t):
-    'asignacion : IDENTIFICADOR accesos lista_punto sig_asig expresion'
-    reporte_gramatical.append(['asignacion -> IDENTIFICADOR accesos lista_punto sig_asig expresion',''])
+def p_asignacion_accesos_generales_acceso(t):
+    'accesos_generales : acceso_general'
+    reporte_gramatical.append(['accesos_generales : acceso_general','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
-def p_asignacion_lista_punto(t):
-    'lista_punto : lista_punto PUNTO valor'
-    reporte_gramatical.append(['lista_punto -> lista_punto PUNTO valor',''])
+def p_asignacion_acceso_general_valor(t):
+    'acceso_general : PUNTO valor'
+    reporte_gramatical.append(['acceso_general : PUNTO valor','t[0] = t[2]'])
+    t[0] = t[2]
 
-def p_asignacion_lista_punto_punto(t):
-    'lista_punto : PUNTO valor'
-    reporte_gramatical.append(['lista_punto -> PUNTO valor',''])
+def p_asignacion_acceso_general_acc(t):
+    'acceso_general : CIZQ expresion CDER'
+    reporte_gramatical.append(['acceso_general : CIZQ expresion CDER','t[0] = t[2]'])
+    t[0] = t[2]
 
 def p_lista_punto_valor_id(t):
     'valor : IDENTIFICADOR'
-    reporte_gramatical.append(['valor -> IDENTIFICADOR',''])
+    reporte_gramatical.append(['valor -> IDENTIFICADOR','t[0] = t[1]'])
+    t[0] = t[1]
 
-def p_lista_punto_valor_acceso(t):
-    'valor : IDENTIFICADOR accesos'
-    reporte_gramatical.append(['valor -> IDENTIFICADOR accesos',''])
-    
 #-------------------------------------------GRAMATICA IF--------------------------------------------------#
 def p_instruccion_if(t):
     'instruccion : if'
@@ -800,16 +804,9 @@ def p_expresion_2_post(t):
     reporte_gramatical.append([' expresion -> expresion '+t[2],''])
 
 def p_expresion_2_accesos(t):
-    'expresion : IDENTIFICADOR accesos'
-    reporte_gramatical.append([' expresion -> IDENTIFICADOR accesos',''])
-
-def p_expresion_2_lista_punto(t):
-    'expresion : IDENTIFICADOR lista_punto'
-    reporte_gramatical.append([' expresion -> IDENTIFICADOR lista_punto',''])
-
-def p_expresion_3_acceso_lista_punto(t):
-    'expresion : IDENTIFICADOR accesos lista_punto'
-    reporte_gramatical.append([' expresion -> IDENTIFICADOR accesos lista_punto',''])
+    'expresion : IDENTIFICADOR accesos_generales'
+    reporte_gramatical.append([' expresion -> IDENTIFICADOR accesos_generales','t[0] = Acceso(t[1],t[2],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Acceso(t[1],t[2],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_expresion_1_entero(t):
     ''' expresion : ENTERO '''
