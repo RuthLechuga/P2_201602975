@@ -1,8 +1,9 @@
 class TablaDeSimbolos() :
 
-    def __init__(self, funciones= {}, simbolos = []) :
+    def __init__(self, funciones= {}, simbolos = [], structs = {}) :
         self.simbolos = simbolos
         self.funciones = funciones
+        self.structs = structs
         self.temporal = 0
         self.parametro = 0
         self.retorno = 0
@@ -40,6 +41,19 @@ class TablaDeSimbolos() :
             return None
 
         return self.funciones[identificador]
+    
+    def addStruct(self, struct):
+        if struct.identificador in self.structs:
+            return False
+
+        self.structs[struct.identificador] = struct
+        return True
+
+    def getStruct(self, identificador):
+        if not identificador in self.structs:
+            return None
+
+        return self.structs[identificador]
     
     def getTemporal(self):
         self.temporal += 1

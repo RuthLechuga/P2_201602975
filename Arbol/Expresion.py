@@ -1,6 +1,7 @@
 from .Instruccion import Instruccion
 from .Mensaje import *
 from .Simbolo import *
+from .Acceso import *
 
 class TIPO_OPERACION(Enum) :
     SUMA = 1,                   #si
@@ -64,6 +65,9 @@ class Expresion(Instruccion) :
         if self.tipo == TIPO_OPERACION.LLAMADA:
             return self.izquierdo.analizar(ts,mensajes)
         
+        if self.tipo == TIPO_OPERACION.ACCESO_ARREGLO:
+            return TIPO_DATO.ENTERO
+        
         if self.tipo == TIPO_OPERACION.IDENTIFICADOR:
             temp = ts.getSimbolo(self.izquierdo)
 
@@ -114,6 +118,10 @@ class Expresion(Instruccion) :
             return None
             
         if self.tipo == TIPO_OPERACION.MAYOR_QUE or self.tipo == TIPO_OPERACION.MENOR_QUE or self.tipo == TIPO_OPERACION.MAYOR_IGUAL_QUE or self.tipo == TIPO_OPERACION.MENOR_IGUAL_QUE or self.tipo == TIPO_OPERACION.IGUAL_QUE or self.tipo == TIPO_OPERACION.DISTINTO_QUE:
+
+            if (tipo_izq == TIPO_DATO.ARREGLO or tipo_der == TIPO_DATO.ARREGLO):
+                return TIPO_DATO.ENTERO
+
             if (tipo_izq == TIPO_DATO.ENTERO or tipo_izq == TIPO_DATO.DECIMAL or tipo_izq == TIPO_DATO.CARACTER) and (tipo_der == TIPO_DATO.ENTERO or tipo_der == TIPO_DATO.DECIMAL or tipo_der == TIPO_DATO.CARACTER):
                 return TIPO_DATO.ENTERO
             
@@ -131,6 +139,10 @@ class Expresion(Instruccion) :
         
     def get3D(self,ts) :
         c3d = ""
+
+        if self.tipo == TIPO_OPERACION.ACCESO_ARREGLO:
+            return self.izquierdo.get3D(ts)
+
         if self.tipo == TIPO_OPERACION.ENTERO or self.tipo == TIPO_OPERACION.DECIMAL:
             temporal = ts.getTemporal()
             c3d = temporal + ' = ' + str(self.izquierdo) + ';\n'

@@ -11,8 +11,7 @@ class Acceso(Instruccion) :
         self.columna = columna
 
     def analizar(self,ts,mensajes) :
-        simbolo = ts.getSimbolo(self.identificador)
-        return simbolo.tipo
+        return TIPO_DATO.ENTERO
 
     def get3D(self,ts) :
         c3d = '' 

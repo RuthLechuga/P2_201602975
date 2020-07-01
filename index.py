@@ -260,9 +260,9 @@ class EditorTexto:
             if isinstance(instruccion,Funcion) and instruccion.identificador != 'main':
                 c3d += instruccion.get3D(ts_global_c)
             else:
-                codigo_main = instruccion.get3D(ts_global_c)
+                codigo_main += instruccion.get3D(ts_global_c)
         
-        c3d = codigo_main + c3d
+        c3d = 'main:\n'+codigo_main + c3d
 
         for funcion in ts_global_c.funciones.values():
             c3d += funcion.c3d_retorno + 'exit; \n'

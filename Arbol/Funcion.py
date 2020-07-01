@@ -50,7 +50,9 @@ class Funcion(Instruccion) :
         ts.ambito = ambito_actual
     
     def get3D(self,ts):
-        c3d = self.identificador + ':\n'
+        c3d=''
+        if self.identificador.lower() != 'main':
+            c3d = self.identificador + ':\n'
 
         ambito_actual = ts.ambito
         ts.ambito = self.identificador

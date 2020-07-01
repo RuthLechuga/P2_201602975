@@ -194,6 +194,7 @@ from Arbol.Printf import *
 from Arbol.Return import *
 from Arbol.Scanf import *
 from Arbol.Simbolo import *
+from Arbol.Struct import *
 from Arbol.Switch import *
 from Arbol.While import *
 
@@ -806,7 +807,8 @@ def p_expresion_2_post(t):
 def p_expresion_2_accesos(t):
     'expresion : IDENTIFICADOR accesos_generales'
     reporte_gramatical.append([' expresion -> IDENTIFICADOR accesos_generales','t[0] = Acceso(t[1],t[2],t.lineno(1),find_column(entrada, t.slice[1]))'])
-    t[0] = Acceso(t[1],t[2],t.lineno(1),find_column(entrada, t.slice[1]))
+    val = Acceso(t[1],t[2],t.lineno(1),find_column(entrada, t.slice[1]))
+    t[0] = Expresion(val,None,TIPO_OPERACION.ACCESO_ARREGLO,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_expresion_1_entero(t):
     ''' expresion : ENTERO '''
