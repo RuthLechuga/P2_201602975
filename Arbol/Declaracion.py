@@ -17,8 +17,12 @@ class Declaracion(Instruccion) :
     
     def analizar(self,ts,mensajes) :
 
-        if self.accesos is None and self.expresion is None:
-            if not ts.addSimbolo(Simbolo(self.identificador,self.tipo,1,self.linea,self.columna,ts.ambito)):
+        if self.expresion is None:
+            dimension = 1
+            if not self.accesos is None:
+                dimension = len(self.accesos)
+            
+            if not ts.addSimbolo(Simbolo(self.identificador,self.tipo,dimension,self.linea,self.columna,ts.ambito)):
                 mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'El identificador '+self.identificador+' ya existe.',self.linea,self.columna))
             return
         
@@ -44,6 +48,14 @@ class Declaracion(Instruccion) :
                 mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'El identificador '+self.identificador+' ya existe.',self.linea,self.columna))
             
             return
+        
+        else:
+            if not isinstance(self.expresion,list):
+                mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'La expresion del identificador '+self.identificador+' no es correcta para un arreglo.',self.linea,self.columna))
+            
+            if not ts.addSimbolo(Simbolo(self.identificador,self.tipo,len(self.accesos),self.linea,self.columna,ts.ambito)):
+                mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'El identificador '+self.identificador+' ya existe.',self.linea,self.columna))
+            return
 
     def get3D(self,ts):
         c3d = ""
@@ -54,7 +66,7 @@ class Declaracion(Instruccion) :
             var.temporal = ts.getParametro()
             return c3d
 
-        if self.accesos is None and self.expresion is None:
+        elif self.accesos is None and self.expresion is None:
             temporal = ts.getTemporal()
             var.temporal = temporal
             if self.tipo == TIPO_DATO.ENTERO:
@@ -66,7 +78,7 @@ class Declaracion(Instruccion) :
             elif self.tipo == TIPO_DATO.CARACTER:
                 c3d = temporal + " = \"\";\n"
         
-        if self.accesos is None and (not self.expresion is None):
+        elif self.accesos is None and (not self.expresion is None):
 
             if isinstance(self.expresion,Scanf):
                 temporal = ts.getTemporal()
@@ -90,6 +102,61 @@ class Declaracion(Instruccion) :
                     temporal = ts.getTemporal()
                     c3d += temporal + ' = (int)'+temp_actual+';\n'
                     var.temporal = temporal
+        
+        elif (not self.accesos is None) and self.expresion is None:
+            temporal = ts.getTemporal()
+            var.temporal = temporal
+            c3d = temporal + " = array();\n"
+        
+        elif (not self.accesos is None) and (not self.expresion is None):
+            temporal = ts.getTemporal()
+            var.temporal = temporal
+            c3d = temporal + " = array();\n"
+
+            #arreglos de una dimension
+            if len(self.accesos) == 1:
+                pos = 0
+                for item in self.expresion:
+                    c3d += item.get3D(ts)
+                    c3d += temporal+'['+str(pos)+'] = '+ ts.getTemporalActual()+';\n'
+                    pos += 1
+
+            #arreglos de dos dimensiones
+            elif len(self.accesos) == 2:
+                max_i = len(self.expresion)
+                max_j = len(self.expresion[0])
+
+                for i in range(max_i):
+                    for j in range(max_j):
+                        c3d += self.expresion[i][j].get3D(ts)
+                        c3d += temporal+'['+str(i)+']['+str(j)+'] ='+ts.getTemporalActual()+';\n'
+            
+            #arreglos de tres dimensiones
+            elif len(self.accesos) == 3:
+                max_i = len(self.expresion)
+                max_j = len(self.expresion[0])
+                max_k = len(self.expresion[0][0])
+
+                for i in range(max_i):
+                    for j in range(max_j):
+                        for k in range(max_k):
+                            c3d += self.expresion[i][j][k].get3D(ts)
+                            c3d += temporal+'['+str(i)+']['+str(j)+']['+str(k)+'] ='+ts.getTemporalActual()+';\n'
+
+            #arreglos de cuatro dimensiones
+            elif len(self.accesos) == 4:
+                max_i = len(self.expresion)
+                max_j = len(self.expresion[0])
+                max_k = len(self.expresion[0][0])
+                max_z = len(self.expresion[0][0][0])
+
+                for i in range(max_i):
+                    for j in range(max_j):
+                        for k in range(max_k):
+                            for z in range(max_z):
+                                c3d += self.expresion[i][j][k][z].get3D(ts)
+                                c3d += temporal+'['+str(i)+']['+str(j)+']['+str(k)+']['+str(z)+'] ='+ts.getTemporalActual()+';\n'
+
         return c3d; 
     
     def getAST(self):

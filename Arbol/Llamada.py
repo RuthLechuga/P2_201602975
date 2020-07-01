@@ -20,18 +20,20 @@ class Llamada(Instruccion) :
             mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'La función:'+self.identificador+' no ha sido declarada.',self.linea,self.columna))
             return
         
-        if len(funcion.parametros) != len(self.parametros):
-            mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'La cantidad de parametros de:'+self.identificador+' no coincide con la cantidad de parametros en la llamada.',self.linea,self.columna))
-            return
-        
+        if not funcion.parametros is None and not self.parametros is None:
+            if len(funcion.parametros) != len(self.parametros):
+                mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'La cantidad de parametros de:'+self.identificador+' no coincide con la cantidad de parametros en la llamada.',self.linea,self.columna))
+                return
+            
         ambito_actual = ts.ambito
         ts.ambito = self.identificador
+
+        if not funcion.parametros is None and not self.parametros is None:
+            for i in range(len(funcion.parametros)):
+                temp_asig = Asignacion(funcion.parametros[i].identificador,None,'=',self.parametros[i],self.linea,self.columna)
+                temp_asig.analizar(ts,mensajes)
+                self.asig_parametros.append(temp_asig)
             
-        for i in range(len(funcion.parametros)):
-            temp_asig = Asignacion(funcion.parametros[i].identificador,None,'=',self.parametros[i],self.linea,self.columna)
-            temp_asig.analizar(ts,mensajes)
-            self.asig_parametros.append(temp_asig)
-        
         ts.ambito = ambito_actual
 
         if funcion.tipo == TIPO_FUNCION.ENTERO:

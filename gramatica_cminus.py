@@ -274,11 +274,13 @@ def p_asignacion_dec_expresion(t):
 
 def p_asignacion_dec_accesos(t):
     'asignacion_dec : IDENTIFICADOR accesos'
-    reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR accesos',''])
+    reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR accesos','t[0] = Declaracion(TIPO_DATO.DECIMAL,t[1],t[2],None,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Declaracion(TIPO_DATO.ARREGLO,t[1],t[2],None,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_asignacion_dec_accesos_expresion(t):
     'asignacion_dec : IDENTIFICADOR accesos ASIG expresion'
     reporte_gramatical.append(['asignacion_dec -> IDENTIFICADOR sig_asig expresion',''])
+    t[0] = Declaracion(TIPO_DATO.ARREGLO,t[1],t[2],t[4],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_signos_asignacion(t):
     '''sig_asig : ASIG
@@ -503,7 +505,8 @@ def p_asignacion(t):
 
 def p_asignacion_accesos(t):
     'asignacion : IDENTIFICADOR accesos sig_asig expresion'
-    reporte_gramatical.append(['asignacion -> IDENTIFICADOR accesos sig_asig expresion',''])
+    reporte_gramatical.append(['asignacion -> IDENTIFICADOR accesos sig_asig expresion','t[0] = Asignacion(t[1],t[2],t[3],t[4],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Asignacion(t[1],t[2],t[3],t[4],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_asignacion_punto(t):
     'asignacion : IDENTIFICADOR lista_punto sig_asig expresion'
@@ -863,6 +866,11 @@ def p_sizeof_TIPO(t):
 def p_casteos(t):
     ' expresion : PIZQ tipo PDER expresion'
     reporte_gramatical.append([' expresion -> PIZQ tipo PDER expresion',''])
+
+def p_arreglos(t):
+    ' expresion : LLIZQ lista_expresiones LLDER '
+    reporte_gramatical.append([' expresion : LLIZQ lista_expresiones LLDER ','t[0] = t[2]'])
+    t[0] = t[2]
 
 #---------------------------------------GRAMATICA LLAMADA FUNCIONES----------------------------------------#
 def p_instruccion_llamada(t):

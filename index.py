@@ -272,7 +272,7 @@ class EditorTexto:
         self.imprimir_TS()    
 
         print('analisis realizado. . .')
-        self.ejecutarAugus(c3d)
+        #self.ejecutarAugus(c3d)
     
     def ejecutarAugus(self, codigo):
         try:
