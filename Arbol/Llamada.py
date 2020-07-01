@@ -50,10 +50,18 @@ class Llamada(Instruccion) :
         ambito_actual = ts.ambito
         ts.ambito = self.identificador
 
+        temporales = []
+
         for asignacion in self.asig_parametros:
+            asignacion.isParametro = True
             c3d += asignacion.get3D(ts)
-            c3d += '$s2[$sp] ='+asignacion.temporal+';\n'
+            temporal = ts.getTemporalActual()
+            c3d += '$s2[$sp] ='+temporal+';\n'
             c3d += '$sp=$sp+1;\n'
+            temporales.append(temporal)
+        
+        for i in range(len(temporales)):
+            c3d += self.asig_parametros[i].temporal + '=' + temporales[i]+';\n'
         
         pila = "$s1"
         cont = funcion.addCont()

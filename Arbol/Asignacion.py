@@ -13,6 +13,7 @@ class Asignacion(Instruccion) :
         self.linea = linea
         self.columna = columna
         self.temporal = ''
+        self.isParametro = False
 
     def analizar(self,ts,mensajes) :
         simbolo = ts.getSimbolo(self.identificador)
@@ -45,6 +46,9 @@ class Asignacion(Instruccion) :
 
         c3d = self.expresion.get3D(ts)
         resultado = ts.getTemporalActual()
+
+        if self.isParametro:
+            return c3d
 
         if self.signo == '=':
             c3d += temporal + ' = ' + resultado + ';\n'
