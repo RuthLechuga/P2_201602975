@@ -38,6 +38,9 @@ class TIPO_OPERACION(Enum) :
     LLAMADA = 32
     TERNARIO = 33
     MENOS_UNARIO = 34
+    CASTEO_ENTERO = 35
+    CASTEO_DECIMAL = 36
+    CASTEO_CARACTER = 37
 
 class Expresion(Instruccion) :
 
@@ -85,6 +88,15 @@ class Expresion(Instruccion) :
                 mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'El identificador: '+ self.izquierdo+ ' no existe en el contexto actual.',self.linea,self.columna))
                 return None
             return temp.tipo
+        
+        if self.tipo == TIPO_OPERACION.CASTEO_ENTERO:
+            return TIPO_DATO.ENTERO
+        
+        if self.tipo == TIPO_OPERACION.CASTEO_DECIMAL:
+            return TIPO_DATO.DECIMAL
+        
+        if self.tipo == TIPO_OPERACION.CASTEO_CARACTER:
+            return TIPO_DATO.CARACTER
         
         try:
             tipo_izq = None if self.izquierdo is None else self.izquierdo.analizar(ts,mensajes)
@@ -188,21 +200,27 @@ class Expresion(Instruccion) :
         
         elif self.tipo == TIPO_OPERACION.NOT:
             c3d += self.izquierdo.get3D(ts)
-            temporal = ts.getTemporal()
             tempizq = ts.getTemporalActual()
+            temporal = ts.getTemporal()
             c3d += temporal + ' = !'+tempizq +';\n'
 
         elif self.tipo == TIPO_OPERACION.BBNOT:
             c3d += self.izquierdo.get3D(ts)
-            temporal = ts.getTemporal()
             tempizq = ts.getTemporalActual()
+            temporal = ts.getTemporal()
             c3d += temporal + ' = ~'+tempizq +';\n'
 
         elif self.tipo == TIPO_OPERACION.MENOS_UNARIO:
             c3d += self.izquierdo.get3D(ts)
-            temporal = ts.getTemporal()
             tempizq = ts.getTemporalActual()
+            temporal = ts.getTemporal()
             c3d += temporal + ' = -'+tempizq +';\n'
+        
+        elif self.tipo == TIPO_OPERACION.CASTEO_ENTERO or self.tipo == TIPO_OPERACION.CASTEO_DECIMAL or self.tipo == TIPO_OPERACION.CARACTER:
+            c3d += self.izquierdo.get3D(ts)
+            tempizq = ts.getTemporalActual()
+            temporal = ts.getTemporal()
+            c3d += temporal + ' = ('+self.signo+')'+tempizq +';\n'
 
         else:
             tizq = self.izquierdo.tipo

@@ -197,6 +197,7 @@ from Arbol.Scanf import *
 from Arbol.Simbolo import *
 from Arbol.Struct import *
 from Arbol.Switch import *
+from Arbol.Ternario import * 
 from Arbol.While import *
 
 lexer = lex.lex()
@@ -885,19 +886,28 @@ def p_expresion_par(t):
 
 def p_operador_ternario(t):
     ' expresion : expresion TERNARIO expresion DPUNTOS expresion '
-    reporte_gramatical.append([' expresion -> expresion TERNARIO expresion DPUNTOS expresion ',''])
+    reporte_gramatical.append([' expresion -> expresion TERNARIO expresion DPUNTOS expresion ','t[0] = Ternario(t[1],t[3],t[5],t.lineno(2),find_column(entrada, t.slice[2]))'])
+    t[0] = Ternario(t[1],t[3],t[5],t.lineno(2),find_column(entrada, t.slice[2]))
 
 def p_sizeof(t):
     ' expresion : SIZEOF PIZQ expresion PDER'
-    reporte_gramatical.append([' expresion -> SIZEOF PIZQ expresion PDER',''])
+    reporte_gramatical.append([' expresion -> SIZEOF PIZQ expresion PDER','t[0] = Expresion(4,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Expresion(4,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_sizeof_TIPO(t):
     ' expresion : SIZEOF PIZQ tipo PDER'
-    reporte_gramatical.append([' expresion -> SIZEOF PIZQ tipo PDER',''])
+    reporte_gramatical.append([' expresion -> SIZEOF PIZQ tipo PDER','t[0] = Expresion(tam,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    if t[3]=='int' or t[1]=='float': t[0] = Expresion(4,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))
+    elif t[3]=='double': t[0] = Expresion(8,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))
+    elif t[3]=='char': t[0] = Expresion(1,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_casteos(t):
     ' expresion : PIZQ tipo PDER expresion'
-    reporte_gramatical.append([' expresion -> PIZQ tipo PDER expresion',''])
+    reporte_gramatical.append([' expresion -> PIZQ tipo PDER expresion','t[0] = Expresion(t[4],None,tipo,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    if t[2]=='int': tipo = TIPO_OPERACION.CASTEO_ENTERO
+    elif t[2]=='double' or t[1]=='float': tipo = TIPO_OPERACION.CASTEO_DECIMAL
+    elif t[2]=='char': tipo = TIPO_OPERACION.CASTEO_CARACTER
+    t[0] = Expresion(t[4],None,tipo,t.lineno(1),find_column(entrada, t.slice[1]),t[2])
 
 def p_arreglos(t):
     ' expresion : LLIZQ lista_expresiones LLDER '
