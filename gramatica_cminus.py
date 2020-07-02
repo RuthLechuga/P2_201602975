@@ -238,6 +238,10 @@ def p_instruccion_global_decl(t):
     reporte_gramatical.append(['instruccion_global -> declaracion PTCOMA','t[0] = t[1]'])
     t[0] = t[1]
 
+def p_instr_error(t) :
+    'instruccion_global  :   error'
+    t[0] = []
+
 def p_declaracion(t):
     'declaracion : tipo lista_asignaciones_dec'
     reporte_gramatical.append(['declaracion -> tipo lista_asignaciones_dec PTCOMA','t[0] = t[2]'])
@@ -477,6 +481,10 @@ def p_instrucciones_instruccion(t):
     'instrucciones : instruccion'
     reporte_gramatical.append(['instrucciones -> instruccion','t[0] = t[1]'])
     t[0] = t[1]
+
+def p_instr_error(t) :
+    'instruccion  :   error'
+    t[0] = []
 
 def p_instruccion(t):
     'instruccion : declaracion PTCOMA'
@@ -943,17 +951,16 @@ def p_lista_expresiones_expresion(t):
 
 #---------------------------------------METODOS DE HERRAMIENTA---------------------------------------------#
 def p_error(t):
+    
     if not t:
-        mensajes.append(Mensaje(TIPO_MENSAJE.SINTACTICO,'Error sintáctico irrecuperable.',0,0))    
         return
-
+ 
     mensajes.append(Mensaje(TIPO_MENSAJE.SINTACTICO,'Error sintáctico en: '+str(t.value)+'.',t.lineno,find_column(entrada, t)))    
     while True:
-        tok = parser.token()
+        tok = parser.token()             
         if not tok or tok.type == 'PTCOMA': 
             break
-    parser.restart()
-
+     
 def find_column(input, token):
     line_start = input.rfind('\n', 0, token.lexpos) + 1
     return ((token.lexpos - line_start) + 1)

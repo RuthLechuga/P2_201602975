@@ -239,31 +239,31 @@ class EditorTexto:
             self.txt_3d.delete('1.0',END)
             self.txt_3d.insert('1.0','>>>>>Errores<<<<<')
             self.imprimir_errores()
-            return
+            #return
 
         ts_global_c = TS.TablaDeSimbolos()
         ts_global_c.reiniciar()
 
         #----------------analizar instrucciones-------------------#
         for instruccion in instrucciones:
-            instruccion.analizar(ts_global_c,mensajes)
+            if not instruccion is None:
+                instruccion.analizar(ts_global_c,mensajes)
         instrucciones_ast = instrucciones
 
         #deteccion de errores semanticos
         if len(mensajes) > 0:
             self.consola.delete('1.0',END)
-            self.cosola.insert('1.0','>>>>>Errores<<<<<')
+            self.consola.insert('1.0','>>>>>Errores<<<<<')
             self.imprimir_errores()
-            return
         
         c3d = ""
         codigo_main = ''
-
         for instruccion in instrucciones:
-            if isinstance(instruccion,Funcion) and instruccion.identificador != 'main':
-                c3d += instruccion.get3D(ts_global_c)
-            else:
-                codigo_main += instruccion.get3D(ts_global_c)
+            if not instruccion is None:
+                if isinstance(instruccion,Funcion) and instruccion.identificador != 'main':
+                    c3d += instruccion.get3D(ts_global_c)
+                else:
+                    codigo_main += instruccion.get3D(ts_global_c)
         
         c3d = 'main:\n'+codigo_main + c3d
 
