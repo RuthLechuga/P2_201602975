@@ -77,6 +77,15 @@ class Expresion(Instruccion) :
             
             return temp.tipo
         
+        
+        if self.tipo == TIPO_OPERACION.PRE_INC or self.tipo == TIPO_OPERACION.PRE_DEC or self.tipo == TIPO_OPERACION.POST_INC or self.tipo == TIPO_OPERACION.POST_DEC:
+            temp = ts.getSimbolo(self.izquierdo)
+            
+            if temp is None:
+                mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'El identificador: '+ self.izquierdo+ ' no existe en el contexto actual.',self.linea,self.columna))
+                return None
+            return temp.tipo
+        
         try:
             tipo_izq = None if self.izquierdo is None else self.izquierdo.analizar(ts,mensajes)
             tipo_der = None if self.derecha is None else self.derecha.analizar(ts,mensajes)
@@ -139,6 +148,20 @@ class Expresion(Instruccion) :
         
     def get3D(self,ts) :
         c3d = ""
+
+        if self.tipo == TIPO_OPERACION.PRE_INC or self.tipo == TIPO_OPERACION.PRE_DEC :
+            var = ts.getSimbolo(self.izquierdo).temporal
+            c3d = var + '=' + var + self.signo +'1;\n'
+            temporal = ts.getTemporal()
+            c3d += temporal + '='+ var +';\n'
+            return c3d
+        
+        if self.tipo == TIPO_OPERACION.POST_INC or self.tipo == TIPO_OPERACION.POST_DEC :
+            var = ts.getSimbolo(self.izquierdo).temporal
+            temporal = ts.getTemporal()
+            c3d += temporal + '='+ var +';\n'
+            c3d += var + '=' + var + self.signo +'1;\n'
+            return c3d
 
         if self.tipo == TIPO_OPERACION.ACCESO_ARREGLO:
             return self.izquierdo.get3D(ts)

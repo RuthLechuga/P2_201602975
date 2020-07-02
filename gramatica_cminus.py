@@ -368,7 +368,7 @@ def p_lista_ids_struct(t):
 
 def p_lista_id(t):
     'lista_id_struct : id_struct'
-    reporte_gramatical.append(['lista_id_struct -> id_struct',''])
+    reporte_gramatical.append(['lista_id_struct -> id_struct','t[0] = [t[1]]'])
     t[0] = [t[1]]
 
 def p_id_struct(t):
@@ -385,6 +385,11 @@ def p_id_struct_acceso(t):
     'id_struct : IDENTIFICADOR accesos'
     reporte_gramatical.append(['id_struct -> IDENTIFICADOR accesos','t[0] = Declaracion(TIPO_DATO.ARREGLO,t[1],t[2],None,t.lineno(1),find_column(entrada, t.slice[1]))'])
     t[0] = Declaracion(TIPO_DATO.ARREGLO,t[1],t[2],None,t.lineno(1),find_column(entrada, t.slice[1]))
+
+def p_id_struct_struct(t):
+    'struct_decl : declaracion_struct PTCOMA'
+    reporte_gramatical.append(['struct_decl -> declaracion_struct PTCOMA','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 #--------------------------------------GRAMATICA DECL. STRUCT---------------------------------------------#
 def p_instruccion_global_declaracion_struct(t):
@@ -817,16 +822,20 @@ def p_expresion_2(t):
                     | DECREMENTO IDENTIFICADOR
                     | BBAND expresion
     '''
-    reporte_gramatical.append([' expresion -> '+t[1]+' expresion',''])
+    reporte_gramatical.append([' expresion -> '+t[1]+' expresion','t[0] = Expresion(t[2],None,'+t[1]+',t.lineno(1),find_column(entrada, t.slice[1]),t[1])'])
     if t[1]=='!': t[0] = Expresion(t[2],None,TIPO_OPERACION.NOT,t.lineno(1),find_column(entrada, t.slice[1]),t[1])
     if t[1]=='~': t[0] = Expresion(t[2],None,TIPO_OPERACION.BBNOT,t.lineno(1),find_column(entrada, t.slice[1]),t[1])
     if t[1]=='-': t[0] = Expresion(t[2],None,TIPO_OPERACION.MENOS_UNARIO,t.lineno(1),find_column(entrada, t.slice[1]),t[1])
+    if t[1]=='++': t[0] = Expresion(t[2],None,TIPO_OPERACION.PRE_INC,t.lineno(1),find_column(entrada, t.slice[1]),'+')
+    if t[1]=='--': t[0] = Expresion(t[2],None,TIPO_OPERACION.PRE_DEC,t.lineno(1),find_column(entrada, t.slice[1]),'-')
 
 def p_expresion_2_post(t):
     ''' expresion : IDENTIFICADOR INCREMENTO
                 | IDENTIFICADOR DECREMENTO
     '''
-    reporte_gramatical.append([' expresion -> expresion '+t[2],''])
+    reporte_gramatical.append([' expresion -> expresion '+t[2],'t[0] = Expresion(t[1],None,'+t[2]+',t.lineno(1),find_column(entrada, t.slice[1]),t[1])'])
+    if t[2]=='++': t[0] = Expresion(t[1],None,TIPO_OPERACION.POST_INC,t.lineno(1),find_column(entrada, t.slice[1]),'+')
+    if t[2]=='--': t[0] = Expresion(t[1],None,TIPO_OPERACION.POST_DEC,t.lineno(1),find_column(entrada, t.slice[1]),'-')
 
 def p_expresion_2_accesos(t):
     'expresion : IDENTIFICADOR accesos_generales'
