@@ -28,6 +28,9 @@ class Asignacion(Instruccion) :
         if not self.accesos is None:
             return
         
+        if simbolo.tipo == TIPO_DATO.ARREGLO:
+            return
+        
         tipo = self.expresion.analizar(ts,mensajes)
 
         if tipo is None:

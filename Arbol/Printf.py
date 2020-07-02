@@ -36,7 +36,13 @@ class Printf(Instruccion) :
 
                     if pos_param<len(self.parametros):
                         c3d += self.parametros[pos_param].get3D(ts)
-                        c3d += 'print('+ts.getTemporalActual()+');\n'
+
+                        if self.cadena[pos]!='c':
+                            c3d += 'print('+ts.getTemporalActual()+');\n'
+                        else:
+                            c3d += ts.getTemporalActual() +'= (char)'+ts.getTemporalActual()+';\n';
+                            c3d += 'print('+ts.getTemporalActual()+');\n'
+
                         pos_param +=1
                     else:
                         c3d += 'print(0);\n'

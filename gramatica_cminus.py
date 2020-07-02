@@ -182,6 +182,7 @@ from Arbol.Break import *
 from Arbol.Case import *
 from Arbol.Continue import *
 from Arbol.Declaracion import *
+from Arbol.DeclaracionStruct import *
 from Arbol.DoWhile import *
 from Arbol.Elseif import *
 from Arbol.EtiquetasAgust import *
@@ -333,52 +334,73 @@ def p_acceso_vacio(t):
 #-------------------------------GRAMATICA DECLARACION STRUCTS---------------------------------------------#
 def p_instruccion_global_struct(t):
     'instruccion_global : def_struct PTCOMA'
-    reporte_gramatical.append(['instruccion_global -> decl_struct PTCOMA',''])
+    reporte_gramatical.append(['instruccion_global -> decl_struct PTCOMA','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_definicion_struct(t):
     'def_struct : STRUCT IDENTIFICADOR LLIZQ struct_lista_decl LLDER '
-    reporte_gramatical.append(['decl_struct -> STRUCT IDENTIFICADOR LLIZQ struct_lista_decl LLDER ',''])
+    reporte_gramatical.append(['decl_struct -> STRUCT IDENTIFICADOR LLIZQ struct_lista_decl LLDER ','t[0] = Struct(t[2],t[4],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Struct(t[2],t[4],t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_struct_lista(t):
     'struct_lista_decl : struct_lista_decl struct_decl'
-    reporte_gramatical.append(['struct_lista_decl -> struct_lista_decl struct_decl',''])
+    reporte_gramatical.append(['struct_lista_decl -> struct_lista_decl struct_decl','t[1].extend(t[2])\nt[0] = t[1]'])
+    t[1].extend(t[2])
+    t[0] = t[1]
 
 def p_struct_lista_decl(t):
     'struct_lista_decl : struct_decl'
-    reporte_gramatical.append(['struct_lista_decl -> struct_decl',''])
+    reporte_gramatical.append(['struct_lista_decl -> struct_decl','t[0] = [t[1]]'])
+    t[0] = t[1]
 
 def p_struct_decl(t):
     'struct_decl : tipo lista_id_struct PTCOMA'
-    reporte_gramatical.append(['struct_decl -> tipo lista_id_struct PTCOMA',''])
+    reporte_gramatical.append(['struct_decl -> tipo lista_id_struct PTCOMA','t[0] = t[2]'])
+    global temporal_tipo
+    temporal_tipo = ''
+    t[0] = t[2]    
 
 def p_lista_ids_struct(t):
     'lista_id_struct : lista_id_struct COMA id_struct'
-    reporte_gramatical.append(['lista_id_struct -> lista_id_struct COMA id_struct',''])
+    reporte_gramatical.append(['lista_id_struct -> lista_id_struct COMA id_struct','t[1].append(t[3])\nt[0] = t[1]'])
+    t[1].append(t[3])
+    t[0] = t[1]
 
 def p_lista_id(t):
     'lista_id_struct : id_struct'
     reporte_gramatical.append(['lista_id_struct -> id_struct',''])
+    t[0] = [t[1]]
 
 def p_id_struct(t):
     'id_struct : IDENTIFICADOR'
-    reporte_gramatical.append(['id_struct -> IDENTIFICADOR',''])
+    reporte_gramatical.append(['id_struct -> IDENTIFICADOR','t[0] = Declaracion(TIPO_DATO.DECIMAL,t[1],None,None,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    global temporal_tipo
+    temporal_tipo = t[-1] if temporal_tipo == '' else temporal_tipo
+    if temporal_tipo=='int' : t[0] = Declaracion(TIPO_DATO.ENTERO,t[1],None,None,t.lineno(1),find_column(entrada, t.slice[1]))
+    elif temporal_tipo=='char' : t[0] = Declaracion(TIPO_DATO.CARACTER,t[1],None,None,t.lineno(1),find_column(entrada, t.slice[1]))
+    elif temporal_tipo=='double' : t[0] = Declaracion(TIPO_DATO.DECIMAL,t[1],None,None,t.lineno(1),find_column(entrada, t.slice[1]))
+    elif temporal_tipo=='float' : t[0] = Declaracion(TIPO_DATO.DECIMAL,t[1],None,None,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_id_struct_acceso(t):
     'id_struct : IDENTIFICADOR accesos'
-    reporte_gramatical.append(['id_struct -> IDENTIFICADOR accesos',''])
+    reporte_gramatical.append(['id_struct -> IDENTIFICADOR accesos','t[0] = Declaracion(TIPO_DATO.ARREGLO,t[1],t[2],None,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = Declaracion(TIPO_DATO.ARREGLO,t[1],t[2],None,t.lineno(1),find_column(entrada, t.slice[1]))
 
 #--------------------------------------GRAMATICA DECL. STRUCT---------------------------------------------#
 def p_instruccion_global_declaracion_struct(t):
     'instruccion_global : declaracion_struct PTCOMA'
     reporte_gramatical.append(['instruccion_global -> declaracion_struct PTCOMA',''])
+    t[0] = [t[1]]
 
 def p_declaracion_struct(t):
     'declaracion_struct : STRUCT IDENTIFICADOR IDENTIFICADOR'
-    reporte_gramatical.append(['declaracion_struct -> STRUCT IDENTIFICADOR IDENTIFICADOR',''])
+    reporte_gramatical.append(['declaracion_struct -> STRUCT IDENTIFICADOR IDENTIFICADOR','t[0] = DeclaracionStruct(t[1],t[2],None,t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = DeclaracionStruct(t[2],t[3],None,t.lineno(1),find_column(entrada, t.slice[1]))
 
 def p_declaracion_struct_accesos(t):
     'declaracion_struct : STRUCT IDENTIFICADOR IDENTIFICADOR accesos'
-    reporte_gramatical.append(['declaracion_struct -> STRUCT IDENTIFICADOR IDENTIFICADOR accesos',''])
+    reporte_gramatical.append(['declaracion_struct -> STRUCT IDENTIFICADOR IDENTIFICADOR accesos','t[0] = DeclaracionStruct(t[2],t[3],t[4],t.lineno(1),find_column(entrada, t.slice[1]))'])
+    t[0] = DeclaracionStruct(t[2],t[3],t[4],t.lineno(1),find_column(entrada, t.slice[1]))
 
 #---------------------------------------GRAMATICA DE METODOS---------------------------------------------#
 def p_instruccion_global_metodo(t):
@@ -457,11 +479,13 @@ def p_instruccion(t):
 
 def p_instruccion_struct(t):
     'instruccion : def_struct PTCOMA'
-    reporte_gramatical.append(['instruccion -> decl_struct PTCOMA',''])
+    reporte_gramatical.append(['instruccion -> decl_struct PTCOMA','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_instruccion_declaracion_struct(t):
     'instruccion : declaracion_struct PTCOMA'
-    reporte_gramatical.append(['instruccion -> declaracion_struct PTCOMA',''])
+    reporte_gramatical.append(['instruccion -> declaracion_struct PTCOMA','t[0] = [t[1]]'])
+    t[0] = [t[1]]
 
 def p_instruccion_goto(t):
     'instruccion : GOTO IDENTIFICADOR PTCOMA'

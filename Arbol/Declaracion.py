@@ -2,6 +2,7 @@ from .Instruccion import Instruccion
 from .Mensaje import *
 from .Simbolo import *
 from .Scanf import *
+from .Expresion import *
 
 class Declaracion(Instruccion) :
 
@@ -50,7 +51,7 @@ class Declaracion(Instruccion) :
             return
         
         else:
-            if not isinstance(self.expresion,list):
+            if not isinstance(self.expresion,list) and not isinstance(self.expresion,Expresion):
                 mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'La expresion del identificador '+self.identificador+' no es correcta para un arreglo.',self.linea,self.columna))
             
             if not ts.addSimbolo(Simbolo(self.identificador,self.tipo,len(self.accesos),self.linea,self.columna,ts.ambito)):
@@ -116,10 +117,14 @@ class Declaracion(Instruccion) :
             #arreglos de una dimension
             if len(self.accesos) == 1:
                 pos = 0
-                for item in self.expresion:
-                    c3d += item.get3D(ts)
-                    c3d += temporal+'['+str(pos)+'] = '+ ts.getTemporalActual()+';\n'
-                    pos += 1
+                if isinstance(self.expresion,list):
+                    for item in self.expresion:
+                            c3d += item.get3D(ts)
+                            c3d += temporal+'['+str(pos)+'] = '+ ts.getTemporalActual()+';\n'
+                            pos += 1
+                else:
+                    c3d += self.expresion.get3D(ts)
+                    c3d += temporal + '='+ts.getTemporalActual()+';\n'
 
             #arreglos de dos dimensiones
             elif len(self.accesos) == 2:
