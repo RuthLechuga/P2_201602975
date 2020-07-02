@@ -795,7 +795,7 @@ def p_expresion_3(t):
                 | expresion MENOR_IGUAL_QUE expresion
                 | expresion MAYOR_IGUAL_QUE expresion
     '''
-    reporte_gramatical.append([' expresion -> expresion '+t[2]+' expresion',''])
+    reporte_gramatical.append([' expresion -> expresion '+t[2]+' expresion','t[0] = Expresion(t[1],t[3],'+t[2]+',t.lineno(2),find_column(entrada, t.slice[2]),t[2])'])
     if t[2]=='+': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.SUMA,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
     if t[2]=='-': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.RESTA,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
     if t[2]=='*': t[0] = Expresion(t[1],t[3],TIPO_OPERACION.MULTIPLICACION,t.lineno(2),find_column(entrada, t.slice[2]),t[2])
@@ -905,7 +905,7 @@ def p_casteos(t):
     ' expresion : PIZQ tipo PDER expresion'
     reporte_gramatical.append([' expresion -> PIZQ tipo PDER expresion','t[0] = Expresion(t[4],None,tipo,t.lineno(1),find_column(entrada, t.slice[1]))'])
     if t[2]=='int': tipo = TIPO_OPERACION.CASTEO_ENTERO
-    elif t[2]=='double' or t[1]=='float': tipo = TIPO_OPERACION.CASTEO_DECIMAL
+    elif t[2]=='double' or t[2]=='float': tipo = TIPO_OPERACION.CASTEO_DECIMAL
     elif t[2]=='char': tipo = TIPO_OPERACION.CASTEO_CARACTER
     t[0] = Expresion(t[4],None,tipo,t.lineno(1),find_column(entrada, t.slice[1]),t[2])
 

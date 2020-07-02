@@ -29,4 +29,17 @@ class Struct(Instruccion) :
         return c3d
 
     def getAST(self) :
-        return ''
+        ast = "\""+str(self)+"\" [label=\"ins_definicion_struct\"] ;\n"
+
+        ast += "\""+str(self)+self.identificador+"\" [label=\"IDENTIFICADOR\"] ;\n"
+        ast += "\""+str(self)+"\" -> \""+str(self)+self.identificador+"\"\n"
+    
+        ast += "\""+str(self.atributos)+"\" [label=\"atributos\"] ;\n";
+        ast += "\""+str(self)+"\" -> \""+str(self.atributos)+"\"\n";
+            
+        for atributo in self.atributos:
+            ast += "\""+str(atributo)+"\" [label=\"atributo\"] ;\n";
+            ast += "\""+str(self.atributos)+"\" -> \""+str(atributo)+"\"\n";
+            ast += atributo.getAST();
+
+        return ast

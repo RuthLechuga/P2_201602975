@@ -19,5 +19,5 @@ class Continue(Instruccion) :
     def getAST(self) :
         ast =   """ \""""+str(self)+"""\" [label=\"ins_continue\"] ;\n
                 \""""+str(self)+"""b\" [label=\"continue\"] ;\n
-                \""""+str(self)+"""\" -> \""""+str(self)+"""b\"\n""";
-        return ast;
+                \""""+str(self)+"""\" -> \""""+str(self)+"""b\"\n"""
+        return ast

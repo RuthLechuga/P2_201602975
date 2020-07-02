@@ -13,4 +13,5 @@ class Scanf(Instruccion) :
         return ''
 
     def getAST(self) :
-        pass
+        ast = "\""+str(self)+"\" [label=\"scanf()\"] ;\n"
+        return ast

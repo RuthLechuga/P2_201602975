@@ -46,4 +46,21 @@ class Ternario(Instruccion) :
         return c3d
 
     def getAST(self) :
-        return '';
+        ast = "\""+str(self)+"\" [label=\"operador_ternario\"] ;\n";
+        
+        ast+= self.condicion.getAST();
+        ast+= "   \""+str(self)+"\" -> \""+str(self.condicion)+"\"\n";
+        
+        ast+="   \""+str(self)+"q\" [label=\"?\"] ;\n";
+        ast+= "   \""+str(self)+"\" -> \""+str(self)+"q\"\n";
+        
+        ast+= self.expresion_true.getAST();
+        ast+= "   \""+str(self)+"\" -> \""+str(self.expresion_true)+"\"\n";
+        
+        ast+="   \""+str(self)+"dp\" [label=\":\"] ;\n";
+        ast+= "   \""+str(self)+"\" -> \""+str(self)+"dp\"\n";
+        
+        ast+= self.expresion_false.getAST();
+        ast+= "   \""+str(self)+"\" -> \""+str(self.expresion_false)+"\"\n";
+        
+        return ast;

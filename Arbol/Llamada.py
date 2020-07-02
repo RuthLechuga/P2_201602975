@@ -88,4 +88,16 @@ class Llamada(Instruccion) :
         return c3d
 
     def getAST(self) :
-        pass
+        ast =  "   \""+str(self)+"\" [label=\"llamada_funcion\"] ;\n" +\
+            "   \""+str(self)+"id"+"\" [label=\""+self.identificador+"\"] ;\n" +\
+            "   \""+str(self)+"\" -> \""+str(self)+"id"+"\"\n"
+
+        ast += "\""+str(self.parametros)+"\" [label=\"lista_valores\"] ;\n"
+        ast += "\""+str(self)+"\" -> \""+str(self.parametros)+"\"\n"
+
+        for parametro in self.parametros:
+            ast += "\""+str(parametro)+"\" [label=\"valor\"] ;\n";
+            ast += "\""+str(self.parametros)+"\" -> \""+str(parametro)+"\"\n";        
+            ast += parametro.getAST();
+
+        return ast

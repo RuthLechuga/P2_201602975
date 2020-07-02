@@ -79,4 +79,26 @@ class Funcion(Instruccion) :
         return c3d
 
     def getAST(self):
-        pass
+        ast = "   \""+str(self)+"\" [label=\"decl_function\"] ;\n" + \
+                "   \""+str(self)+self.tipo.name+"\" [label=\"TIPO\"] ;\n" + \
+                "   \""+str(self)+"\" -> \""+str(self)+self.tipo.name+"\"\n" +\
+                "   \""+str(self)+self.identificador+"\" [label=\"IDENTIFICADOR\"] ;\n" + \
+                "   \""+str(self)+"\" -> \""+str(self)+self.identificador+"\"\n"
+    
+        if not self.parametros is None:
+            ast += "\""+str(self.parametros)+"\" [label=\"parametros\"] ;\n"
+            ast += "\""+str(self)+"\" -> \""+str(self.parametros)+"\"\n"
+            for parametro in self.parametros:
+                ast += "\""+str(parametro)+"\" [label=\"parametro\"] ;\n"
+                ast += "\""+str(self.parametros)+"\" -> \""+str(parametro)+"\"\n"
+                ast += parametro.getAST()
+            
+        ast += "\""+str(self.instrucciones)+"\" [label=\"instrucciones\"] ;\n"
+        ast += "\""+str(self)+"\" -> \""+str(self.instrucciones)+"\"\n"
+
+        for instruccion in self.instrucciones:
+            ast += "\""+str(instruccion)+"\" [label=\"instruccion\"] ;\n"
+            ast += "\""+str(self.instrucciones)+"\" -> \""+str(instruccion)+"\"\n"
+            ast += instruccion.getAST()
+
+        return ast

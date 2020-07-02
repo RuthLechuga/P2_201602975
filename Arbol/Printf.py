@@ -54,4 +54,15 @@ class Printf(Instruccion) :
         return c3d
 
     def getAST(self) :
-        pass
+        ast = "   \""+str(self)+"\" [label=\"print\"] ;\n" +\
+            "   \""+str(self)+"\" -> \""+str(self.cadena)+"\"\n"
+        
+        if not self.parametros is None:
+            ast += "\""+str(self.parametros)+"\" [label=\"parametros\"] ;\n"
+            ast += "\""+str(self)+"\" -> \""+str(self.parametros)+"\"\n"
+            for parametro in self.parametros:
+                ast += "\""+str(parametro)+"\" [label=\"parametro\"] ;\n"
+                ast += "\""+str(self.parametros)+"\" -> \""+str(parametro)+"\"\n"
+                ast += parametro.getAST()
+
+        return ast

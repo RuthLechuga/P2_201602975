@@ -19,5 +19,5 @@ class Break(Instruccion) :
     def getAST(self) :
         ast =   """ \""""+str(self)+"""\" [label=\"ins_break\"] ;\n
                 \""""+str(self)+"""b\" [label=\"break\"] ;\n
-                \""""+str(self)+"""\" -> \""""+str(self)+"""b\"\n""";
-        return ast;
+                \""""+str(self)+"""\" -> \""""+str(self)+"""b\"\n"""
+        return ast

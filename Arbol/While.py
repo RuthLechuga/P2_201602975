@@ -47,4 +47,19 @@ class While(Instruccion) :
         return c3d
 
     def getAST(self) :
-        pass
+        ast = "   \""+str(self)+"\" [label=\"ins_while\"] ;\n" + \
+              "   \""+str(self)+"et"+"\" [label=\"while\"] ;\n" + \
+              "   \""+str(self)+"\" -> \""+str(self)+"et"+"\"\n"
+        
+        ast += self.expresion.getAST();
+        ast += "\""+str(self)+"\" -> \""+str(self.expresion)+"\"\n";
+
+        ast += "\""+str(self.instrucciones)+"\" [label=\"instrucciones\"] ;\n";
+        ast += "\""+str(self)+"\" -> \""+str(self.instrucciones)+"\"\n";
+
+        for instruccion in self.instrucciones:
+            ast += "\""+str(instruccion)+"\" [label=\"instruccion\"] ;\n";
+            ast += "\""+str(self.instrucciones)+"\" -> \""+str(instruccion)+"\"\n";
+            ast += instruccion.getAST()
+
+        return ast

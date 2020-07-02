@@ -27,4 +27,12 @@ class Return(Instruccion) :
         return c3d
             
     def getAST(self) :
-        return ""
+        ast = "   \""+str(self)+"\" [label=\"ins_return\"] ;\n" + \
+            "   \""+str(self)+"r\" [label=\"return\"] ;\n" + \
+            "   \""+str(self)+"\" -> \""+str(self)+"r\"\n"
+        
+        if not self.expresion is None:
+            ast += self.expresion.getAST()
+            ast += "   \""+str(self)+"\" -> \""+str(self.expresion)+"\"\n";
+ 
+        return ast

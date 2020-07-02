@@ -25,6 +25,7 @@ ts_global_c = None
 reporte_gramatical = []
 path_archivo = ''
 new = 2
+instrucciones_ast = None
 head_html = '''
 <head> 
     <style>
@@ -224,6 +225,7 @@ class EditorTexto:
         global mensajes
         global reporte_gramatical
         global ts_global_c
+        global instrucciones_ast
 
         self.cleanTable()
         self.cleanTS()
@@ -245,11 +247,12 @@ class EditorTexto:
         #----------------analizar instrucciones-------------------#
         for instruccion in instrucciones:
             instruccion.analizar(ts_global_c,mensajes)
+        instrucciones_ast = instrucciones
 
         #deteccion de errores semanticos
         if len(mensajes) > 0:
-            self.txt_3d.delete('1.0',END)
-            self.txt_3d.insert('1.0','>>>>>Errores<<<<<')
+            self.consola.delete('1.0',END)
+            self.cosola.insert('1.0','>>>>>Errores<<<<<')
             self.imprimir_errores()
             return
         
@@ -269,10 +272,11 @@ class EditorTexto:
 
         self.txt_3d.delete('1.0',END)
         self.txt_3d.insert('1.0',c3d)    
+        self.consola.delete('1.0',END)
+        self.consola.insert('1.0','analisis realizado. . .')    
         self.imprimir_TS()    
 
-        print('analisis realizado. . .')
-        self.ejecutarAugus(c3d)
+        #self.ejecutarAugus(c3d)
     
     def ejecutarAugus(self, codigo):
         try:
@@ -406,7 +410,19 @@ class EditorTexto:
             webbrowser.open('TS.html',new=new)
 
     def reporte_ast(self):
-        pass
+        global ts_global
+        global instrucciones_ast
+
+        arbol = 'digraph ast {\n init -> instrucciones_globales\n '
+        
+        for instruccion in instrucciones_ast:
+            arbol += 'instrucciones_globales -> '+'\"'+str(instruccion)+'\"'+'\n'
+            arbol += instruccion.getAST()
+
+        arbol += "\n}"
+
+        s = Source(arbol, filename="AST", format="svg")
+        s.view()
 
     def reporte_gramatical(self):
         global reporte_gramatical

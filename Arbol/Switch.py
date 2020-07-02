@@ -47,4 +47,18 @@ class Switch(Instruccion) :
         return c3d
 
     def getAST(self) :
-        pass
+        ast = "\""+str(self)+"\" [label=\"ins_switch\"] ;\n"+\
+            "\""+str(self)+"et"+"\" [label=\"switch\"] ;\n" +\
+            "\""+str(self)+"\" -> \""+str(self)+"et"+"\"\n"
+        
+        ast+= self.expresion.getAST();
+        ast+= "   \""+str(self)+"\" -> \""+str(self.expresion)+"\"\n";
+        
+        ast += "\""+str(self.cases)+"\" [label=\"cases\"] ;\n";
+        ast+= "\""+str(self)+"\" -> \""+str(self.cases)+"\"\n";
+
+        for case in self.cases:
+            ast+= "\""+str(self.cases)+"\" -> \""+str(case)+"\"\n";
+            ast+= case.getAST()
+
+        return ast

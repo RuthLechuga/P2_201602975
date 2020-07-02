@@ -27,4 +27,10 @@ class If(Instruccion) :
         return c3d
 
     def getAST(self) :
-        pass
+        ast = "   \""+str(self)+"\" [label=\"ins_ifs\"] ;\n";
+
+        for elseif in self.lista_if:
+            ast += "\""+str(self)+"\" -> \""+str(elseif)+"\"\n";
+            ast += elseif.getAST();
+
+        return ast

@@ -103,4 +103,29 @@ class Asignacion(Instruccion) :
         return c3d; 
     
     def getAST(self):
-        pass
+        ast = "\""+str(self)+"\" [label=\"ins_asignacion\"] ;\n"
+        ast += "\""+str(self)+self.identificador+"\" [label=\"IDENTIFICADOR\"] ;\n"
+        ast += "\""+str(self)+"\" -> \""+str(self)+self.identificador+"\"\n"
+
+        if not self.accesos is None:
+            ast += "\""+str(self.accesos)+"\" [label=\"accesos\"] ;\n";
+            ast += "\""+str(self)+"\" -> \""+str(self.accesos)+"\"\n";
+            for acceso in self.accesos:
+                if not isinstance(acceso,str):
+                    ast += "\""+str(acceso)+"\" [label=\"acceso\"] ;\n";
+                    ast += "\""+str(self.accesos)+"\" -> \""+str(acceso)+"\"\n";
+                    ast += acceso.getAST();
+                else:
+                    ast += "\""+str(self)+str(acceso)+"\" [label=\"cadena\"] ;\n";
+                    ast += "\""+str(self.accesos)+"\" -> \""+str(self)+str(acceso)+"\"\n";
+
+        if not self.expresion is None:
+            ast += "\""+str(self)+"igual\" [label=\""+self.signo+"\"] ;\n"
+            ast += "\""+str(self)+"\" -> \""+str(self)+"igual\"\n"
+            ast += "\""+str(self)+"\" -> \""+str(self.expresion)+"\"\n";
+            if not isinstance(self.expresion,list):
+                ast += self.expresion.getAST()
+            else:
+                ast += "\""+str(self.expresion)+"\" [label=\"lista\"] ;\n";
+            
+        return ast

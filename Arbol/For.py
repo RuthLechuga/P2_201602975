@@ -62,4 +62,28 @@ class For(Instruccion) :
         return c3d
 
     def getAST(self) :
-        pass
+        ast = "   \""+str(self)+"\" [label=\"ins_for\"] ;\n" +\
+        "   \""+str(self)+"for"+"\" [label=\"for\"] ;\n" +\
+        "   \""+str(self)+"\" -> \""+str(self)+"for"+"\"\n"
+
+        ast+= "   \""+str(self.declaracion)+"\" [label=\"DECLARACION\"] ;\n";
+        ast+= self.declaracion.getAST()
+        ast+= "   \""+str(self)+"\" -> \""+str(self.declaracion)+"\"\n";
+
+        ast+= "   \""+str(self.condicion)+"\" [label=\"CONDICION\"] ;\n";
+        ast+= self.condicion.getAST()
+        ast+= "   \""+str(self)+"\" -> \""+str(self.condicion)+"\"\n";        
+
+        ast+= "   \""+str(self.incremento)+"\" [label=\"INCREMENTO\"] ;\n";
+        ast+= self.incremento.getAST()
+        ast+= "   \""+str(self)+"\" -> \""+str(self.incremento)+"\"\n"; 
+
+        ast += "\""+str(self.instrucciones)+"\" [label=\"instrucciones\"] ;\n"
+        ast += "\""+str(self)+"\" -> \""+str(self.instrucciones)+"\"\n"
+        
+        for instruccion in self.instrucciones:
+            ast += "\""+str(instruccion)+"\" [label=\"instruccion\"] ;\n"
+            ast += "\""+str(self.instrucciones)+"\" -> \""+str(instruccion)+"\"\n"
+            ast += instruccion.getAST()
+               
+        return ast

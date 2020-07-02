@@ -12,4 +12,8 @@ class EtiquetasAgust(Instruccion) :
         return self.codigo
 
     def getAST(self) :
-        pass
+        ast = "\""+str(self)+"\" [label=\"ins_et_augus\"] ;\n" +\
+            "\""+str(self)+"et"+"\" [label=\""+str(codigo)+"\"] ;\n" +\
+            "\""+str(self)+"\" -> \""+str(self)+"et"+"\"\n"
+ 
+        return ast

@@ -273,4 +273,63 @@ class Expresion(Instruccion) :
         return c3d
 
     def getAST(self) :
-        pass
+        ast = ''
+        
+        if self.tipo == TIPO_OPERACION.SUMA or self.tipo == TIPO_OPERACION.RESTA or self.tipo == TIPO_OPERACION.RESIDUO or \
+        self.tipo == TIPO_OPERACION.MULTIPLICACION or self.tipo == TIPO_OPERACION.DIVISION or \
+        self.tipo == TIPO_OPERACION.MENOR_QUE or self.tipo == TIPO_OPERACION.MAYOR_QUE or \
+        self.tipo == TIPO_OPERACION.MENOR_IGUAL_QUE or self.tipo == TIPO_OPERACION.MAYOR_IGUAL_QUE or \
+        self.tipo == TIPO_OPERACION.AND or self.tipo == TIPO_OPERACION.OR or \
+        self.tipo == TIPO_OPERACION.BBAND or self.tipo == TIPO_OPERACION.BBOR or \
+        self.tipo == TIPO_OPERACION.BBXOR or self.tipo == TIPO_OPERACION.BBIZQ or \
+        self.tipo == TIPO_OPERACION.BBDER or self.tipo == TIPO_OPERACION.IGUAL_QUE or \
+        self.tipo == TIPO_OPERACION.DISTINTO_QUE:
+            ast_izq = None if self.izquierdo is None else self.izquierdo.getAST()
+            ast_der = None if self.derecha is None else self.derecha.getAST()
+
+            ast += "\""+str(self)+"\" [label=\"expresion\"] ;\n"
+            ast += ast_izq
+            ast += "\""+str(self)+"\" -> \""+str(self.izquierdo)+"\"\n";
+            ast += "\""+str(self)+"sig\""+" [label=\""+self.signo+"\"] ;\n";
+            ast += "\""+str(self)+"\" -> \""+str(self)+"sig\"\n";
+            ast += ast_der
+            ast += "\""+str(self)+"\" -> \""+str(self.derecha)+"\"\n"
+        
+        elif self.tipo == TIPO_OPERACION.NOT or self.tipo == TIPO_OPERACION.BBNOT or\
+        self.tipo == TIPO_OPERACION.PRE_INC or self.tipo == TIPO_OPERACION.PRE_DEC or \
+        self.tipo == TIPO_OPERACION.MENOS_UNARIO:
+            ast_izq = None if self.izquierdo is None else self.izquierdo.getAST()
+            ast += "\""+str(self)+"sig\""+" [label=\""+self.signo+"\"] ;\n";
+            ast += "\""+str(self)+"\" -> \""+str(self)+"sig\"\n";
+            ast += "\""+str(self)+"\" [label=\"expresion\"] ;\n"
+            ast += ast_izq
+            ast += "\""+str(self)+"\" -> \""+str(self.izquierdo)+"\"\n";
+        
+        elif self.tipo == TIPO_OPERACION.PRE_INC or self.tipo == TIPO_OPERACION.PRE_DEC:
+            ast_izq = None if self.izquierdo is None else self.izquierdo.getAST()
+            ast += "\""+str(self)+"\" [label=\"expresion\"] ;\n"
+            ast += ast_izq
+            ast += "\""+str(self)+"\" -> \""+str(self.izquierdo)+"\"\n";
+            ast += "\""+str(self)+"sig\""+" [label=\""+self.signo+"\"] ;\n";
+            ast += "\""+str(self)+"\" -> \""+str(self)+"sig\"\n";
+        
+        elif self.tipo == TIPO_OPERACION.CASTEO_ENTERO or self.tipo == TIPO_OPERACION.CASTEO_DECIMAL or \
+        self.tipo == TIPO_OPERACION.CASTEO_CARACTER:
+            ast_izq = None if self.izquierdo is None else self.izquierdo.getAST()
+            ast += "\""+str(self)+"\" [label=\"expresion\"] ;\n"
+            ast += "\""+str(self)+"sig\""+" [label=\"("+self.signo+")\"] ;\n";
+            ast += "\""+str(self)+"\" -> \""+str(self)+"sig\"\n";
+            ast += ast_izq
+            ast += "\""+str(self)+"\" -> \""+str(self.izquierdo)+"\"\n";
+        
+        elif self.tipo == TIPO_OPERACION.ACCESO_ARREGLO or self.tipo == TIPO_OPERACION.LLAMADA or \
+        self.tipo == TIPO_OPERACION.TERNARIO:
+            ast_izq = None if self.izquierdo is None else self.izquierdo.getAST()
+            ast += "\""+str(self)+"\" [label=\"expresion\"] ;\n"
+            ast += ast_izq
+            ast += "\""+str(self)+"\" -> \""+str(self.izquierdo)+"\"\n";
+
+        else:
+            ast += "\""+str(self)+"\" [label=\""+self.tipo.name+"\"] ;\n"
+
+        return ast

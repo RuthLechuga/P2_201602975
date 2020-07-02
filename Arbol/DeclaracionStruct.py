@@ -35,4 +35,27 @@ class DeclaracionStruct(Instruccion) :
         return c3d
 
     def getAST(self) :
-        return ''
+        ast = "\""+str(self)+"\" [label=\"ins_declaracion_struct\"] ;\n"
+
+        ast += "\""+str(self)+"_struct\" [label=\"STRCUCT\"] ;\n"
+        ast += "\""+str(self)+"\" -> \""+str(self)+"_struct\"\n"
+
+        ast += "\""+str(self)+self.tipo+"\" [label=\"TIPO\"] ;\n"
+        ast += "\""+str(self)+"\" -> \""+str(self)+self.tipo+"\"\n"
+
+        ast += "\""+str(self)+self.identificador+"\" [label=\"IDENTIFICADOR\"] ;\n"
+        ast += "\""+str(self)+"\" -> \""+str(self)+self.identificador+"\"\n"
+
+        if not self.accesos is None:
+            ast += "\""+str(self.accesos)+"\" [label=\"accesos\"] ;\n";
+            ast += "\""+str(self)+"\" -> \""+str(self.accesos)+"\"\n";
+            for acceso in self.accesos:
+                if not isinstance(acceso,str):
+                    ast += "\""+str(acceso)+"\" [label=\"acceso\"] ;\n";
+                    ast += "\""+str(self.accesos)+"\" -> \""+str(acceso)+"\"\n";
+                    ast += acceso.getAST();
+                else:
+                    ast += "\""+str(self)+str(acceso)+"\" [label=\"cadena\"] ;\n";
+                    ast += "\""+str(self.accesos)+"\" -> \""+str(self)+str(acceso)+"\"\n";
+
+        return ast

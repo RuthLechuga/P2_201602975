@@ -27,4 +27,22 @@ class Case(Instruccion) :
         return c3d
 
     def getAST(self) :
-        pass
+        ast = "\""+str(self)+"\" [label=\"ins_case\"] ;\n"
+            
+        if not self.expresion is None:
+            ast+= "   \""+str(self)+"et"+"\" [label=\"case\"] ;\n"
+            ast+= "   \""+str(self)+"\" -> \""+str(self)+"et"+"\"\n"
+            ast += self.expresion.getAST()
+            ast+= "   \""+str(self)+"\" -> \""+str(self.expresion)+"\"\n"
+        else:
+            ast+= "   \""+str(self)+"et"+"\" [label=\"default\"] ;\n"
+            ast+= "   \""+str(self)+"\" -> \""+str(self)+"et"+"\"\n"
+
+        ast += "\""+str(self.instrucciones)+"\" [label=\"instrucciones\"] ;\n"
+        ast += "\""+str(self)+"\" -> \""+str(self.instrucciones)+"\"\n"
+
+        for instruccion in self.instrucciones:
+            ast += "\""+str(instruccion)+"\" [label=\"instruccion\"] ;\n"
+            ast += "\""+str(self.instrucciones)+"\" -> \""+str(instruccion)+"\"\n"   
+
+        return ast

@@ -36,4 +36,25 @@ class Elseif(Instruccion) :
         return c3d
 
     def getAST(self) :
-        pass
+        ast = ''
+
+        if not self.condicion is None:
+            ast += "\""+str(self)+"\" [label=\"ins_if\"] ;\n" +\
+                "\""+str(self)+"et"+"\" [label=\"if\"] ;\n" +\
+                "\""+str(self)+"\" -> \""+str(self)+"et"+"\"\n"
+            ast += "\""+str(self.condicion)+"\" [label=\"expresion\"] ;\n" +\
+                "\""+str(self)+"\" -> \""+str(self.condicion)+"\"\n"
+        else:
+            ast += "\""+str(self)+"\" [label=\"ins_else\"] ;\n" +\
+                "\""+str(self)+"et"+"\" [label=\"else\"] ;\n" +\
+                "\""+str(self)+"\" -> \""+str(self)+"et"+"\"\n"
+        
+        ast += "\""+str(self.instrucciones)+"\" [label=\"instrucciones\"] ;\n";
+        ast += "\""+str(self)+"\" -> \""+str(self.instrucciones)+"\"\n";
+
+        for instruccion in self.instrucciones:
+            ast += "\""+str(instruccion)+"\" [label=\"instruccion\"] ;\n";
+            ast += "\""+str(self.instrucciones)+"\" -> \""+str(instruccion)+"\"\n";
+            ast += instruccion.getAST();
+
+        return ast
