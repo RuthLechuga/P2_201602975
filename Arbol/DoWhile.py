@@ -1,6 +1,9 @@
 from .Instruccion import Instruccion
 from .Mensaje import *
 from .Simbolo import *
+from .Return import *
+from .Break import *
+from .Continue import *
 
 class DoWhile(Instruccion) :
 
@@ -14,9 +17,16 @@ class DoWhile(Instruccion) :
         
         if not self.expresion.analizar(ts,mensajes) == TIPO_DATO.ENTERO :
             mensajes.append(Mensaje(TIPO_MENSAJE.SEMANTICO,'La condición para el While es incorrecta.',self.linea,self.columna))
-            
+        
+        bandera = False
         for instruccion in self.instrucciones:
-            instruccion.analizar(ts,mensajes)
+            if not bandera:
+                instruccion.analizar(ts,mensajes)
+
+                if isinstance(instruccion,Return) or isinstance(instruccion,Break) or isinstance(instruccion,Continue):
+                    bandera = True
+            else:
+                self.instrucciones.remove(instruccion)
 
     def get3D(self,ts) :
         c3d = ''

@@ -1,6 +1,8 @@
 from .Instruccion import Instruccion
 from .Mensaje import *
 from .Simbolo import *
+from .Return import *
+from .Break import *
 
 class Case(Instruccion) :
 
@@ -15,8 +17,15 @@ class Case(Instruccion) :
         if not self.expresion is None:
             self.expresion.analizar(ts,mensajes)
 
+        bandera = False
         for instruccion in self.instrucciones:
-            instruccion.analizar(ts,mensajes)
+            if not bandera:
+                instruccion.analizar(ts,mensajes)
+
+                if isinstance(instruccion,Return) or isinstance(instruccion,Break):
+                    bandera = True
+            else:
+                self.instrucciones.remove(instruccion)
 
     def get3D(self,ts) :
         c3d = ''

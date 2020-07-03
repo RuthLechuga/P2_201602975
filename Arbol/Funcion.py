@@ -43,9 +43,16 @@ class Funcion(Instruccion) :
         
         #se analizan las instrucciones de la funcion
         if not self.instrucciones is None:
+            bandera = False
             for instruccion in self.instrucciones:
-                instruccion.analizar(ts,mensajes)
-                
+                if not bandera:
+                    instruccion.analizar(ts,mensajes)
+
+                    if isinstance(instruccion,Return):
+                        bandera = True
+                else:
+                    self.instrucciones.remove(instruccion)
+
         self.var_retorno = ts.getRetorno()        
         ts.ambito = ambito_actual
     
