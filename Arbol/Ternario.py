@@ -28,19 +28,15 @@ class Ternario(Instruccion) :
         false_temp = ts.getTemporalActual()
 
         true_label = ts.getLabel()
-        false_label = ts.getLabel()
         salida_label = ts.getLabel()
 
         temp_resultado = ts.getTemporal()
         c3d += 'if('+cond_temp+') goto '+ true_label+'  ;\n'
-        c3d += 'if(!'+cond_temp+') goto '+ false_label+' ;\n'
+        c3d += temp_resultado +'='+false_temp+';\n'
+        c3d += 'goto '+salida_label+';\n'
 
         c3d += true_label +':\n'
         c3d += temp_resultado +'='+true_temp+';\n'
-        c3d += 'goto '+salida_label+';\n'
-
-        c3d += false_label +':\n'
-        c3d += temp_resultado +'='+false_temp+';\n'
 
         c3d += salida_label+':\n'
         return c3d
