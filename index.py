@@ -91,9 +91,9 @@ class EditorTexto:
         mOpciones.add_cascade(label="Color fondo", menu=mColores)
         menubar.add_cascade(label="Opciones", menu=mOpciones)
 
-        mDebugger = Menu(menubar, background='#FFFFFF',foreground='blue')
-        mDebugger.add_command(label="Debuggear",command=self.debuggear)
-        menubar.add_cascade(label="Debuggear", menu=mDebugger)
+        #mDebugger = Menu(menubar, background='#FFFFFF',foreground='blue')
+        #mDebugger.add_command(label="Debuggear",command=self.debuggear)
+        #menubar.add_cascade(label="Debuggear", menu=mDebugger)
        
         mAyuda = Menu(menubar, background='#FFFFFF',foreground='blue')
         mAyuda.add_command(label="Acerca de", command=self.acerca)
@@ -233,13 +233,15 @@ class EditorTexto:
         instrucciones = g_cminus.parsec(self.text.get_text())
         mensajes = g_cminus.mensajes
         reporte_gramatical = g_cminus.reporte_gramatical
-        
+
         #deteccion de errores lexicos y sintacticos
         if len(mensajes) > 0:
             self.txt_3d.delete('1.0',END)
             self.txt_3d.insert('1.0','>>>>>Errores<<<<<')
             self.imprimir_errores()
-            #return
+
+        if instrucciones is None:
+            return
 
         ts_global_c = TS.TablaDeSimbolos()
         ts_global_c.reiniciar()
@@ -276,7 +278,7 @@ class EditorTexto:
         self.consola.insert('1.0','analisis realizado. . .')    
         self.imprimir_TS()    
 
-        #self.ejecutarAugus(c3d)
+        self.ejecutarAugus(c3d)
     
     def ejecutarAugus(self, codigo):
         try:

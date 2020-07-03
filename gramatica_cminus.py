@@ -240,7 +240,7 @@ def p_instruccion_global_decl(t):
 
 def p_instr_error(t) :
     'instruccion_global  :   error'
-    t[0] = []
+    t[0] = [EtiquetasAgust('')]
 
 def p_declaracion(t):
     'declaracion : tipo lista_asignaciones_dec'
@@ -484,7 +484,7 @@ def p_instrucciones_instruccion(t):
 
 def p_instr_error(t) :
     'instruccion  :   error'
-    t[0] = []
+    t[0] = [EtiquetasAgust('')]
 
 def p_instruccion(t):
     'instruccion : declaracion PTCOMA'
@@ -837,6 +837,7 @@ def p_expresion_2(t):
     if t[1]=='-': t[0] = Expresion(t[2],None,TIPO_OPERACION.MENOS_UNARIO,t.lineno(1),find_column(entrada, t.slice[1]),t[1])
     if t[1]=='++': t[0] = Expresion(t[2],None,TIPO_OPERACION.PRE_INC,t.lineno(1),find_column(entrada, t.slice[1]),'+')
     if t[1]=='--': t[0] = Expresion(t[2],None,TIPO_OPERACION.PRE_DEC,t.lineno(1),find_column(entrada, t.slice[1]),'-')
+    if t[1]=='&': t[0] = t[2]
 
 def p_expresion_2_post(t):
     ''' expresion : IDENTIFICADOR INCREMENTO

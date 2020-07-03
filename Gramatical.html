@@ -39,68 +39,13 @@
             </tr>
             
             <tr>
-                <td> expresion -> ENTERO</td>
-                <td>t[0] = Expresion(t[1],None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))</td>
-            </tr>
-            
-            <tr>
-                <td> expresion -> ENTERO</td>
-                <td>t[0] = Expresion(t[1],None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))</td>
-            </tr>
-            
-            <tr>
-                <td> expresion -> expresion * expresion</td>
-                <td></td>
-            </tr>
-            
-            <tr>
-                <td> expresion -> ENTERO</td>
-                <td>t[0] = Expresion(t[1],None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))</td>
-            </tr>
-            
-            <tr>
-                <td> expresion -> expresion + expresion</td>
-                <td></td>
-            </tr>
-            
-            <tr>
-                <td>asignacion_dec -> IDENTIFICADOR sig_asig expresion</td>
-                <td>t[0] = Declaracion(TIPO_DATO.ENTERO,t[1],None,t[3],t.lineno(1),find_column(entrada, t.slice[1]))</td>
-            </tr>
-            
-            <tr>
-                <td>lista_asignaciones_dec -> asignacion_dec</td>
-                <td>t[0] = [t[1]]</td>
-            </tr>
-            
-            <tr>
-                <td>declaracion -> tipo lista_asignaciones_dec PTCOMA</td>
-                <td>t[0] = t[2]</td>
-            </tr>
-            
-            <tr>
-                <td>instruccion_global -> declaracion PTCOMA</td>
-                <td>t[0] = t[1]</td>
-            </tr>
-            
-            <tr>
-                <td>instrucciones_globales -> instruccion_global</td>
-                <td>t[0] = t[1]</td>
-            </tr>
-            
-            <tr>
                 <td>tipo -> int</td>
                 <td>t[0] = t[1]</td>
             </tr>
             
             <tr>
-                <td> expresion -> IDENTIFICADOR</td>
-                <td>t[0] = Expresion(t[1],None,TIPO_OPERACION.IDENTIFICADOR,t.lineno(1),find_column(entrada, t.slice[1]))</td>
-            </tr>
-            
-            <tr>
-                <td> expresion -> - expresion</td>
-                <td>t[0] = Expresion(t[2],None,-,t.lineno(1),find_column(entrada, t.slice[1]),t[1])</td>
+                <td> expresion -> ENTERO</td>
+                <td>t[0] = Expresion(t[1],None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))</td>
             </tr>
             
             <tr>
@@ -119,23 +64,12 @@
             </tr>
             
             <tr>
-                <td>instruccion_global -> declaracion PTCOMA</td>
+                <td>instruccion -> declaracion PTCOMA</td>
                 <td>t[0] = t[1]</td>
             </tr>
             
             <tr>
-                <td>instrucciones_globales -> instrucciones_globales instruccion_global</td>
-                <td>t[1].extend(t[2])
-t[0] = t[1]</td>
-            </tr>
-            
-            <tr>
-                <td>tipo -> float</td>
-                <td>t[0] = t[1]</td>
-            </tr>
-            
-            <tr>
-                <td>tipo -> float</td>
+                <td>instrucciones -> instruccion</td>
                 <td>t[0] = t[1]</td>
             </tr>
             
@@ -145,54 +79,18 @@ t[0] = t[1]</td>
             </tr>
             
             <tr>
-                <td> expresion -> PIZQ tipo PDER expresion</td>
-                <td>t[0] = Expresion(t[4],None,tipo,t.lineno(1),find_column(entrada, t.slice[1]))</td>
+                <td> expresion -> ENTERO</td>
+                <td>t[0] = Expresion(t[1],None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))</td>
             </tr>
             
             <tr>
-                <td>asignacion_dec -> IDENTIFICADOR sig_asig expresion</td>
-                <td>t[0] = Declaracion(TIPO_DATO.ENTERO,t[1],None,t[3],t.lineno(1),find_column(entrada, t.slice[1]))</td>
-            </tr>
-            
-            <tr>
-                <td>lista_asignaciones_dec -> asignacion_dec</td>
-                <td>t[0] = [t[1]]</td>
-            </tr>
-            
-            <tr>
-                <td>declaracion -> tipo lista_asignaciones_dec PTCOMA</td>
-                <td>t[0] = t[2]</td>
-            </tr>
-            
-            <tr>
-                <td>instruccion_global -> declaracion PTCOMA</td>
-                <td>t[0] = t[1]</td>
-            </tr>
-            
-            <tr>
-                <td>instrucciones_globales -> instrucciones_globales instruccion_global</td>
-                <td>t[1].extend(t[2])
-t[0] = t[1]</td>
-            </tr>
-            
-            <tr>
-                <td>tipo -> int</td>
-                <td>t[0] = t[1]</td>
+                <td> expresion -> expresion <= expresion</td>
+                <td>t[0] = Expresion(t[1],t[3],<=,t.lineno(2),find_column(entrada, t.slice[2]),t[2])</td>
             </tr>
             
             <tr>
                 <td> expresion -> IDENTIFICADOR</td>
                 <td>t[0] = Expresion(t[1],None,TIPO_OPERACION.IDENTIFICADOR,t.lineno(1),find_column(entrada, t.slice[1]))</td>
-            </tr>
-            
-            <tr>
-                <td> expresion -> IDENTIFICADOR</td>
-                <td>t[0] = Expresion(t[1],None,TIPO_OPERACION.IDENTIFICADOR,t.lineno(1),find_column(entrada, t.slice[1]))</td>
-            </tr>
-            
-            <tr>
-                <td> expresion -> expresion + expresion</td>
-                <td></td>
             </tr>
             
             <tr>
@@ -211,6 +109,92 @@ t[0] = t[1]</td>
             </tr>
             
             <tr>
+                <td>inc_dec -> IDENTIFICADOR INCREMENTO</td>
+                <td>exp = Expresion(t[1],Expresion(1,None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1])),TIPO_OPERACION.SUMA,t.lineno(1),find_column(entrada, t.slice[1]))
+t[0] = Asignacion(t[1],None,'=',exp,t.lineno(1),find_column(entrada, t.slice[1]))</td>
+            </tr>
+            
+            <tr>
+                <td>instruccion -> inc_dec PTCOMA</td>
+                <td>t[0] = t[1]</td>
+            </tr>
+            
+            <tr>
+                <td>instrucciones -> instrucciones instruccion</td>
+                <td>t[1].extend(t[2])
+t[0] = t[1]</td>
+            </tr>
+            
+            <tr>
+                <td> expresion -> IDENTIFICADOR</td>
+                <td>t[0] = Expresion(t[1],None,TIPO_OPERACION.IDENTIFICADOR,t.lineno(1),find_column(entrada, t.slice[1]))</td>
+            </tr>
+            
+            <tr>
+                <td> expresion -> ENTERO</td>
+                <td>t[0] = Expresion(t[1],None,TIPO_OPERACION.ENTERO,t.lineno(1),find_column(entrada, t.slice[1]))</td>
+            </tr>
+            
+            <tr>
+                <td> expresion -> expresion > expresion</td>
+                <td>t[0] = Expresion(t[1],t[3],>,t.lineno(2),find_column(entrada, t.slice[2]),t[2])</td>
+            </tr>
+            
+            <tr>
+                <td>instruccion -> PRINTF PIZQ CADENA PDER PTCOMA</td>
+                <td>t[0] = Printf(t[3],None,t.lineno(2),find_column(entrada, t.slice[2]))</td>
+            </tr>
+            
+            <tr>
+                <td>instrucciones -> instruccion</td>
+                <td>t[0] = t[1]</td>
+            </tr>
+            
+            <tr>
+                <td>instruccion -> BREAK PTCOMA</td>
+                <td>t[0] = [Break()]</td>
+            </tr>
+            
+            <tr>
+                <td>instrucciones -> instrucciones instruccion</td>
+                <td>t[1].extend(t[2])
+t[0] = t[1]</td>
+            </tr>
+            
+            <tr>
+                <td>if -> IF PIZQ expresion PDER LLIZQ instrucciones LLDER</td>
+                <td>lista = [Elseif(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))]
+t[0] = If(lista)</td>
+            </tr>
+            
+            <tr>
+                <td>instruccion -> if</td>
+                <td>t[0] = [t[1]]</td>
+            </tr>
+            
+            <tr>
+                <td>instrucciones -> instrucciones instruccion</td>
+                <td>t[1].extend(t[2])
+t[0] = t[1]</td>
+            </tr>
+            
+            <tr>
+                <td>while -> WHILE PIZQ expresion PDER LLIZQ instrucciones LLDER</td>
+                <td>t[0] = While(t[3],t[6],t.lineno(1),find_column(entrada, t.slice[1]))</td>
+            </tr>
+            
+            <tr>
+                <td>instruccion -> while</td>
+                <td>t[0] = [t[1]]</td>
+            </tr>
+            
+            <tr>
+                <td>instrucciones -> instrucciones instruccion</td>
+                <td>t[1].extend(t[2])
+t[0] = t[1]</td>
+            </tr>
+            
+            <tr>
                 <td>metodo -> tipo IDENTIFICADOR PIZQ PDER LLIZQ instrucciones LLDER</td>
                 <td>t[0] = Funcion(tipo,t[2],None,t[6],t.lineno(2),find_column(entrada, t.slice[2]))</td>
             </tr>
@@ -221,9 +205,8 @@ t[0] = t[1]</td>
             </tr>
             
             <tr>
-                <td>instrucciones_globales -> instrucciones_globales instruccion_global</td>
-                <td>t[1].extend(t[2])
-t[0] = t[1]</td>
+                <td>instrucciones_globales -> instruccion_global</td>
+                <td>t[0] = t[1]</td>
             </tr>
             
             <tr>

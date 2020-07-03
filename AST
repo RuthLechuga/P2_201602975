@@ -1,375 +1,82 @@
 digraph ast {
  init -> instrucciones_globales
- instrucciones_globales -> "<Arbol.Struct.Struct object at 0x000002BC632D3490>"
-"<Arbol.Struct.Struct object at 0x000002BC632D3490>" [label="ins_definicion_struct"] ;
-"<Arbol.Struct.Struct object at 0x000002BC632D3490>persona" [label="IDENTIFICADOR"] ;
-"<Arbol.Struct.Struct object at 0x000002BC632D3490>" -> "<Arbol.Struct.Struct object at 0x000002BC632D3490>persona"
-"[<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>, <Arbol.Declaracion.Declaracion object at 0x000002BC632D3610>, <Arbol.Declaracion.Declaracion object at 0x000002BC632D3670>]" [label="atributos"] ;
-"<Arbol.Struct.Struct object at 0x000002BC632D3490>" -> "[<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>, <Arbol.Declaracion.Declaracion object at 0x000002BC632D3610>, <Arbol.Declaracion.Declaracion object at 0x000002BC632D3670>]"
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>" [label="atributo"] ;
-"[<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>, <Arbol.Declaracion.Declaracion object at 0x000002BC632D3610>, <Arbol.Declaracion.Declaracion object at 0x000002BC632D3670>]" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>"
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>" [label="ins_declaracion"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>nombre" [label="IDENTIFICADOR"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>nombre"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D34C0>]" [label="accesos"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D34C0>]"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D34C0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D34C0>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D34C0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D34C0>" [label="ENTERO"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3610>" [label="atributo"] ;
-"[<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>, <Arbol.Declaracion.Declaracion object at 0x000002BC632D3610>, <Arbol.Declaracion.Declaracion object at 0x000002BC632D3670>]" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC632D3610>"
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3610>" [label="ins_declaracion"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3610>edad" [label="IDENTIFICADOR"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3610>" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC632D3610>edad"
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3670>" [label="atributo"] ;
-"[<Arbol.Declaracion.Declaracion object at 0x000002BC632D3460>, <Arbol.Declaracion.Declaracion object at 0x000002BC632D3610>, <Arbol.Declaracion.Declaracion object at 0x000002BC632D3670>]" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC632D3670>"
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3670>" [label="ins_declaracion"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3670>cui" [label="IDENTIFICADOR"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC632D3670>" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC632D3670>cui"
-instrucciones_globales -> "<Arbol.Funcion.Funcion object at 0x000002BC63A40490>"
-   "<Arbol.Funcion.Funcion object at 0x000002BC63A40490>" [label="decl_function"] ;
-   "<Arbol.Funcion.Funcion object at 0x000002BC63A40490>ENTERO" [label="TIPO"] ;
-   "<Arbol.Funcion.Funcion object at 0x000002BC63A40490>" -> "<Arbol.Funcion.Funcion object at 0x000002BC63A40490>ENTERO"
-   "<Arbol.Funcion.Funcion object at 0x000002BC63A40490>main" [label="IDENTIFICADOR"] ;
-   "<Arbol.Funcion.Funcion object at 0x000002BC63A40490>" -> "<Arbol.Funcion.Funcion object at 0x000002BC63A40490>main"
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" [label="instrucciones"] ;
-"<Arbol.Funcion.Funcion object at 0x000002BC63A40490>" -> "[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]"
-"<Arbol.Printf.Printf object at 0x000002BC632D37C0>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Printf.Printf object at 0x000002BC632D37C0>"
-   "<Arbol.Printf.Printf object at 0x000002BC632D37C0>" [label="print"] ;
-   "<Arbol.Printf.Printf object at 0x000002BC632D37C0>" -> ">>>>>>>>>>>>>>>> :)\n"
-"<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>"
-"<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>" [label="ins_declaracion_struct"] ;
-"<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>_struct" [label="STRCUCT"] ;
-"<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>" -> "<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>_struct"
-"<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>persona" [label="TIPO"] ;
-"<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>" -> "<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>persona"
-"<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>" -> "<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D34F0>]" [label="accesos"] ;
-"<Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D34F0>]"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D34F0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D34F0>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D34F0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D34F0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D39D0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3910>]" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D39D0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3910>]"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D39D0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D39D0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3910>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D39D0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D39D0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>nombre" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D39D0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3910>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>nombre"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3910>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D39D0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3910>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3910>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3910>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3A00>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3A00>" [label="CARACTER"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D39A0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3790>]" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D39A0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3790>]"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D39A0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D39A0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3790>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D39A0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D39A0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>nombre" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D39A0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3790>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>nombre"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3790>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D39A0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3790>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3790>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3790>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3970>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3970>" [label="CARACTER"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3B20>, 'edad']" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D3B20>, 'edad']"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3B20>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3B20>, 'edad']" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3B20>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3B20>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>edad" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3B20>, 'edad']" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>edad"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D36A0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D36A0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3B80>, 'cui']" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D3B80>, 'cui']"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3B80>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3B80>, 'cui']" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3B80>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3B80>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>cui" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3B80>, 'cui']" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>cui"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3CD0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3CD0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3D30>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3CA0>]" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D3D30>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3CA0>]"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3D30>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3D30>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3CA0>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3D30>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3D30>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>nombre" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3D30>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3CA0>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>nombre"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3CA0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3D30>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3CA0>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3CA0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3CA0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3D00>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3D00>" [label="CARACTER"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3DF0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3C10>]" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D3DF0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3C10>]"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3DF0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3DF0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3C10>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3DF0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3DF0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>nombre" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3DF0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3C10>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>nombre"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3C10>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3DF0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3C10>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3C10>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3C10>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3DC0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3DC0>" [label="CARACTER"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3AF0>, 'edad']" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D3AF0>, 'edad']"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3AF0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3AF0>, 'edad']" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3AF0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3AF0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>edad" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3AF0>, 'edad']" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>edad"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3880>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3880>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3EB0>, 'cui']" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D3EB0>, 'cui']"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3EB0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3EB0>, 'cui']" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3EB0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3EB0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>cui" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3EB0>, 'cui']" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>cui"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D37F0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D37F0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3FD0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3EE0>]" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D3FD0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3EE0>]"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3FD0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3FD0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3EE0>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3FD0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3FD0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>nombre" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3FD0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3EE0>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>nombre"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3EE0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3FD0>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D3EE0>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3EE0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3EE0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3D90>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3D90>" [label="CARACTER"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3E80>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D38B0>]" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D3E80>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D38B0>]"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3E80>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3E80>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D38B0>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3E80>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3E80>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>nombre" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3E80>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D38B0>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>nombre"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D38B0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3E80>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC632D38B0>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D38B0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D38B0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A401F0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A401F0>" [label="CARACTER"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3F40>, 'edad']" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D3F40>, 'edad']"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3F40>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3F40>, 'edad']" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3F40>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3F40>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>edad" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3F40>, 'edad']" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>edad"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A401C0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A401C0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>personas" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>personas"
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3FA0>, 'cui']" [label="accesos"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC632D3FA0>, 'cui']"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3FA0>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3FA0>, 'cui']" -> "<Arbol.Expresion.Expresion object at 0x000002BC632D3FA0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC632D3FA0>" [label="ENTERO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>cui" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC632D3FA0>, 'cui']" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>cui"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A403A0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A403A0>" [label="ENTERO"] ;
-"<Arbol.For.For object at 0x000002BC63A40850>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC632D37C0>, <Arbol.DeclaracionStruct.DeclaracionStruct object at 0x000002BC632D3940>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3430>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3A90>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C70>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3D60>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3850>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3C40>, <Arbol.Asignacion.Asignacion object at 0x000002BC632D3E20>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40070>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40190>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40220>, <Arbol.Asignacion.Asignacion object at 0x000002BC63A40340>, <Arbol.For.For object at 0x000002BC63A40850>]" -> "<Arbol.For.For object at 0x000002BC63A40850>"
-   "<Arbol.For.For object at 0x000002BC63A40850>" [label="ins_for"] ;
-   "<Arbol.For.For object at 0x000002BC63A40850>for" [label="for"] ;
-   "<Arbol.For.For object at 0x000002BC63A40850>" -> "<Arbol.For.For object at 0x000002BC63A40850>for"
-   "<Arbol.Declaracion.Declaracion object at 0x000002BC63A40520>" [label="DECLARACION"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A40520>" [label="ins_declaracion"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A40520>i" [label="IDENTIFICADOR"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A40520>" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC63A40520>i"
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A40520>igual" [label="="] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A40520>" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC63A40520>igual"
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A40520>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40250>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40250>" [label="ENTERO"] ;
-   "<Arbol.For.For object at 0x000002BC63A40850>" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC63A40520>"
-   "<Arbol.Expresion.Expresion object at 0x000002BC63A40400>" [label="CONDICION"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40400>" [label="expresion"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A402E0>" [label="IDENTIFICADOR"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40400>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A402E0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40400>sig" [label="<"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40400>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40400>sig"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40460>" [label="ENTERO"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40400>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40460>"
-   "<Arbol.For.For object at 0x000002BC63A40850>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40400>"
-   "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40790>" [label="INCREMENTO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40790>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40790>i" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40790>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40790>i"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40790>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40790>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40790>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40790>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40760>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40760>" [label="expresion"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A400A0>" [label="IDENTIFICADOR"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40760>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A400A0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40760>sig" [label="+"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40760>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40760>sig"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A406A0>" [label="ENTERO"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40760>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A406A0>"
-   "<Arbol.For.For object at 0x000002BC63A40850>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40790>"
-"[<Arbol.For.For object at 0x000002BC63A40E80>, <Arbol.Printf.Printf object at 0x000002BC63A40DC0>]" [label="instrucciones"] ;
-"<Arbol.For.For object at 0x000002BC63A40850>" -> "[<Arbol.For.For object at 0x000002BC63A40E80>, <Arbol.Printf.Printf object at 0x000002BC63A40DC0>]"
-"<Arbol.For.For object at 0x000002BC63A40E80>" [label="instruccion"] ;
-"[<Arbol.For.For object at 0x000002BC63A40E80>, <Arbol.Printf.Printf object at 0x000002BC63A40DC0>]" -> "<Arbol.For.For object at 0x000002BC63A40E80>"
-   "<Arbol.For.For object at 0x000002BC63A40E80>" [label="ins_for"] ;
-   "<Arbol.For.For object at 0x000002BC63A40E80>for" [label="for"] ;
-   "<Arbol.For.For object at 0x000002BC63A40E80>" -> "<Arbol.For.For object at 0x000002BC63A40E80>for"
-   "<Arbol.Declaracion.Declaracion object at 0x000002BC63A409D0>" [label="DECLARACION"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A409D0>" [label="ins_declaracion"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A409D0>j" [label="IDENTIFICADOR"] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A409D0>" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC63A409D0>j"
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A409D0>igual" [label="="] ;
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A409D0>" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC63A409D0>igual"
-"<Arbol.Declaracion.Declaracion object at 0x000002BC63A409D0>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A408B0>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A408B0>" [label="ENTERO"] ;
-   "<Arbol.For.For object at 0x000002BC63A40E80>" -> "<Arbol.Declaracion.Declaracion object at 0x000002BC63A409D0>"
-   "<Arbol.Expresion.Expresion object at 0x000002BC63A400D0>" [label="CONDICION"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A400D0>" [label="expresion"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40910>" [label="IDENTIFICADOR"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A400D0>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40910>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A400D0>sig" [label="<"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A400D0>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A400D0>sig"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40970>" [label="ENTERO"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A400D0>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40970>"
-   "<Arbol.For.For object at 0x000002BC63A40E80>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A400D0>"
-   "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40CA0>" [label="INCREMENTO"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40CA0>" [label="ins_asignacion"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40CA0>j" [label="IDENTIFICADOR"] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40CA0>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40CA0>j"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40CA0>igual" [label="="] ;
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40CA0>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40CA0>igual"
-"<Arbol.Asignacion.Asignacion object at 0x000002BC63A40CA0>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40C70>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40C70>" [label="expresion"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40A00>" [label="IDENTIFICADOR"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40C70>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40A00>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40C70>sig" [label="+"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40C70>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40C70>sig"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40BB0>" [label="ENTERO"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40C70>" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40BB0>"
-   "<Arbol.For.For object at 0x000002BC63A40E80>" -> "<Arbol.Asignacion.Asignacion object at 0x000002BC63A40CA0>"
-"[<Arbol.Printf.Printf object at 0x000002BC63A40FA0>]" [label="instrucciones"] ;
-"<Arbol.For.For object at 0x000002BC63A40E80>" -> "[<Arbol.Printf.Printf object at 0x000002BC63A40FA0>]"
-"<Arbol.Printf.Printf object at 0x000002BC63A40FA0>" [label="instruccion"] ;
-"[<Arbol.Printf.Printf object at 0x000002BC63A40FA0>]" -> "<Arbol.Printf.Printf object at 0x000002BC63A40FA0>"
-   "<Arbol.Printf.Printf object at 0x000002BC63A40FA0>" [label="print"] ;
-   "<Arbol.Printf.Printf object at 0x000002BC63A40FA0>" -> "%c"
-"[<Arbol.Expresion.Expresion object at 0x000002BC63A40F70>]" [label="parametros"] ;
-"<Arbol.Printf.Printf object at 0x000002BC63A40FA0>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC63A40F70>]"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40F70>" [label="parametro"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC63A40F70>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40F70>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40F70>" [label="expresion"] ;
-"<Arbol.Acceso.Acceso object at 0x000002BC63A40F10>" [label="ACCESOS"] ;
-   "<Arbol.Acceso.Acceso object at 0x000002BC63A40F10>et" [label="personas"] ;
-   "<Arbol.Acceso.Acceso object at 0x000002BC63A40F10>" -> "<Arbol.Acceso.Acceso object at 0x000002BC63A40F10>et"
-"[<Arbol.Expresion.Expresion object at 0x000002BC63A40130>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC63A40F40>]" [label="accesos"] ;
-"<Arbol.Acceso.Acceso object at 0x000002BC63A40F10>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC63A40130>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC63A40F40>]"
-"[<Arbol.Expresion.Expresion object at 0x000002BC63A40130>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC63A40F40>]" [label="accesos"] ;
-"<Arbol.Acceso.Acceso object at 0x000002BC63A40F10>" -> "[<Arbol.Expresion.Expresion object at 0x000002BC63A40130>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC63A40F40>]"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40130>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC63A40130>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC63A40F40>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40130>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40130>" [label="IDENTIFICADOR"] ;
-"<Arbol.Acceso.Acceso object at 0x000002BC63A40F10>nombre" [label="cadena"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC63A40130>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC63A40F40>]" -> "<Arbol.Acceso.Acceso object at 0x000002BC63A40F10>nombre"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40F40>" [label="acceso"] ;
-"[<Arbol.Expresion.Expresion object at 0x000002BC63A40130>, 'nombre', <Arbol.Expresion.Expresion object at 0x000002BC63A40F40>]" -> "<Arbol.Expresion.Expresion object at 0x000002BC63A40F40>"
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40F40>" [label="IDENTIFICADOR"] ;
-"<Arbol.Expresion.Expresion object at 0x000002BC63A40F70>" -> "<Arbol.Acceso.Acceso object at 0x000002BC63A40F10>"
-"<Arbol.Printf.Printf object at 0x000002BC63A40DC0>" [label="instruccion"] ;
-"[<Arbol.For.For object at 0x000002BC63A40E80>, <Arbol.Printf.Printf object at 0x000002BC63A40DC0>]" -> "<Arbol.Printf.Printf object at 0x000002BC63A40DC0>"
-   "<Arbol.Printf.Printf object at 0x000002BC63A40DC0>" [label="print"] ;
-   "<Arbol.Printf.Printf object at 0x000002BC63A40DC0>" -> "\n"
+ instrucciones_globales -> "<Arbol.Funcion.Funcion object at 0x000002584D629100>"
+   "<Arbol.Funcion.Funcion object at 0x000002584D629100>" [label="decl_function"] ;
+   "<Arbol.Funcion.Funcion object at 0x000002584D629100>ENTERO" [label="TIPO"] ;
+   "<Arbol.Funcion.Funcion object at 0x000002584D629100>" -> "<Arbol.Funcion.Funcion object at 0x000002584D629100>ENTERO"
+   "<Arbol.Funcion.Funcion object at 0x000002584D629100>main" [label="IDENTIFICADOR"] ;
+   "<Arbol.Funcion.Funcion object at 0x000002584D629100>" -> "<Arbol.Funcion.Funcion object at 0x000002584D629100>main"
+"[<Arbol.Declaracion.Declaracion object at 0x000002584D629370>, <Arbol.While.While object at 0x000002584D6298B0>]" [label="instrucciones"] ;
+"<Arbol.Funcion.Funcion object at 0x000002584D629100>" -> "[<Arbol.Declaracion.Declaracion object at 0x000002584D629370>, <Arbol.While.While object at 0x000002584D6298B0>]"
+"<Arbol.Declaracion.Declaracion object at 0x000002584D629370>" [label="instruccion"] ;
+"[<Arbol.Declaracion.Declaracion object at 0x000002584D629370>, <Arbol.While.While object at 0x000002584D6298B0>]" -> "<Arbol.Declaracion.Declaracion object at 0x000002584D629370>"
+"<Arbol.Declaracion.Declaracion object at 0x000002584D629370>" [label="ins_declaracion"] ;
+"<Arbol.Declaracion.Declaracion object at 0x000002584D629370>cont" [label="IDENTIFICADOR"] ;
+"<Arbol.Declaracion.Declaracion object at 0x000002584D629370>" -> "<Arbol.Declaracion.Declaracion object at 0x000002584D629370>cont"
+"<Arbol.Declaracion.Declaracion object at 0x000002584D629370>igual" [label="="] ;
+"<Arbol.Declaracion.Declaracion object at 0x000002584D629370>" -> "<Arbol.Declaracion.Declaracion object at 0x000002584D629370>igual"
+"<Arbol.Declaracion.Declaracion object at 0x000002584D629370>" -> "<Arbol.Expresion.Expresion object at 0x000002584D6292B0>"
+"<Arbol.Expresion.Expresion object at 0x000002584D6292B0>" [label="ENTERO"] ;
+"<Arbol.While.While object at 0x000002584D6298B0>" [label="instruccion"] ;
+"[<Arbol.Declaracion.Declaracion object at 0x000002584D629370>, <Arbol.While.While object at 0x000002584D6298B0>]" -> "<Arbol.While.While object at 0x000002584D6298B0>"
+   "<Arbol.While.While object at 0x000002584D6298B0>" [label="ins_while"] ;
+   "<Arbol.While.While object at 0x000002584D6298B0>et" [label="while"] ;
+   "<Arbol.While.While object at 0x000002584D6298B0>" -> "<Arbol.While.While object at 0x000002584D6298B0>et"
+"<Arbol.Expresion.Expresion object at 0x000002584D6294C0>" [label="expresion"] ;
+"<Arbol.Expresion.Expresion object at 0x000002584D629220>" [label="IDENTIFICADOR"] ;
+"<Arbol.Expresion.Expresion object at 0x000002584D6294C0>" -> "<Arbol.Expresion.Expresion object at 0x000002584D629220>"
+"<Arbol.Expresion.Expresion object at 0x000002584D6294C0>sig" [label="<="] ;
+"<Arbol.Expresion.Expresion object at 0x000002584D6294C0>" -> "<Arbol.Expresion.Expresion object at 0x000002584D6294C0>sig"
+"<Arbol.Expresion.Expresion object at 0x000002584D629400>" [label="ENTERO"] ;
+"<Arbol.Expresion.Expresion object at 0x000002584D6294C0>" -> "<Arbol.Expresion.Expresion object at 0x000002584D629400>"
+"<Arbol.While.While object at 0x000002584D6298B0>" -> "<Arbol.Expresion.Expresion object at 0x000002584D6294C0>"
+"[<Arbol.Printf.Printf object at 0x000002584D6294F0>, <Arbol.Asignacion.Asignacion object at 0x000002584D629790>, <Arbol.If.If object at 0x000002584D629D00>]" [label="instrucciones"] ;
+"<Arbol.While.While object at 0x000002584D6298B0>" -> "[<Arbol.Printf.Printf object at 0x000002584D6294F0>, <Arbol.Asignacion.Asignacion object at 0x000002584D629790>, <Arbol.If.If object at 0x000002584D629D00>]"
+"<Arbol.Printf.Printf object at 0x000002584D6294F0>" [label="instruccion"] ;
+"[<Arbol.Printf.Printf object at 0x000002584D6294F0>, <Arbol.Asignacion.Asignacion object at 0x000002584D629790>, <Arbol.If.If object at 0x000002584D629D00>]" -> "<Arbol.Printf.Printf object at 0x000002584D6294F0>"
+   "<Arbol.Printf.Printf object at 0x000002584D6294F0>" [label="print"] ;
+   "<Arbol.Printf.Printf object at 0x000002584D6294F0>" -> "cont = %i\n"
+"[<Arbol.Expresion.Expresion object at 0x000002584D620FD0>]" [label="parametros"] ;
+"<Arbol.Printf.Printf object at 0x000002584D6294F0>" -> "[<Arbol.Expresion.Expresion object at 0x000002584D620FD0>]"
+"<Arbol.Expresion.Expresion object at 0x000002584D620FD0>" [label="parametro"] ;
+"[<Arbol.Expresion.Expresion object at 0x000002584D620FD0>]" -> "<Arbol.Expresion.Expresion object at 0x000002584D620FD0>"
+"<Arbol.Expresion.Expresion object at 0x000002584D620FD0>" [label="IDENTIFICADOR"] ;
+"<Arbol.Asignacion.Asignacion object at 0x000002584D629790>" [label="instruccion"] ;
+"[<Arbol.Printf.Printf object at 0x000002584D6294F0>, <Arbol.Asignacion.Asignacion object at 0x000002584D629790>, <Arbol.If.If object at 0x000002584D629D00>]" -> "<Arbol.Asignacion.Asignacion object at 0x000002584D629790>"
+"<Arbol.Asignacion.Asignacion object at 0x000002584D629790>" [label="ins_asignacion"] ;
+"<Arbol.Asignacion.Asignacion object at 0x000002584D629790>cont" [label="IDENTIFICADOR"] ;
+"<Arbol.Asignacion.Asignacion object at 0x000002584D629790>" -> "<Arbol.Asignacion.Asignacion object at 0x000002584D629790>cont"
+"<Arbol.Asignacion.Asignacion object at 0x000002584D629790>igual" [label="="] ;
+"<Arbol.Asignacion.Asignacion object at 0x000002584D629790>" -> "<Arbol.Asignacion.Asignacion object at 0x000002584D629790>igual"
+"<Arbol.Asignacion.Asignacion object at 0x000002584D629790>" -> "<Arbol.Expresion.Expresion object at 0x000002584D629760>"
+"<Arbol.Expresion.Expresion object at 0x000002584D629760>" [label="expresion"] ;
+"<Arbol.Expresion.Expresion object at 0x000002584D6297C0>" [label="IDENTIFICADOR"] ;
+"<Arbol.Expresion.Expresion object at 0x000002584D629760>" -> "<Arbol.Expresion.Expresion object at 0x000002584D6297C0>"
+"<Arbol.Expresion.Expresion object at 0x000002584D629760>sig" [label="+"] ;
+"<Arbol.Expresion.Expresion object at 0x000002584D629760>" -> "<Arbol.Expresion.Expresion object at 0x000002584D629760>sig"
+"<Arbol.Expresion.Expresion object at 0x000002584D629580>" [label="ENTERO"] ;
+"<Arbol.Expresion.Expresion object at 0x000002584D629760>" -> "<Arbol.Expresion.Expresion object at 0x000002584D629580>"
+"<Arbol.If.If object at 0x000002584D629D00>" [label="instruccion"] ;
+"[<Arbol.Printf.Printf object at 0x000002584D6294F0>, <Arbol.Asignacion.Asignacion object at 0x000002584D629790>, <Arbol.If.If object at 0x000002584D629D00>]" -> "<Arbol.If.If object at 0x000002584D629D00>"
+   "<Arbol.If.If object at 0x000002584D629D00>" [label="ins_ifs"] ;
+"<Arbol.If.If object at 0x000002584D629D00>" -> "<Arbol.Elseif.Elseif object at 0x000002584D6297F0>"
+"<Arbol.Elseif.Elseif object at 0x000002584D6297F0>" [label="ins_if"] ;
+"<Arbol.Elseif.Elseif object at 0x000002584D6297F0>et" [label="if"] ;
+"<Arbol.Elseif.Elseif object at 0x000002584D6297F0>" -> "<Arbol.Elseif.Elseif object at 0x000002584D6297F0>et"
+"<Arbol.Expresion.Expresion object at 0x000002584D629430>" [label="expresion"] ;
+"<Arbol.Elseif.Elseif object at 0x000002584D6297F0>" -> "<Arbol.Expresion.Expresion object at 0x000002584D629430>"
+"[<Arbol.Printf.Printf object at 0x000002584D629730>, <Arbol.Break.Break object at 0x000002584D629490>]" [label="instrucciones"] ;
+"<Arbol.Elseif.Elseif object at 0x000002584D6297F0>" -> "[<Arbol.Printf.Printf object at 0x000002584D629730>, <Arbol.Break.Break object at 0x000002584D629490>]"
+"<Arbol.Printf.Printf object at 0x000002584D629730>" [label="instruccion"] ;
+"[<Arbol.Printf.Printf object at 0x000002584D629730>, <Arbol.Break.Break object at 0x000002584D629490>]" -> "<Arbol.Printf.Printf object at 0x000002584D629730>"
+   "<Arbol.Printf.Printf object at 0x000002584D629730>" [label="print"] ;
+   "<Arbol.Printf.Printf object at 0x000002584D629730>" -> "Termine :)"
+"<Arbol.Break.Break object at 0x000002584D629490>" [label="instruccion"] ;
+"[<Arbol.Printf.Printf object at 0x000002584D629730>, <Arbol.Break.Break object at 0x000002584D629490>]" -> "<Arbol.Break.Break object at 0x000002584D629490>"
+ "<Arbol.Break.Break object at 0x000002584D629490>" [label="ins_break"] ;
+
+                "<Arbol.Break.Break object at 0x000002584D629490>b" [label="break"] ;
+
+                "<Arbol.Break.Break object at 0x000002584D629490>" -> "<Arbol.Break.Break object at 0x000002584D629490>b"
 
 }
