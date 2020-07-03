@@ -257,6 +257,7 @@ class EditorTexto:
             self.consola.delete('1.0',END)
             self.consola.insert('1.0','>>>>>Errores<<<<<')
             self.imprimir_errores()
+            return
         
         c3d = ""
         codigo_main = ''
